@@ -33,7 +33,7 @@ class ServerHttp {
 
         try {
             if (body?.event === 'conversation_updated') {
-                const phone = this.decryptPhone(body?.meta?.sender?.phone_number.replace('+', ''));
+                const phone = this.encryptPhone(body?.meta?.sender?.phone_number.replace('+', ''));
                 const idAssigned = body?.changed_attributes[0]?.assignee_id?.current_value ?? null;
 
                 const encryptedPhone = this.encryptPhone(phone);
@@ -45,10 +45,15 @@ class ServerHttp {
                 }
                 res.send('ok');
                 return;
+
             }
 
+
+
+
+
             if (body?.private == false && body?.event == "message_created" && body?.message_type === "outgoing") {
-                const phone = this.decryptPhone(body.conversation?.meta?.sender?.phone_number.replace('+', ''));
+                const phone = this.encryptPhone(body.conversation?.meta?.sender?.phone_number.replace('+', ''));
                 const content = body?.content ?? '';
 
                 const decryptedPhone = this.encryptPhone(phone);

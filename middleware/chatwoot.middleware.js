@@ -1,6 +1,7 @@
 module.exports = async (ctx, options) => {
     const globalState = options.globalState.getMyState();
     const inboxId = globalState.inbox_id;
+    
     const chatwood = options.extensions.chatwood;
     const checkIsSave = (await chatwood.searchByNumber(`${ctx.from}`));
     const name = ctx?.pushName ?? ctx.ProfileName.split(" ").shift();

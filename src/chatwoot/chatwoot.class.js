@@ -95,7 +95,7 @@ class ChatwootClass {
      * @param {*} dataIn 
      * @returns 
      */
-    createContact = async (dataIn = { from: '', name: '', inbox: '' }) => {
+    createContact = async (dataIn = { from: this.encryptPhone(''), name: '', inbox: '' }) => {
         try {
 
             dataIn.from = this.formatNumber(dataIn.from)

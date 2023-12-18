@@ -68,12 +68,12 @@ class ChatwootClass {
      * [CONTACT]
      * https://www.chatwoot.com/developers/api/#tag/Contacts/operation/contactSearch
      * https://chatwoot-production-e265.up.railway.app/api/v1/accounts/1/contacts/search?q=+359987499
-     * @param {*} from numero de telefono 
+     * @param {*} name numero de telefono 
      * @returns [] array
      */
-    findContact = async (from) => {
+    findContact = async (name) => {
         try {
-            const url = this.buildBaseUrl(`/contacts/search?q=${from}`)
+            const url = this.buildBaseUrl(`/contacts/search?q=${name}`)
 
             const dataFetch = await fetch(url, {
                 headers: this.buildHeader(),
@@ -103,7 +103,7 @@ class ChatwootClass {
             const data = {
                 inbox_id: dataIn.inbox,
                 name: dataIn.name,
-                phone_number: this.encryptPhone(dataIn.from) 
+                phone_number: this.dataIn.name
             };
 
             const url = this.buildBaseUrl(`/contacts`)
@@ -131,8 +131,8 @@ class ChatwootClass {
      */
     findOrCreateContact = async (dataIn = { from: '', name: '', inbox: '' }) => {
         try {
-            dataIn.from = this.formatNumber(dataIn.from)
-            const getContact = await this.findContact(dataIn.from)
+            dataIn.name = this.formatNumber(dataIn.name)
+            const getContact = await this.findContact(dataIn.name)
             if (!getContact) {
                 const contact = await this.createContact(dataIn)
                 return contact

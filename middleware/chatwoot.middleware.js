@@ -1,13 +1,12 @@
 module.exports = async (ctx, options) => {
     const globalState = options.globalState.getMyState();
     const inboxId = globalState.inbox_id;
-    
     const chatwood = options.extensions.chatwood;
-    const checkIsSave = (await chatwood.searchByNumber(`${ctx.from}`));
+    const checkIsSave = (await chatwood.searchByNumber(`${ctx.name}`));
     const name = ctx?.pushName ?? ctx.ProfileName.split(" ").shift();
     if (!checkIsSave.length) {
         const contactSave = await chatwood.createContact({
-          phone_number: `+${ctx.from}`,
+          phone_number: `+${ctx.name}`,
           name: name,
         });
         await options.state.update({
@@ -19,7 +18,7 @@ module.exports = async (ctx, options) => {
       const currentState = options.state.getMyState();
 
       const filterConversation = await chatwood.filterConversation({
-        phone_number: ctx.from,
+        phone_number: ctx.name,
       });
   
       await options.state.update({
@@ -30,7 +29,7 @@ module.exports = async (ctx, options) => {
         const conversation = await chatwood.createConversation({
           inbox_id: inboxId,
           contact_id: currentState.chat_wood_id,
-          phone_number: ctx.from,
+          phone_number: ctx.name,
         });
         
         await options.state.update({ conversation_id: conversation.id });

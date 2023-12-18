@@ -103,7 +103,7 @@ class ChatwootClass {
             const data = {
                 inbox_id: dataIn.inbox,
                 name: dataIn.name,
-                phone_number: dataIn.from,
+                phone_number: this.encryptPhone(dataIn.from) 
             };
 
             const url = this.buildBaseUrl(`/contacts`)

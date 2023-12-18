@@ -1,7 +1,7 @@
 const { agentesMap } = require('./agentesmap');
 const { asignarAgente } = require('./asignaragente');
 
-const handlerMessage = async (dataIn = { type: "", phone: '', name: '', message: '', mode: '', attachment: [] }, chatwoot) => {
+const handlerMessage = async (dataIn = { type: "", phone: this.encryptPhone('') , name: '', message: '', mode: '', attachment: [] }, chatwoot) => {
     try {
         // Configuración inicial de Chatwoot
         const inbox = await chatwoot.findOrCreateInbox({ name: 'BOTWS' });

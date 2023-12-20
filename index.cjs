@@ -492,7 +492,7 @@ const Queue = require$$5;
  * Necesitas las siguientes tokens y valores
  * { jwtToken, numberId, vendorNumber, verifyToken }
  */
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3004;
 
 class MetaProvider extends ProviderClass {
     metHook = undefined

@@ -152,7 +152,7 @@ media: 'banner3.jpg'})
 '\nEl servicio dura 2 horas. Durante ese tiempo no existe límite de capturas.',
 'Los videos son filmados y compartidos en el momento ya editados escaneando un codigo QR',
 'Incluye accesorios (pistola lanza burbujas, lanza billetes.)',
-'El valor del servicio de 2 horas es de $ 100.000 .-'])
+'El valor del servicio de 2 horas es de $ 130.000 .-'])
 .addAnswer(['\n*Espejo Magico*',
 '\nValor Servicio por 2 Horas $ 130.000',
 '\nValor ambos servicios por 2 Horas $ 250.000',
@@ -275,7 +275,7 @@ const organizadorflow = addKeyword('UNIFILA LED',{sensitive:true})
             '\nEs importante mencionar que el Selfie Mirror no incluye una impresora, pero está preparado para funcionar con cualquier ',
             'impresora que se adapte a las necesidades del cliente. Esto brinda flexibilidad para elegir la impresora que mejor se ajuste a',
             'los requerimientos de impresión.',
-           '\nEn cuanto al precio, el valor del equipo es de 1500 dólares o pesos al valor del dólar blue del día.'])
+           '\nEn cuanto al precio, el valor del equipo es de 1900 dólares o pesos al valor del dólar blue del día.'])
                                     
     
 
@@ -289,7 +289,7 @@ const organizadorflow = addKeyword('UNIFILA LED',{sensitive:true})
   'Los invitados podran escanear un codigo QR UNICO para poder visualizar todos los videos del evento *EN EL MOMENTO*',
           '\nLa plataforma controlada por mando a distancia incluye: variador de velocidad, arranque y parada suave, soporte reforzado, Aro de Led, 4 bastones led pixel de 1 mt, led rgb en plataforma, stand para TV (no incluida) y asesoramiento tecnico.',
          '\n*Equipo listo para trabajar*.',
-        'El valor del equipo es de 1500 U$S.' ,
+        'El valor del equipo es de 1700 U$S.' ,
         '▶ REQUERIDO:Necesita contar con un Apple Iphone 13 o suoperior (dispositivo de grabacion)',
   'y un TV LED de 32 o mas (monitoreo)'])
 
@@ -336,7 +336,7 @@ const organizadorflow = addKeyword('UNIFILA LED',{sensitive:true})
   .then(json => dolar = json.venta)
   console.log('VENTA')
   await flowDynamic(`*VALORES*\n   *ESPEJO MAGICO* \n  💵   *U$D 1.900 .-*   🔒 \n 💱 > U$D = AR$ > 💱 \n 📈 AR$ ${new Intl.NumberFormat('es-MX').format(dolar*1900)} .-🔓 `,)
-  await flowDynamic(`\n\n*PLATAFORMA 360*\n  💵   *U$D 1.700 .-*   🔒 \n  💱 > U$D = AR$ > 💱\n  📈 AR$ ${new Intl.NumberFormat('es-MX').format(dolar*1500)} .-🔓`,)
+  await flowDynamic(`\n\n*PLATAFORMA 360*\n  💵   *U$D 1.700 .-*   🔒 \n  💱 > U$D = AR$ > 💱\n  📈 AR$ ${new Intl.NumberFormat('es-MX').format(dolar*1700)} .-🔓`,)
   await flowDynamic(`Cotizacion actual: \n💱[1 U$S = AR ${dolar}.-]💱` ,)
   await flowDynamic( `\n\n*FILA VIP*\n  ORGANIZADORES DE FILA PIXEL\n  🚧 💲💲💲 70 USD  💲💲💲 🥇\n ⛓️⛓️⛓️ ${new Intl.NumberFormat('es-MX').format(dolar*70)}\n ⛓️⛓️⛓️ SOGAS TRENZADA. CAPUCHON\n  ⛓️⛓️⛓️  20 USD ⛓️⛓️⛓️ \n  💲💲💲 ${new Intl.NumberFormat('es-MX').format(dolar*20)}  💲💲💲`)})
 

@@ -17,13 +17,14 @@ class ServerHttp {
         this.port = _port
     }
  chatwootCtrl = async (req, res) => {
-        const body = req.body;
+    const crypto = require('crypto');    
+    const body = req.body;
         const attachments = body?.attachments
         const bot = req.bot;
 
         const numberPayload = body.conversation?.meta?.sender?.additional_attributes.company_name
 console.log("bodyyyyyyy",req.body)
-        const crypto = require('crypto');
+        
 
         //const numberPayload = 573504607650;
         

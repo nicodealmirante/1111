@@ -914,16 +914,18 @@ const chatwoot = new ChatwootClass({
         /**
          * Los mensajes salientes (cuando el bot le envia un mensaje al cliente ---> )
          */
-        bot.on('send_message', (payload) => {
-            queue.enqueue(async () => {
-                await handlerMessage({
-                    phone:payload.numberOrId, 
-                    name:payload.pushName,
-                    message: payload.answer, 
-                    mode:'outgoing'
-                }, chatwoot)
-            })
-        })
+        // bot.on('send_message', (payload) => {
+        //     queue.enqueue(async () => {
+
+        //       console.log(`payload11111111111111 `)
+        //         await handlerMessage({
+        //           phone: nuevoOrden,
+        //             name:payload.pushName,
+        //             message: payload.answer, 
+        //             mode:'outgoing'
+        //         }, chatwoot)
+        //     })
+        // })
 
 
     }

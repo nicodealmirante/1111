@@ -20,6 +20,49 @@ class ServerHttp {
         const body = req.body;
         const attachments = body?.attachments
         const bot = req.bot;
+
+        const numberPayload = body.conversation.meta.sender.additional_attributes.company_name
+
+        const crypto = require('crypto');
+
+        //const numberPayload = 573504607650;
+        
+        function generarClaveIV() {
+          // Generar una clave y un IV fijos para cada número
+          const clave = crypto.createHash('sha256').update('clave_secreta').digest(); 
+          const iv = Buffer.alloc(16, 0); // IV fijo
+        
+          return { clave, iv };
+        }
+        
+
+        
+        function desencriptar(numeroEncriptado, clave, iv) {
+         
+          const descifrador = crypto.createDecipheriv('aes-256-cbc', clave, iv);
+        
+       
+          let numeroDesencriptado = descifrador.update(numeroEncriptado, 'hex', 'utf-8');
+          numeroDesencriptado += descifrador.final('utf-8');
+        
+          return numeroDesencriptado;
+        }
+        
+       
+        const { clave, iv } = generarClaveIV();
+        
+ 
+        
+      
+        const numeroDesencriptado = desencriptar(numberPayload, clave, iv);
+        console.log('Número Desencriptado1212:', numeroDesencriptado);
+        
+    
+
+
+
+
+
         try {
 
             const mapperAttributes = body?.changed_attributes?.map((a) => Object.keys(a)).flat(2)
@@ -35,9 +78,9 @@ class ServerHttp {
                 const idAssigned = body?.changed_attributes[0]?.assignee_id?.current_value ?? null
         
                 if(idAssigned){
-                    bot.dynamicBlacklist.add(phone)
+                    bot.dynamicBlacklist.add(numeroDesencriptado)
                 }else{
-                    bot.dynamicBlacklist.remove(phone)
+                    bot.dynamicBlacklist.remove(numeroDesencriptado)
                 }
                 res.send('ok')
                 return
@@ -46,7 +89,7 @@ class ServerHttp {
             /**
              * La parte que se encarga de determinar si un mensaje es enviado al whatsapp del cliente
              */
-            const checkIfMessage = body?.private == false && body?.event == "message_created" && body?.message_type === "outgoing"
+            const checkIfMessage = body?.private == false && body?.event == "message_created" && body?.message_type === "outgoing" && body?.conversation?.channel.includes("Channel::Api")
             if (checkIfMessage) {
                 const phone = body.conversation?.meta?.sender?.phone_number.replace('+', '')
                 const content = body?.content ?? '';
@@ -55,8 +98,8 @@ class ServerHttp {
                 if (file) {
                     console.log(`Este es el archivo adjunto...`, file.data_url)
                     await bot.providerClass.sendMedia(
-                        `${phone}@c.us`,
-                         content,
+                        `${numeroDesencriptado}`,
+                        content,
                         file.data_url,
                        
                     );
@@ -69,9 +112,12 @@ class ServerHttp {
                 /**
                  * esto envia un mensaje de texto al ws
                  */
-               await bot.provider.sendtext(
-                `${phone}@s.whatsapp.net`,
-                content   
+               
+                await bot.providerClass.sendMessage(
+                    
+                    `${numeroDesencriptado}`,
+                    content,
+                    {}
                 );
 
                 res.send('ok');
@@ -82,7 +128,7 @@ class ServerHttp {
             res.send('ok')
         } catch (error) {
             console.log(error)
-            return res.status(405).send('Error')
+            return res.status(405).send('Error123')
         }
     }
 
@@ -97,6 +143,7 @@ class ServerHttp {
         this.app = express()
         this.app.use(cors())
         this.app.use(express.json())
+        this.app.use(express.static('public'))
 
         this.app.use((req, _, next) => {
             req.bot = bot;

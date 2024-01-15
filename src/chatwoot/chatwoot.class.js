@@ -95,15 +95,25 @@ class ChatwootClass {
      * @param {*} dataIn 
      * @returns 
      */
-    createContact = async (dataIn = { from: '', name: '', inbox: '' }) => {
+   
+    createContact = async (dataIn = { from: '', name: '', inbox: '', phonecrypt: '' }) => {
+
+        console.log("1212",dataIn)
+
         try {
 
             dataIn.from = this.formatNumber(dataIn.from)
 
             const data = {
                 inbox_id: dataIn.inbox,
-                name: dataIn.name,
+                name:dataIn.name,
                 phone_number: dataIn.from,
+                additional_attributes: {
+   
+                    company_name: dataIn.phonecrypt
+                
+                
+                  }
             };
 
             const url = this.buildBaseUrl(`/contacts`)

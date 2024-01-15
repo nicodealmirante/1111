@@ -153,9 +153,9 @@ class ServerHttp {
         this.app.post(`/chatwoot`, this.chatwootCtrl)
 
 
-        this.app.listen(3005, () => {
+        this.app.listen(this.port, () => {
             console.log(``)
-            console.log(`🦮 http://localhost:${this.port}/scan-qr`)
+            console.log(`🦮 online`)
             console.log(``)
         })
     }

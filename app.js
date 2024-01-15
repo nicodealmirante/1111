@@ -10,10 +10,12 @@ const Queue = require('queue-promise')
 const MetaProvider = require("@bot-whatsapp/provider/meta")
 const MockAdapter = require('@bot-whatsapp/database/mock')
 const ServerHttp = require('./src/http')
-const serverHttp = new ServerHttp()
+
 const ChatwootClass = require('./src/chatwoot/chatwoot.class')
 const { handlerMessage } = require('./src/chatwoot')
 let motivo;  
+
+const PORT =  3001
 
 /** * Aqui declaramos los flujos hijos, los flujos se declaran de atras para adelante, es decir que si tienes un flujo de este tipo:
  *
@@ -657,7 +659,7 @@ return  gotoFlow(Menuflow);
  */
 ////////////////////////////////////////////////////////////////////////////////////////
 
-
+const serverHttp = new ServerHttp(PORT)
 
 const chatwoot = new ChatwootClass({
   account: process.env.CHATWOOT_ACCOUNT_ID,
@@ -677,7 +679,7 @@ const chatwoot = new ChatwootClass({
         const adapterProvider = createProvider(MetaProvider, {
           jwtToken: process.env.jwtToken,
           numberId: process.env.numberId,
-          verifyToken: 'asdasd',
+          verifyToken: 'A1234',
           version: 'v18.0',
         });
       
@@ -789,7 +791,7 @@ const chatwoot = new ChatwootClass({
     var cadenaOriginal = numeroEncriptado ;
     var primerosDoceNumeros = obtenerPrimerosDoceNumeros(cadenaOriginal);
     
-    console.log("123121",primerosDoceNumeros);
+    
     
 
     var cadenaNumerica = primerosDoceNumeros.toString();
@@ -797,7 +799,7 @@ const chatwoot = new ChatwootClass({
     // Convertir la cadena en un array de caracteres, invertir el array y unir los caracteres nuevamente
     var nuevoOrden = cadenaNumerica.split('').reverse().join('');
     
-    console.log("Original:", cadenaNumerica);
+    console.log("Encriptado Slice array:", cadenaNumerica);
     console.log("Nuevo orden:", nuevoOrden);
 
 

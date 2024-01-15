@@ -295,7 +295,7 @@ const organizadorflow = addKeyword('UNIFILA LED',{sensitive:true})
         '▶ REQUERIDO:Necesita contar con un Apple Iphone 13 o suoperior (dispositivo de grabacion)',
   'y un TV LED de 32 o mas (monitoreo)'])
 
-  .addAnswer('Selfie Mirror', {media: 'video3.mp4'})
+  // .addAnswer('Selfie Mirror', {media: 'video3.mp4'})
   
   .addAnswer('Formas de pago: efectivo, transferencia/depósito')
 
@@ -313,7 +313,7 @@ const organizadorflow = addKeyword('UNIFILA LED',{sensitive:true})
   '¡Haz que tu negocio brille con nuestros organizadores de fila Pixel LED! 💫✨ #TecnologíaLED #OrganizaciónEfectiva #AtraeClientes\n',
   '*VALORES*\n',
   'https://filavip.ar'])
-  .addAnswer('FILA VIP', {media: 'ledselfie.mp4'})
+  // .addAnswer('FILA VIP', {media: 'ledselfie.mp4'})
   .addAnswer('FOTO FILA VIP', {media: '111.jpg'})
  
 
@@ -321,9 +321,9 @@ const organizadorflow = addKeyword('UNIFILA LED',{sensitive:true})
  
   .addAnswer('Selfie Mirror 360 + Selfie',{media: 'dibu.jpg'})
 
-  .addAnswer('Showroom', {media: 'video.mp4', delay: 4000})
-  .addAnswer('Selfie Mirror', {media: 'video2.mp4'})
-  .addAnswer('Captura 360', {media: 'video360.mp4', delay: 2000},)
+  // .addAnswer('Showroom', {media: 'video.mp4', delay: 4000})
+  // .addAnswer('Selfie Mirror', {media: 'video2.mp4'})
+  // .addAnswer('Captura 360', {media: 'video360.mp4', delay: 2000},)
   .addAnswer('UNIFILAS FOTO',{
     media: 'colum1.jpg', delay: 3000})
     .addAnswer('UNIFILAS',{

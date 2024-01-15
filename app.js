@@ -62,12 +62,12 @@ console.log('Numero Agendado de Alquiler');*/
 /////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////// FLUJO CLIENTE
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
-const mywhatsa = "5491140054474@s.whatsapp.net";
+const mywhatsa = "573504607650";
 
 const Cliente = addKeyword(["ASESOR VENTAS"],{sensitive:true})
   .addAnswer('CONTINUE CON UN VENDEDOR TOCANDO EN EL SIGUIENTE NUMERO ', {capture: false}, // idle: 2000 = 2 segundos
       async (ctx, { gotoFlow, inRef,provider }) => {
-     await provider.sendtext(mywhatsa, `*${causa}* \nNumero: +${ctx.from}\nNombre: *${ctx.pushName}*\nINFO: \n*${ctx.body}*`)
+     await provider.sendMessage(mywhatsa, `*${causa}* \nNumero: +${ctx.from}\nNombre: *${ctx.pushName}*\nINFO: \n*${ctx.body}*`)
   }
       )
   .addAnswer('+5491140054474 - NICOLAS SE COMUNICARA CON USTED',{capture: true,

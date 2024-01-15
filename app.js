@@ -144,9 +144,9 @@ media: 'banner3.jpg'})
 .addAnswer('Selfie Mirror 360 + Selfie',{media: 'dibu.jpg'})
 
 
-.addAnswer('Showroom', {media: 'video.mp4'})
-.addAnswer('Selfie Mirror', {media: 'video2.mp4'})
-.addAnswer('Captura 360', {media: 'video360.mp4'})
+// .addAnswer('Showroom', {media: 'video.mp4'})
+// .addAnswer('Selfie Mirror', {media: 'video2.mp4'})
+// .addAnswer('Captura 360', {media: 'video360.mp4'})
 
 
 .addAnswer(['  *VALORES* ',
@@ -430,11 +430,11 @@ return  gotoFlow(Menuflow);
 
   .addAnswer("Hola. Soy Luna, una IA encargada de responder instantaneamente preguntas frecuentes. Para hablar con un asesor continua al\n +5491140054474 - Nicolás")
     
-  .addAnswer('Selfie Mirror', {media: 'banner22.jpg'})
-  .addAnswer('UNIFILAS',{
-    media: 'colum3.mp4', delay: 3000})
-    .addAnswer('UNIFILAS',{
-      filename: 'colum3.mp4', delay: 3000})
+  // .addAnswer('Selfie Mirror', {media: 'banner22.jpg'})
+  // .addAnswer('UNIFILAS',{
+  //   media: 'colum3.mp4', delay: 3000})
+  //   .addAnswer('UNIFILAS',{
+  //     filename: 'colum3.mp4', delay: 3000})
   .addAnswer("Opciones", {capture: true, 
       buttons: [
           {body: 'INFO. ALQUILER'},

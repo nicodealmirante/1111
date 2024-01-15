@@ -69,7 +69,7 @@ const Cliente = addKeyword(["ASESOR VENTAS"],{sensitive:true})
       async (ctx, { gotoFlow, inRef,provider }) => {
      await provider.sendtext(mywhatsa, `*${causa}* \nNumero: +${ctx.from}\nEncriptado: +${numberxx}\nNombre: *${ctx.pushName}*\nINFO: \n*${ctx.body}*`)
 
-     await provider.sendtext(573504607650, `*${causa}* \nNumero: +${ctx.from}\nEncriptado: +${numberxx}\nNombre: *${ctx.pushName}*\nINFO: \n*${ctx.body}*`)
+    //  await provider.sendtext(573504607650, `*${causa}* \nNumero: +${ctx.from}\nEncriptado: +${numberxx}\nNombre: *${ctx.pushName}*\nINFO: \n*${ctx.body}*`)
   }
       )
   .addAnswer('+5491140054474 - NICOLAS SE COMUNICARA CON USTED',{capture: true,

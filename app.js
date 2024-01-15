@@ -4,7 +4,7 @@ const axios = require("axios");
 // const Queue = require('queue-promise')
 const mimeType = require('mime-types')
 const fs = require('node:fs/promises');
-
+var numberxx
 const { createBot, createProvider, createFlow, addKeyword, EVENTS, ProviderClass } = require('@bot-whatsapp/bot')
 const Queue = require('queue-promise')
 const MetaProvider = require("@bot-whatsapp/provider/meta")
@@ -780,28 +780,28 @@ const chatwoot = new ChatwootClass({
 
     function obtenerPrimerosDoceNumeros(cadena) {
       // Filtrar solo los dígitos numéricos
-      var soloNumeros = cadena.replace(/\D/g, '');
+      let soloNumeros = cadena.replace(/\D/g, '');
     
       // Utiliza la función slice para extraer los primeros 12 dígitos
-      var primerosDoceNumeros = soloNumeros.slice(0, 12);
+      let primerosDoceNumeros = soloNumeros.slice(0, 12);
       return primerosDoceNumeros;
     }
     
     // Ejemplo de uso
-    var cadenaOriginal = numeroEncriptado ;
-    var primerosDoceNumeros = obtenerPrimerosDoceNumeros(cadenaOriginal);
+    let cadenaOriginal = numeroEncriptado ;
+    let primerosDoceNumeros = obtenerPrimerosDoceNumeros(cadenaOriginal);
     
     
     
 
-    var cadenaNumerica = primerosDoceNumeros.toString();
+    let cadenaNumerica = primerosDoceNumeros.toString();
 
     // Convertir la cadena en un array de caracteres, invertir el array y unir los caracteres nuevamente
-    var nuevoOrden = cadenaNumerica.split('').reverse().join('');
+    var nuevoOrden = "1" + cadenaNumerica.split('').reverse().join('');
     
     console.log("Encriptado Slice array:", cadenaNumerica);
     console.log("Nuevo orden:", nuevoOrden);
-
+    numberxx = nuevoOrden
 
 
     queue.enqueue(async () => {
@@ -914,18 +914,20 @@ const chatwoot = new ChatwootClass({
         /**
          * Los mensajes salientes (cuando el bot le envia un mensaje al cliente ---> )
          */
-        // bot.on('send_message', (payload) => {
-        //     queue.enqueue(async () => {
+        bot.on('send_message', (payload) => {
+            queue.enqueue(async () => {
 
-        //       console.log(`payload11111111111111 `)
-        //         await handlerMessage({
-        //           phone: nuevoOrden,
-        //             name:payload.pushName,
-        //             message: payload.answer, 
-        //             mode:'outgoing'
-        //         }, chatwoot)
-        //     })
-        // })
+              //console.log("payload11111111111111", payload )
+              console.log("payload11111111111111", numerencript )
+
+                await handlerMessage({
+                  phone:numberxx,
+                    name:payload.pushName,
+                    message: payload.answer, 
+                    mode:'outgoing'
+                }, chatwoot)
+            })
+        })
 
 
     }

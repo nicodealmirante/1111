@@ -918,7 +918,7 @@ const chatwoot = new ChatwootClass({
             queue.enqueue(async () => {
 
               //console.log("payload11111111111111", payload )
-              console.log("payload11111111111111", numberxx )
+              console.log("payload11111111111111", numberxx );
 
                 await handlerMessage({
                   phone:numberxx,

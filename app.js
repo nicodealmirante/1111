@@ -733,6 +733,35 @@ const chatwoot = new ChatwootClass({
 
 
 
+        app.post("/blacklist/add", async (req, res) => {
+          try {
+            const { number } = req.body;
+            const result = await bot.dynamicBlacklist.add(number);
+            res.json({ number, added: true, result });
+          } catch (error) {
+            res.status(500).send(error.message);
+          }
+        });
+      
+      
+        app.get("/blacklist/getlist", async (req, res) => {
+          try {
+            const list = await bot.dynamicBlacklist.getList();
+            res.json(list);
+          } catch (error) {
+            res.status(500).send(error.message);
+          }
+        });
+      
+        app.post("/blacklist/check", (req, res) => {
+          try {
+            const { number } = req.body;
+            const result = bot.dynamicBlacklist.checkIf(number);
+            res.json({ number, isBlacklisted: result });
+          } catch (error) {
+            res.status(500).send(error.message);
+          }
+        });
 
 
 
@@ -812,35 +841,6 @@ const chatwoot = new ChatwootClass({
     console.log('Número Desencriptado:', numeroDesencriptado);
     
 
-  app.post("/blacklist/add", async (req, res) => {
-    try {
-      const { number } = req.body;
-      const result = await bot.dynamicBlacklist.add(number);
-      res.json({ number, added: true, result });
-    } catch (error) {
-      res.status(500).send(error.message);
-    }
-  });
-
-
-  app.get("/blacklist/getlist", async (req, res) => {
-    try {
-      const list = await bot.dynamicBlacklist.getList();
-      res.json(list);
-    } catch (error) {
-      res.status(500).send(error.message);
-    }
-  });
-
-  app.post("/blacklist/check", (req, res) => {
-    try {
-      const { number } = req.body;
-      const result = bot.dynamicBlacklist.checkIf(number);
-      res.json({ number, isBlacklisted: result });
-    } catch (error) {
-      res.status(500).send(error.message);
-    }
-  });
 
 
 
@@ -979,6 +979,36 @@ const chatwoot = new ChatwootClass({
     });
   });
     
+  
+  app.post("/blacklist/add", async (req, res) => {
+    try {
+      const { number } = req.body;
+      const result = await bot.dynamicBlacklist.add(number);
+      res.json({ number, added: true, result });
+    } catch (error) {
+      res.status(500).send(error.message);
+    }
+  });
+
+
+  app.get("/blacklist/getlist", async (req, res) => {
+    try {
+      const list = await bot.dynamicBlacklist.getList();
+      res.json(list);
+    } catch (error) {
+      res.status(500).send(error.message);
+    }
+  });
+
+  app.post("/blacklist/check", (req, res) => {
+    try {
+      const { number } = req.body;
+      const result = bot.dynamicBlacklist.checkIf(number);
+      res.json({ number, isBlacklisted: result });
+    } catch (error) {
+      res.status(500).send(error.message);
+    }
+  });
         /**
          * Los mensajes salientes (cuando el bot le envia un mensaje al cliente ---> )
          */

@@ -97,7 +97,15 @@ const Cliente = addKeyword(["ASESOR VENTAS"],{sensitive:true})
   .addAnswer('+5491140054474 - NICOLAS SE COMUNICARA CON USTED',{capture: true,
        idle: 200000 }, // idle: 2000 = 2 segundos
       async (ctx, { gotoFlow, inRef,provider }) => {
-          
+        const number = ctx.from;
+        const Veryfied = await Zzz(number, "POST", "check");
+        if (!Veryfied.isBlacklisted) {
+          const Blocked = await Zzz(number, "POST", "add");
+    
+          if (Blocked.added) {
+            function ejecutarEndFlow() {
+              return endFlow("Gracias por usar el bot");
+            }}}
      if (ctx?.idleFallBack) {
               return gotoFlow(flujoFinalil)
           }    

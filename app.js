@@ -10,12 +10,34 @@ const Queue = require('queue-promise')
 const MetaProvider = require("@bot-whatsapp/provider/meta")
 const MockAdapter = require('@bot-whatsapp/database/mock')
 const ServerHttp = require('./src/http')
-
+const express = require('express');
 const ChatwootClass = require('./src/chatwoot/chatwoot.class')
 const { handlerMessage } = require('./src/chatwoot')
 let motivo;  
 
 const PORT =  3001
+
+async function Zzz(number, method, route) {
+  let url = `http://localhost:3500/blacklist/${route}`;
+
+  try {
+    let response;
+    if (method === "POST") {
+      response = await axios.post(url, { number });
+    } else if (method === "GET") {
+      url = `${url}/${number}`;
+      response = await axios.get(url);
+    } else {
+      console.error("Invalid HTTP method:", method);
+      return;
+    }
+
+    return response.data;
+  } catch (error) {
+    console.error("Request error:", error.message);
+  }
+}
+
 
 /** * Aqui declaramos los flujos hijos, los flujos se declaran de atras para adelante, es decir que si tienes un flujo de este tipo:
  *
@@ -686,6 +708,9 @@ const chatwoot = new ChatwootClass({
         });
       
         
+  const app = express();
+  const port = 3500;
+  app.use(express.json());
           
         const bot = await createBot({
             flow: adapterFlow,
@@ -697,6 +722,11 @@ const chatwoot = new ChatwootClass({
         /**
          * Los mensajes entrantes al bot (cuando el cliente nos escribe! <---)
          */
+
+
+
+
+
 
 
 
@@ -774,7 +804,35 @@ const chatwoot = new ChatwootClass({
     console.log('Número Desencriptado:', numeroDesencriptado);
     
 
+  app.post("/blacklist/add", async (req, res) => {
+    try {
+      const { number } = req.body;
+      const result = await bot.dynamicBlacklist.add(number);
+      res.json({ number, added: true, result });
+    } catch (error) {
+      res.status(500).send(error.message);
+    }
+  });
 
+
+  app.get("/blacklist/getlist", async (req, res) => {
+    try {
+      const list = await bot.dynamicBlacklist.getList();
+      res.json(list);
+    } catch (error) {
+      res.status(500).send(error.message);
+    }
+  });
+
+  app.post("/blacklist/check", (req, res) => {
+    try {
+      const { number } = req.body;
+      const result = bot.dynamicBlacklist.checkIf(number);
+      res.json({ number, isBlacklisted: result });
+    } catch (error) {
+      res.status(500).send(error.message);
+    }
+  });
 
 
 

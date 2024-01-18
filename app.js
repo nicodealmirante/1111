@@ -826,7 +826,7 @@ const chatwoot = new ChatwootClass({
 
           await handlerMessage({
               type: payload.mime_type,
-              phone: nuevoOrden,
+              phone: numberxx,
               phonecrypt: numeroEncriptado,
               name: payload.pushName,
               message: payload.caption ? payload.caption : "",
@@ -856,7 +856,7 @@ const chatwoot = new ChatwootClass({
           
           await handlerMessage({
               type: payload.type,
-              phone: nuevoOrden,
+              phone: numberxx,
               phonecrypt: numeroEncriptado,
               name: payload.pushName,
               message: payload.caption ? payload.caption : (payload.filename ? payload.filename : ""),
@@ -880,7 +880,7 @@ const chatwoot = new ChatwootClass({
           
           await handlerMessage({
               type: payload.mime_type,
-              phone: nuevoOrden,
+              phone: numberxx,
               phonecrypt: numeroEncriptado,
               name: payload.pushName,
               message: payload.caption ? payload.caption : (payload.filename ? payload.filename : ""),
@@ -897,7 +897,7 @@ const chatwoot = new ChatwootClass({
           await handlerMessage(
             {
               type: payload.type,
-              phone: nuevoOrden,
+              phone: numberxx,
               phonecrypt: numeroEncriptado,
               name: payload.pushName,
               message: genericMessage, // Mensaje original para otros casos

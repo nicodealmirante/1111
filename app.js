@@ -374,6 +374,12 @@ const organizadorflow = addKeyword('UNIFILA LED',{sensitive:true})
   await flowDynamic(`Cotizacion actual: \n💱[1 U$S = AR ${dolar}.-]💱` ,)
   await flowDynamic( `\n\n*FILA VIP*\n  ORGANIZADORES DE FILA PIXEL\n  🚧 💲💲💲 70 USD  💲💲💲 🥇\n ⛓️⛓️⛓️ ${new Intl.NumberFormat('es-MX').format(dolar*70)}\n ⛓️⛓️⛓️ SOGAS TRENZADA. CAPUCHON\n  ⛓️⛓️⛓️  20 USD ⛓️⛓️⛓️ \n  💲💲💲 ${new Intl.NumberFormat('es-MX').format(dolar*20)}  💲💲💲`)})
 
+  await flowDynamic([
+                  {
+                      body:'PDF',
+      media:"pdf_file.pdf"
+                  }
+              ])
 .addAnswer("Opciones", {capture: true, 
   buttons: [
       {body: 'INFO. ALQUILER'},
@@ -771,17 +777,21 @@ const chatwoot = new ChatwootClass({
   const downloadMediaMessage = async (ctx) => {
       console.log("qqqqqqqqqqqq",ctx)
       try {
-          const response = await axios.get(ctx.url, {
-              responseType: 'arraybuffer',
-              headers: {
-                  'Authorization': `Bearer ${process.env.jwtToken}`
-              }
-          });
-          return Buffer.from(response.data, 'binary');
-      } catch (error) {
-          console.error(`Error al descargar el medio: ${error}`);
-          throw error;
-      }
+        const response = await axios.get(url, {
+            headers: {
+                Authorization:
+                    `Bearer `, //Aqui va tu Token
+            },
+            maxBodyLength: Infinity,
+            responseType: 'arraybuffer', // Especificamos que queremos obtener el buffer de la imagen o video etc..
+        });
+
+        return response.data // Esto retorna el buffer de la imagen
+    } catch (error) {
+        console.log(error);
+    }
+
+
   };
 
 

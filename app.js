@@ -469,8 +469,6 @@ return  gotoFlow(Menuflow);
   .addAnswer("Hola. Soy Luna, una IA encargada de responder instantaneamente preguntas frecuentes. Para hablar con un asesor continua al\n +5491140054474 - Nicolás")
     
   .addAnswer('Selfie Mirror', {media: 'banner22.jpg'})
-  .addAnswer('UNIFILAS',{
-    media: 'colum3.mp4', delay: 3000})
     .addAnswer('UNIFILAS',{
       filename: 'colum3.mp4', delay: 3000})
   .addAnswer("Opciones", {capture: true, 

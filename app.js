@@ -377,7 +377,7 @@ const organizadorflow = addKeyword('UNIFILA LED',{sensitive:true})
   await flowDynamic([
                   {
                       body:'PDF',
-      media:"pdf_file.pdf"
+      media:"FichaTécnicaFULL.pdf"
                   }
               ])
 .addAnswer("Opciones", {capture: true, 

@@ -6,7 +6,7 @@
   "scripts": {
     "pre-copy": "cd .. && npm run  copy.lib base-meta-memory",
     "copy-image": "node copyImage.js",
-    "start": "nodemon app.js",
+    "start": "node app.js",
     "dev": "nodemon app.js"
   },
   "keywords": [],

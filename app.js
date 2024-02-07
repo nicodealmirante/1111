@@ -380,6 +380,8 @@ const organizadorflow = addKeyword('UNIFILA LED',{sensitive:true})
       media:"FichaTécnicaFULL.pdf"
                   }
               ])
+
+})
 .addAnswer("Opciones", {capture: true, 
   buttons: [
       {body: 'INFO. ALQUILER'},
@@ -396,8 +398,6 @@ const organizadorflow = addKeyword('UNIFILA LED',{sensitive:true})
         }
     }
     )
-})
-
 
 //////////////////////////////////////////////////////////////// EVENTO WELCOME
 /** .addAnswer("*CONTINUAR*", { 

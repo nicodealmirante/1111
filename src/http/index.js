@@ -23,7 +23,7 @@ class ServerHttp {
         const bot = req.bot;
 
         const numberPayload = body.conversation?.meta?.sender?.additional_attributes.company_name
-console.log("bodyyyyyyy",req.body)
+//console.log("bodyyyyyyy",req.body)
         
 
         //const numberPayload = 573504607650;

@@ -72,7 +72,7 @@ const Cliente = addKeyword(["ASESOR VENTAS"],{sensitive:true})
     //  await provider.sendtext(573504607650, `*${causa}* \nNumero: +${ctx.from}\nEncriptado: +${numberxx}\nNombre: *${ctx.pushName}*\nINFO: \n*${ctx.body}*`)
   }
       )
-  .addAnswer('+5491140054474 - NICOLAS SE COMUNICARA CON USTED',{capture: true,
+  .addAnswer(`+5491140054474 - NICOLAS SE COMUNICARA CON USTED.${ctx.from}`,{capture: true,
        idle: 200000 }, // idle: 2000 = 2 segundos
       async (ctx, { gotoFlow, inRef,provider }) => {
           

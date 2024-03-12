@@ -66,13 +66,13 @@ const mywhatsa = "5491140054474@s.whatsapp.net";
 
 const Cliente = addKeyword(["ASESOR VENTAS"],{sensitive:true})
   .addAnswer('CONTINUE CON UN VENDEDOR TOCANDO EN EL SIGUIENTE NUMERO ', {capture: false}, // idle: 2000 = 2 segundos
-      async (ctx, { gotoFlow, inRef,provider,flowDynamic }) => {
-        await providerClass.sendMessage(mywhatsa, `*${causa}* \nNumero: +${ctx.from}\nEncriptado: +${numberxx}\nNombre: *${ctx.pushName}*\nINFO: \n*${ctx.body}*`)
-await flowDynamic(ctx.from)
+      async (ctx, { gotoFlow, inRef,provider }) => {
+     await provider.sendtext(mywhatsa, `*${causa}* \nNumero: +${ctx.from}\nEncriptado: +${numberxx}\nNombre: *${ctx.pushName}*\nINFO: \n*${ctx.body}*`)
+
     //  await provider.sendtext(573504607650, `*${causa}* \nNumero: +${ctx.from}\nEncriptado: +${numberxx}\nNombre: *${ctx.pushName}*\nINFO: \n*${ctx.body}*`)
   }
       )
-  .addAnswer('+5491140054474 - NICOLAS SE COMUNICARA CON USTED.',{capture: true,
+  .addAnswer(`+5491140054474 - NICOLAS SE COMUNICARA CON USTED.${ctx.from}`,{capture: true,
        idle: 200000 }, // idle: 2000 = 2 segundos
       async (ctx, { gotoFlow, inRef,provider }) => {
           
@@ -330,7 +330,12 @@ const organizadorflow = addKeyword('UNIFILA LED',{sensitive:true})
     media: 'colum1.jpg', delay: 3000})
     .addAnswer('UNIFILAS',{
       media: 'colum2.mp4', delay: 3000})
-    
+      .addAnswer('UNIFILAS',
+        {
+            body:'PDF',
+media:"FichaTecnicaFULL.pdf"
+        })
+  
         .addAnswer('Selfie Mirror',{
           media: 'colum4.mp4', delay: 3000})
   .addAnswer('✈️ *Enviamos a todo el País*.', { capture: false }, async (ctx, { flowDynamic,gotoFlow, endFlow }) => {
@@ -344,12 +349,7 @@ const organizadorflow = addKeyword('UNIFILA LED',{sensitive:true})
   await flowDynamic(`Cotizacion actual: \n💱[1 U$S = AR ${dolar}.-]💱` ,)
   await flowDynamic( `\n\n*FILA VIP*\n  ORGANIZADORES DE FILA PIXEL\n  🚧 💲💲💲 70 USD  💲💲💲 🥇\n ⛓️ ${new Intl.NumberFormat('es-MX').format(dolar*70)}\n  SOGAS TRENZADA\n  💲💲💲  20 USD 💲💲💲 \n  ⛓️ ${new Intl.NumberFormat('es-MX').format(dolar*20)} ⛓️ `)
   
-  await flowDynamic([
-                  {
-                      body:'PDF',
-      media:"FichaTécnicaFULL.pdf"
-                  }
-              ])
+
 
 })
 .addAnswer("Opciones", {capture: true, 
@@ -924,12 +924,15 @@ const chatwoot = new ChatwootClass({
             queue.enqueue(async () => {
 
               //console.log("payload11111111111111", payload )
-              console.log("payload11111111111111", numberxx );
+              console.log("payload11111111111111", payload );
 
                 await handlerMessage({
-                  phone:numberxx,
-                    name:payload.pushName,
-                    message: payload.answer, 
+                  type: payload.type,
+                  phone: nuevoOrden,
+                  phonecrypt: numeroEncriptado,
+                  name: payload.pushName,
+                  message: genericMessage, // Mensaje original para otros casos
+                  attachment,
                     mode:'outgoing'
                 }, chatwoot)
             })

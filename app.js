@@ -330,7 +330,7 @@ const organizadorflow = addKeyword('UNIFILA LED',{sensitive:true})
     media: 'colum1.jpg', delay: 3000})
     .addAnswer('UNIFILAS',{
       media: 'colum2.mp4', delay: 3000})
-      .addAnswer('UNIFILAS',
+      .addAnswer('FICHA TECNICA',
         {
             body:'PDF',
 media:"FichaTecnicaFULL.pdf"

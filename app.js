@@ -17,7 +17,7 @@ let motivo;
 
 const PORT =  3001
 
-async function Zzz(number, method, route) {
+/**async function Zzz(number, method, route) {
   let url = `http://localhost:3500/blacklist/${route}`;
 
   try {
@@ -37,8 +37,7 @@ async function Zzz(number, method, route) {
     console.error("Request error:", error.message);
   }
 }
-
-
+ */
 /** * Aqui declaramos los flujos hijos, los flujos se declaran de atras para adelante, es decir que si tienes un flujo de este tipo:
  *
  *          Menu Principal
@@ -98,14 +97,14 @@ const Cliente = addKeyword(["ASESOR VENTAS"],{sensitive:true})
        idle: 200000 }, // idle: 2000 = 2 segundos
       async (ctx, { gotoFlow, inRef,provider }) => {
         const number = ctx.from;
-        const Veryfied = await Zzz(number, "POST", "check");
+   /**    const Veryfied = await Zzz(number, "POST", "check");
         if (!Veryfied.isBlacklisted) {
           const Blocked = await Zzz(number, "POST", "add");
     
           if (Blocked.added) {
             function ejecutarEndFlow() {
               return endFlow("Gracias por usar el bot");
-            }}}
+            }}} */
      if (ctx?.idleFallBack) {
               return gotoFlow(flujoFinalil)
           }    
@@ -738,7 +737,7 @@ const chatwoot = new ChatwootClass({
          */
 
 
-
+/** 
         app.post("/blacklist/add", async (req, res) => {
           try {
             const { number } = req.body;
@@ -771,7 +770,7 @@ const chatwoot = new ChatwootClass({
 
 
 
-
+*/
 
     
   const downloadMediaMessage = async (ctx) => {

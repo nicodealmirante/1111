@@ -68,7 +68,7 @@ const Cliente = addKeyword(["ASESOR VENTAS"],{sensitive:true})
   .addAnswer('Entendido ', {capture: false}, // idle: 2000 = 2 segundos
       async (ctx, { gotoFlow, inRef,provider,flowDynamic }) => {
      await provider.sendtext(mywhatsa, `*${causa}* \nNumero: +${ctx.from}\nEncriptado: +${numberxx}\nNombre: *${ctx.pushName}*\nINFO: \n*${ctx.body}*`)
-     await flowDynamic(ctx.from)
+  
     //  await provider.sendtext(573504607650, `*${causa}* \nNumero: +${ctx.from}\nEncriptado: +${numberxx}\nNombre: *${ctx.pushName}*\nINFO: \n*${ctx.body}*`)
   }
       )
@@ -438,7 +438,7 @@ return  gotoFlow(Menuflow);
 
   const flowPrincipal = addKeyword(EVENTS.WELCOME)
 
-  .addAnswer("Hola. Soy Luna, una IA encargada de responder instantaneamente preguntas frecuentes. Para hablar con un asesor continua al\n +5491140054474 - Nicolás")
+  .addAnswer("Hola. Soy Luna, una IA encargada de responder instantaneamente preguntas frecuentes. Para hablar con un asesor humano toque el boton correspondiente."")
     
   .addAnswer('Selfie Mirror', {media: 'banner22.jpg'})
     .addAnswer('UNIFILAS',{

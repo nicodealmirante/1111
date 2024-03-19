@@ -314,60 +314,10 @@ const queue = new Queue({
     interval: 500
 });
 
-// Función para descargar archivos adjuntos de los mensajes
-const downloadMediaMessage = async (ctx) => {
-    try {
-        const response = await axios.get(ctx.url, {
-            responseType: 'arraybuffer',
-            headers: {
-                'Authorization': `Bearer ${process.env.jwtToken}`
-            }
-        });
-        return Buffer.from(response.data, 'binary');
-    } catch (error) {
-        console.error(`Error al descargar el medio: ${error}`);
-        throw error;
-    }
-};
-
-// Función para manejar mensajes entrantes del proveedor
-const handleIncomingMessage = async (payload) => {
-    // Tu lógica de manejo de mensajes entrantes aquí
-    console.log("payload", payload);
-    // Más lógica...
-};
-
-// Función para manejar mensajes salientes del bot
-const handleOutgoingMessage = async (payload) => {
-    // Tu lógica de manejo de mensajes salientes aquí
-    console.log("payload11111111111111", payload);
-    // Más lógica...
-};
-
-// Evento para manejar mensajes entrantes del proveedor
-adapterProvider.on("message", async (payload) => {
-    try {
-        // Tu lógica de manejo de mensajes entrantes aquí
-        await handleIncomingMessage(payload);
-    } catch (err) {
-        console.log("Error al manejar mensaje entrante:", err);
-    }
-});
-
-// Evento para manejar mensajes salientes del bot
-bot.on('send_message', async (payload) => {
-    try {
-        // Tu lógica de manejo de mensajes salientes aquí
-        await handleOutgoingMessage(payload);
-    } catch (err) {
-        console.log("Error al manejar mensaje saliente:", err);
-    }
-});
-
-// Función principal
 const main = async () => {
     const adapterDB = new MockAdapter();
     const adapterFlow = createFlow([flowPrincipal, flowVenta, flowsAlquiler, Menuflow, Cliente]);
+
     const adapterProvider = createProvider(MetaProvider, {
         jwtToken: process.env.jwtToken,
         numberId: process.env.numberId,
@@ -382,8 +332,173 @@ const main = async () => {
     });
 
     serverHttp.initialization(bot);
+
+    const downloadMediaMessage = async (ctx) => {
+        console.log("qqqqqqqqqqqq",ctx)
+        try {
+            const response = await axios.get(ctx.url, {
+                responseType: 'arraybuffer',
+                headers: {
+                    'Authorization': `Bearer ${process.env.jwtToken}`
+                }
+            });
+            return Buffer.from(response.data, 'binary');
+        } catch (error) {
+            console.error(`Error al descargar el medio: ${error}`);
+            throw error;
+        }
+    };
+
+    adapterProvider.on("message", async (payload) => {
+        console.log("payload", payload);
+
+        const numberPayload = payload.from
+
+        const crypto = require('crypto');
+
+        function generarClaveIV() {
+            const clave = crypto.createHash('sha256').update('clave_secreta').digest();
+            const iv = Buffer.alloc(16, 0);
+            return { clave, iv };
+        }
+
+        function encriptar(numero, clave, iv) {
+            const numeroStr = numero.toString();
+            const cifrador = crypto.createCipheriv('aes-256-cbc', clave, iv);
+            let numeroEncriptado = cifrador.update(numeroStr, 'utf-8', 'hex');
+            numeroEncriptado += cifrador.final('hex');
+            return numeroEncriptado;
+        }
+
+        function desencriptar(numeroEncriptado, clave, iv) {
+            const descifrador = crypto.createDecipheriv('aes-256-cbc', clave, iv);
+            let numeroDesencriptado = descifrador.update(numeroEncriptado, 'hex', 'utf-8');
+            numeroDesencriptado += descifrador.final('utf-8');
+            return numeroDesencriptado;
+        }
+
+        const { clave, iv } = generarClaveIV();
+        const numeroEncriptado = encriptar(numberPayload, clave, iv);
+        console.log('Número Encriptado123:', numeroEncriptado);
+
+        const numeroDesencriptado = desencriptar(numeroEncriptado, clave, iv);
+        console.log('Número Desencriptado:', numeroDesencriptado);
+
+        function obtenerPrimerosDoceNumeros(cadena) {
+            let soloNumeros = cadena.replace(/\D/g, '');
+            let primerosDoceNumeros = soloNumeros.slice(0, 12);
+            return primerosDoceNumeros;
+        }
+
+        let cadenaOriginal = numeroEncriptado ;
+        let primerosDoceNumeros = obtenerPrimerosDoceNumeros(cadenaOriginal);
+
+        let cadenaNumerica = primerosDoceNumeros.toString();
+        var nuevoOrden = "1" + cadenaNumerica.split('').reverse().join('');
+        console.log("Encriptado Slice array:", cadenaNumerica);
+        console.log("Nuevo orden:", nuevoOrden);
+        numberxx = nuevoOrden
+
+        queue.enqueue(async () => {
+            try {
+                const attachment = [];
+
+                if (payload?.body.includes("_event_media_")) {
+                    const mime_type = payload.mime_type;
+                    const ext = mimeType.extension(`${mime_type}`);
+                    const buffer = await downloadMediaMessage(payload, "buffer");
+                    const fileName = `file-${Date.now()}.${ext}`;
+                    const pathFile = `${process.cwd()}/public/${fileName}`;
+                    await fs.writeFile(pathFile, buffer);
+                    attachment.push(pathFile);
+
+                    await handlerMessage({
+                        type: payload.mime_type,
+                        phone: nuevoOrden,
+                        phonecrypt: numeroEncriptado,
+                        name: payload.pushName,
+                        message: payload.caption ? payload.caption : "",
+                        attachment,
+                        mode: 'incoming'
+                    }, chatwoot)
+                } else if (payload?.body.includes("_event_document_")) {
+                    function obtenerExtension(nombreArchivo) {
+                        return nombreArchivo.split(".").pop();
+                    }
+
+                    const mime_type = payload.mime_type;
+                    const nombre = payload.filename;
+                    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",nombre);
+                    ext = obtenerExtension(nombre);
+
+                    buffer = await downloadMediaMessage(payload, "buffer");
+
+                    const fileName = `file-${Date.now()}.${ext}`;
+                    const pathFile = `${process.cwd()}/public/${fileName}`;
+                    await fs.writeFile(pathFile, buffer);
+                    attachment.push(pathFile);
+
+                    await handlerMessage({
+                        type: payload.type,
+                        phone: nuevoOrden,
+                        phonecrypt: numeroEncriptado,
+                        name: payload.pushName,
+                        message: payload.caption ? payload.caption : (payload.filename ? payload.filename : ""),
+                        attachment,
+                        mode: 'incoming'
+                    }, chatwoot)
+                } else if (payload?.body.includes("_event_audio_")) {
+                    const mime_type = payload.mime_type;
+                    const ext = mimeType.extension(`${mime_type}`);
+                    buffer = await downloadMediaMessage(payload, "buffer");
+                    const fileName = `file-${Date.now()}.${ext}`;
+                    const pathFile = `${process.cwd()}/public/${fileName}`;
+                    await fs.writeFile(pathFile, buffer);
+                    attachment.push(pathFile);
+
+                    await handlerMessage({
+                        type: payload.mime_type,
+                        phone: nuevoOrden,
+                        phonecrypt: numeroEncriptado,
+                        name: payload.pushName,
+                        message: payload.caption ? payload.caption : (payload.filename ? payload.filename : ""),
+                        attachment,
+                        mode: 'incoming'
+                    }, chatwoot)
+                } else {
+                    const genericMessage = payload.body;
+                    await handlerMessage(
+                        {
+                            type: payload.type,
+                            phone: nuevoOrden,
+                            phonecrypt: numeroEncriptado,
+                            name: payload.pushName,
+                            message: genericMessage,
+                            attachment,
+                            mode: "incoming",
+                        },
+                        chatwoot
+                    );
+                }
+            } catch (err) {
+                console.log("ERROR123", err);
+            }
+        });
+    });
+
+    bot.on('send_message', (payload) => {
+        queue.enqueue(async () => {
+            console.log("payload11111111111111", numberxx );
+            await handlerMessage({
+                phone:numberxx,
+                name:payload.pushName,
+                message: payload.answer, 
+                mode:'outgoing'
+            }, chatwoot)
+        })
+    })
 };
 
-// Ejecución de la función principal
 main();
+
 

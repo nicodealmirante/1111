@@ -438,7 +438,7 @@ return  gotoFlow(Menuflow);
 
   const flowPrincipal = addKeyword(EVENTS.WELCOME)
 
-  .addAnswer("Hola. Soy Luna, una IA encargada de responder instantaneamente preguntas frecuentes. Para hablar con un asesor humano toque el boton correspondiente."")
+  .addAnswer("Hola. Soy Luna, una IA encargada de responder instantaneamente preguntas frecuentes. Para hablar con un asesor humano toque el boton correspondiente.")
     
   .addAnswer('Selfie Mirror', {media: 'banner22.jpg'})
     .addAnswer('UNIFILAS',{

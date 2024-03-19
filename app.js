@@ -17,46 +17,10 @@ let motivo;
 
 const PORT =  3001
 
-/** * Aqui declaramos los flujos hijos, los flujos se declaran de atras para adelante, es decir que si tienes un flujo de este tipo:
- *
- *          Menu Principal
- *           - SubMenu 1
- *             - Submenu 1.1
- *           - Submenu 2
- *             - Submenu 2.1
- *
- * Primero declaras los submenus 1.1 y 2.1, luego el 1 y 2 y al final el principal.
+
  */
 
 let causa
-
-
-
-
-
-
-////////////////////////////////////////////////////////////////////////////////////////////
-////     FUNCIONES
-/////////////////////////////////////////////////////////////////////////////////////////
-/**
- function numero(nnum){
-let nuevoContenido = `\n${nnum}`;
-  fs.appendFile('numeros.txt', nuevoContenido, (err) => {
-    if (err) throw err;
-    console.log('The "data to append" was appended to file!');
-  });
-          console.log('Numero Agendado de Venta');
-  }
-  function numero2(nnum){
-    let nuevoContenido = `\n${nnum}`;
-fs.appendFile('numerosalquiler.txt', nuevoContenido, (err) => {
-  if (err) throw err;
-  console.log('The "data to append" was appended to file!');
-});
-console.log('Numero Agendado de Alquiler');*/ 
-////////////////////////////////////////////////////////////////////////////////////////
-//////////// FLUJO SPAM //////////
-////////////////////////////////////////////////////////////////////////////////////////////
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -87,18 +51,6 @@ const flujoFinalil = addKeyword('HH').addAnswer('ASESOR RESPONDIENDO A CONTINUAC
 
 
 
-  /** 
-})
-         
-    .addAnswer("ESTE CHAT AUTOMATICO A FINALIZADO. NOS PONDREMOS EN CONTACTO CON USTED", {capture:true, delay:5000}, async (ctx ,{gotoFlow,endFlow,provider,fallBack}) => {
-          if(ctx.body == "SM" ||ctx.body == "Sm" || ctx.body == "sm"){
-               return gotoFlow(Menuflow),
-              endFlow()}
-    const mywhatsa = "5491140054474@s.whatsapp.net";
-    await provider.sendtext(mywhatsa, `SIG MSJ\nNumero: +${ctx.from}\nINFO: *${ctx.body}*`) 
-     return fallBack("Gracias por comunicarse con nosotros. Escriba *SM* para volver al menu inicial")
-  }) 
-*/
 
 //////////////////////////////zx</////////////////////////////////// EVENTO VOICE
 
@@ -187,81 +139,7 @@ media: 'banner3.jpg'})
 
     const flujoFinal = addKeyword('HH').addAnswer('Lo traslado con un agente?')
 
-/* 
-if(ctx.body == 'CONTINUAR CON AGENTE'){
-  return gotoFlow(Cliente)
-} else if(ctx.body == 'VOLVER AL MENU') {
- return gotoFlow(Menuflow)}
-  else if (ctx.body == 'FINALIZAR') {
-   await flowDynamic('GRACIAS POR COMUNICARSE CON NOSOTROS. QUEDAMOS A SUS ORDENES.')
-return endFlow()
-}}
- 
-    let fecha
-    let asd2;
-let asd;
-var res1;
-var res2;
-var total;
- const getTicket = async (donde) => {
 
-    var config = {
-      method: "get",
-      url: `https://maps.googleapis.com/maps/api/distancematrix/json?destinations=${donde.replace(' ','%20')}Argentina&origins=Ramos%20Mejia%20Buenos%20Aires%20Argentina&key=AIzaSyB-o-yLjNarKluwNV8z8IZTDhosOlM1NOw`,
-    };
-    const response = await axios(config)
-    res1 = response.data["destination_addresses"][0]
-    asd2 = response.data["rows"][0]["elements"][0]["duration"].text
-    asd = Math.round(response.data["rows"][0]["elements"][0]["distance"].value/1000)
-total=(((asd*250)/3000)*3000)}
-
- 
-
-const alquila22 = addKeyword('alquilawer',{sensitive:true})  
-
-.addAnswer('Cual es la fecha del evento? Escriba en este formato (DD-MM-AAAA)', {capture: true}, async(ctx,{}) => {fecha=ctx.body})
-.addAnswer('Donde sería el evento? Escriba en este formato (LOCALIDAD - PROVINCIA)', {capture:true}, async (ctx, { endFlow, provider, flowDynamic}) => {
-await getTicket(ctx.body)
-var traslados = `*TRASLADOS*\nDISTANCIA: *${Math.round(asd)}* KM \nTIEMPO: *${asd2}*\nLUGAR: *${res1}*\nVALOR: *$ ${total}*.-\n*`
-
-if((asd)<=200){
-  await flowDynamic(traslados)
-}a
-
-
-
-await flowDynamic('UN AGENTE SE COMUNICARA CON USTED A LA BREVEDAD')
-return endFlow(Menuflow)})
-/////////////////////////////////////////////////////////////////////////////////////////// FLUJO VENTA
-const organizadorflow = addKeyword('UNIFILA LED',{sensitive:true})
-.addAnswer(['¡Optimiza tus espacios y atrae la atención de tus clientes con nuestros organizadores de fila con tecnología Pixel LED!\n',
-'En SELFIE MIRROR, entendemos la importancia de mantener tus espacios organizados y atractivos. Nuestros organizadores de fila no solo te ayudarán a mantener un flujo ordenado de clientes, sino que también añadirán un toque de modernidad y estilo a tu negocio.\n',
-'¿Qué hace que nuestros organizadores de fila con tecnología Pixel LED sean especiales?\n',
-'✨ Iluminación espectacular: Nuestra tecnología Pixel LED ofrece una iluminación vibrante y personalizable que destacará tu marca y creará una experiencia memorable para tus clientes.\n',
-'🧹 Organización efectiva: Mantén tus filas en orden y evita la confusión con nuestros organizadores de alta calidad. ¡El caos será cosa del pasado!\n',
-'🎨 Personalización total: Personaliza la apariencia de tus organizadores para que se adapten a tu imagen corporativa o al tema de tu negocio.\n',
-'🌟 Destaca entre la multitud: Con nuestros organizadores de fila Pixel LED, tu negocio destacará en cualquier entorno, desde eventos, ferias comerciales hasta tiendas minoristas y restaurantes.\n',
-'¡Es el momento de darle a tu negocio una ventaja competitiva!\n',
-'¡Haz que tu negocio brille con nuestros organizadores de fila Pixel LED! 💫✨ #TecnologíaLED #OrganizaciónEfectiva #AtraeClientes\n',
-'*VALORES*\n',
-'https://filavip.ar'])
-.addAnswer('FILA VIP', {media: 'ledselfie.mp4'})
-.addAnswer('FOTO FILA VIP', {media: '111.jpg'})
-.addAction(async (ctx, { gotoFlow,flowDynamic}) => {
-  await  flowDynamic([`*VALOR FILA VIP*\n
-  ORGANIZADORES DE FILA PIXEL\n
-    🚧 NEGRO  ◼️  PLATA 🥈  ORO  🥇 \n
-   AR$ 60.000 ◼️ 85.000 🥈 95.000 🥇\n
-  SOGAS TRENZADA. CAPUCHON\n
-   ⛓️  NEGRO ◼️  PLATA  🥈  ORO  🥇\n
-  AR$ 14.000 ◼️ 15.000 🥈 25.000 🥇\n
-   PACK 4 PIXEL + 2 SOGAS (NEGRO)\n
-  💲💲💲 AR$ 255.000 💲💲💲`])
-  .addAnswer('COMUNIQUESE A ESTE NUMERO PARA HABLAR CON ASESOR +5491140054474')
-
- return gotoFlow(Menuflow)
-}
-)*/ 
 
   const flowVenta = addKeyword(['INFO. VENTA'], { sensitive: true })
   .addAnswer('👌 Te envío la info de Venta.')
@@ -372,65 +250,8 @@ media:"FichaTecnicaFULL.pdf"
     )
 
 //////////////////////////////////////////////////////////////// EVENTO WELCOME
-/** .addAnswer("*CONTINUAR*", { 
-      capture: true,
-      buttons: [
-          {body: 'CONTINUAR CON AGENTE'},
-          {body: 'VOLVER AL MENU'},
-          {body: 'FINALIZAR'},
-      ], delay: 2000
-  }, async (ctx, { endFlow, gotoFlow, provider, flowDynamic}) => {
 
-if (ctx.body == 'CONTINUAR CON AGENTE') {
 
-  await provider.sendtext(mywhatsa, `*VENTA* \nNumero: +${ctx.from}\nNombre: *${ctx.pushName}*\nINFO: \n*${ctx.body}*`)
-await  flowDynamic('UN AGENTE SE COMUNICARA CON USTED A LA BREVEDAD')
-return gotoFlow(Menuflow)
-return endFlow(flowVenta)
-
-} else if (ctx.body == 'VOLVER AL MENU') {
-
- return gotoFlow(Menuflow)
- return endFlow(flowVenta)
-
-  } else if (ctx.body == 'FINALIZAR') {
-  await  flowDynamic('GRACIAS POR COMUNICARSE CON NOSOTROS. QUEDAMOS A SUS ORDENES.')
-return endFlow()
-}}
-)        
-   
-
-.addAnswer("*INFO*", { 
-  capture: true,
-  buttons: [
-      {body: 'INFO. ALQUILER'},
-      {body: 'INFO. VENTA'},
-      {body: 'UNIFILA LED'},
-  ], delay: 5000}
-) .addAnswer("Contacto", { 
-  capture: true,
-  buttons: [
-      {body: 'HABLAR CON ASESOR'},
-      {body: 'INFO DE LA EMPRESA'},
-      {body: 'PAGINA WEB'},
-  ],
-delay: 2000 }, async (ctx, { fallBack, gotoFlow, provider, flowDynamic}) => {
-
-if (ctx.body == 'PAGINA WEB') {
-flowDynamic('https://www.espejoselfiemirror.com.ar')        
-    gotoFlow(Menuflow);
-} else if (ctx.body == 'HABLAR CON ASESOR') {
-nombre = "Cliente"
-return gotoFlow(Cliente)
-} else if (ctx.body == 'INFO DE LA EMPRESA') {
-await flowDynamic('*Av de Mayo 1624  - RAMOS MEJÍA - Buenos Aires*' )
-await flowDynamic('  Nuestros horarios de atención son: de Lunes a Viernes de 10hs a 17hs' )
-
-await flowDynamic('Selfie Mirror', {media: 'video.mp4'})
-
-return  gotoFlow(Menuflow);
-}});
-*/
  //////////////////////////////////////////////////////////////// EVENTO WELCOME
 
 
@@ -461,139 +282,7 @@ return  gotoFlow(Menuflow);
         )
  
 
-    /*
-    .addAnswer("*Contacto*", { 
-      capture: true,
-      buttons: [
-        {body: 'INFO DE LA EMPRESA'},
-          {body: 'PAGINA WEB'},
-      ],
-   delay: 3000 }, async (ctx, { fallBack, gotoFlow, adapterProvider, flowDynamic}) => {
 
-if (ctx.body == 'PAGINA WEB') {
-await flowDynamic('SELFIE MIRROR \nhttps://www.espejoselfiemirror.com.ar')  
-await flowDynamic('FILA VIP \nhttps://filavip.ar')  
-       return gotoFlow(Menuflow);
-} else if (ctx.body == 'HABLAR CON ASESOR') {
-  await flowDynamic('COMUNIQUESE A ESTE NUMERO PARA HABLAR CON ASESOR +5491140054474')
-
-
-} else if (ctx.body == 'INFO DE LA EMPRESA') {
-await flowDynamic('*Av de Mayo 1624  - RAMOS MEJÍA - Buenos Aires*' )
-await flowDynamic('  Nuestros horarios de atención son: de Lunes a Viernes de 10hs a 17hs' )
-
-await flowDynamic('Selfie Mirror', {media: 'video.mp4'})
-
-return  gotoFlow(Menuflow);
-}});
-          
-    
- /**   {capture: true},async (ctx, {provider}) => {
-
-curl 'https://graph.facebook.com/v18.0/106540352242922/messages' \
--H 'Content-Type: application/json' \
--H 'Authorization: Bearer EAAJB...' \
--d '{
-    "messaging_product": "whatsapp",
-    "recipient_type": "individual",
-    "to": "+16505555555",
-    "type": "interactive",
-    "interactive": {
-        "type": "cta_url",
-        "header": {
-            "text": "Available Dates"
-        },
-        "body": {
-            "text": "Tap the button below to see available dates."
-        },
-        "footer": {
-            "text": "Dates subject to change."
-        },
-        "action": {
-            "name": "cta_url",
-            "parameters": {
-                "display_text": "See Dates",
-                "url": "https://www.luckyshrub.com?clickID=kqDGWd24Q5TRwoEQTICY7W1JKoXvaZOXWAS7h1P76s0R7Paec4"
-            }
-        }
-    }
-}'
-
-
-
-  
-            const headerText = 'MENU'
-            const bodyText = 'Informacion y Precios'
-            const footerText = 'Seleccione'
-            const buttonList = 'Lista'
-            const listParams = [
-                {
-                   "action": {
-            "name": "cta_url",
-            "parameters": {
-                "display_text": "See Dates",
-                "url": "https://www.luckyshrub.com?clickID=kqDGWd24Q5TRwoEQTICY7W1JKoXvaZOXWAS7h1P76s0R7Paec4"
-            }
-                        {
-                            id: 'ID_2',
-                            title: 'FilaVip',
-                            description: 'Organizadores de fila LED'
-                        },
-                        {
-                            id: 'ID_3',
-                            title: 'Plataforma 360 Super Slow',
-                            description: 'Plataforma con camara giratoraia'
-                        }
-                    ]
-                },
-                {
-                    title: 'ALQUILER',
-                    rows: [
-                        {
-                            id: 'ID_1',
-                            title: 'Selfie Mirror',
-                            description: 'Espejo Magico'
-                        },
-                        {
-                            id: 'ID_2',
-                            title: 'Plataforma 360 Super Slow',
-                            description: 'Plataforma con camara giratoraia'
-         } ] },
-                        {
-                          title: 'Empresa',
-                          rows: [
-                              {
-                                  id: 'ID_1',
-                                  title: 'Ubicacion',
-                                  description: 'Ubicacion y Horarios'
-                              },
-                              {
-                                  id: 'ID_2',
-                                  title: 'Sitio Web',
-                                  description: 'Paginas de productos'
-                              }
-                  
-                    ]
-                }
-  
-            const headerText = 'MENU'
-            const bodyText = 'Informacion y Precios'
-            const footerText = 'Seleccione'
-            const buttonList = 'Lista'
-            const listParams = [
-                {
-                   "action": {
-            "name": "cta_url",
-            "parameters": {
-                "display_text": "See Dates",
-                "url": "https://www.luckyshrub.com?clickID=kqDGWd24Q5TRwoEQTICY7W1JKoXvaZOXWAS7h1P76s0R7Paec4"
-            }
-            ]
-            await provider.sendList(ctx.from, headerText, bodyText, footerText, buttonList ,listParams)
-        }
-        
-
-*/
 
   /////////////////////////////////////////////////////////////////////////  FLUJO MENU
   
@@ -608,339 +297,93 @@ curl 'https://graph.facebook.com/v18.0/106540352242922/messages' \
             ],
           }
 ) 
-/*
-.addAnswer("*CONTACTO*", { 
-  capture: true,
-  buttons: [
-      {body: 'HABLAR CON ASESOR'},
-      {body: 'INFO DE LA EMPRESA'},
-      {body: 'adadsdd', url: "https://wa.me/541166704322"},
-  ],
-delay: 2000 }, async (ctx, { fallBack, gotoFlow, provider, flowDynamic}) => {
-if (ctx.body == 'PAGINA WEB') {
-  await flowDynamic('SELFIE MIRROR \nhttps://www.espejoselfiemirror.com.ar')  
-  await flowDynamic('FILA VIP \nhttps://filavip.ar')  
-    gotoFlow(Menuflow);
-} else if (ctx.body == 'HABLAR CON ASESOR') {
-nombre = "Cliente"
-return gotoFlow(Cliente)
-} else if (ctx.body == 'INFO DE LA EMPRESA') {
-await flowDynamic('*Av de Mayo 1624  - RAMOS MEJÍA - Buenos Aires*' )
-await flowDynamic('  Nuestros horarios de atención son: de Lunes a Viernes de 10hs a 17hs' )
 
-await flowDynamic('Selfie Mirror', {media: 'video.mp4'})
-
-return  gotoFlow(Menuflow);
-}   })
-
-
-  const Menuflow2 = addKeyword(["me-?nu"], { sensitive: true })
-
-  
-     .addAnswer("Menu", { 
-                      capture: true,
-                      buttons: [
-                          {body: 'HABLAR CON ASESOR'},
-                          {body: 'INFO DE LA EMPRESA'},
-                          {body: 'PAGINA WEB'},
-                      ],
-                   delay: 2000 }, async (ctx, { gotoFlow, provider, flowDynamic}) => {
-              
-              if (ctx.body == 'PAGINA WEB') {
-                await flowDynamic('SELFIE MIRROR \nhttps://www.espejoselfiemirror.com.ar')  
-
-                await flowDynamic('FILA VIP \nhttps://filavip.ar')  
-                      return  gotoFlow(Menuflow);
-      } else if (ctx.body == 'HABLAR CON ASESOR') {
-         nombre = "Cliente"
-         return gotoFlow(Cliente)
-      } else if (ctx.body == 'INFO DE LA EMPRESA') {
-       await flowDynamic('*Av de Mayo 1624  - RAMOS MEJÍA - Buenos Aires*' )
-       await flowDynamic('  Nuestros horarios de atención son: de Lunes a Viernes de 10hs a 17hs' )
-   
-       await flowDynamic('Selfie Mirror', {media: 'video.mp4'})
-      
-      return  gotoFlow(Menuflow);
-         } 
-        });
-        
  */
 ////////////////////////////////////////////////////////////////////////////////////////
 
 const serverHttp = new ServerHttp(PORT)
 
 const chatwoot = new ChatwootClass({
-  account: process.env.CHATWOOT_ACCOUNT_ID,
-  token: process.env.CHATWOOT_TOKEN,
-  endpoint: process.env.CHATWOOT_ENDPOINT
-})
-    
-    const queue = new Queue({
-        concurrent: 1,
-        interval: 500 
-    })
-    
-    const main = async () => {
-        const adapterDB = new MockAdapter()
-        const adapterFlow = createFlow([flowPrincipal, flowVenta, flowsAlquiler, Menuflow,Cliente])
+    account: process.env.CHATWOOT_ACCOUNT_ID,
+    token: process.env.CHATWOOT_TOKEN,
+    endpoint: process.env.CHATWOOT_ENDPOINT
+});
 
-        const adapterProvider = createProvider(MetaProvider, {
-          jwtToken: process.env.jwtToken,
-          numberId: process.env.numberId,
-          verifyToken: 'A1234',
-          version: 'v18.0',
+const queue = new Queue({
+    concurrent: 1,
+    interval: 500
+});
+
+// Función para descargar archivos adjuntos de los mensajes
+const downloadMediaMessage = async (ctx) => {
+    try {
+        const response = await axios.get(ctx.url, {
+            responseType: 'arraybuffer',
+            headers: {
+                'Authorization': `Bearer ${process.env.jwtToken}`
+            }
         });
-      
-        
-          
-        const bot = await createBot({
-            flow: adapterFlow,
-            provider: adapterProvider,
-            database: adapterDB,
-        })
-    
-    serverHttp.initialization(bot)
-        /**
-         * Los mensajes entrantes al bot (cuando el cliente nos escribe! <---)
-         */
+        return Buffer.from(response.data, 'binary');
+    } catch (error) {
+        console.error(`Error al descargar el medio: ${error}`);
+        throw error;
+    }
+};
 
-
-
-    
-  const downloadMediaMessage = async (ctx) => {
-      console.log("qqqqqqqqqqqq",ctx)
-      try {
-          const response = await axios.get(ctx.url, {
-              responseType: 'arraybuffer',
-              headers: {
-                  'Authorization': `Bearer ${process.env.jwtToken}`
-              }
-          });
-          return Buffer.from(response.data, 'binary');
-      } catch (error) {
-          console.error(`Error al descargar el medio: ${error}`);
-          throw error;
-      }
-  };
-
-
-  adapterProvider.on("message", (payload) => {
+// Función para manejar mensajes entrantes del proveedor
+const handleIncomingMessage = async (payload) => {
+    // Tu lógica de manejo de mensajes entrantes aquí
     console.log("payload", payload);
+    // Más lógica...
+};
 
+// Función para manejar mensajes salientes del bot
+const handleOutgoingMessage = async (payload) => {
+    // Tu lógica de manejo de mensajes salientes aquí
+    console.log("payload11111111111111", payload);
+    // Más lógica...
+};
 
-    const numberPayload = payload.from
-
-    const crypto = require('crypto');
-
-
-    
-    function generarClaveIV() {
-    
-      const clave = crypto.createHash('sha256').update('clave_secreta').digest(); 
-      const iv = Buffer.alloc(16, 0); // IV fijo
-    
-      return { clave, iv };
+// Evento para manejar mensajes entrantes del proveedor
+adapterProvider.on("message", async (payload) => {
+    try {
+        // Tu lógica de manejo de mensajes entrantes aquí
+        await handleIncomingMessage(payload);
+    } catch (err) {
+        console.log("Error al manejar mensaje entrante:", err);
     }
-    
-    function encriptar(numero, clave, iv) {
-     
-      const numeroStr = numero.toString();
-    
-     
-      const cifrador = crypto.createCipheriv('aes-256-cbc', clave, iv);
-    
-     
-      let numeroEncriptado = cifrador.update(numeroStr, 'utf-8', 'hex');
-      numeroEncriptado += cifrador.final('hex');
-    
-      
-      return numeroEncriptado;
+});
+
+// Evento para manejar mensajes salientes del bot
+bot.on('send_message', async (payload) => {
+    try {
+        // Tu lógica de manejo de mensajes salientes aquí
+        await handleOutgoingMessage(payload);
+    } catch (err) {
+        console.log("Error al manejar mensaje saliente:", err);
     }
-    
-    function desencriptar(numeroEncriptado, clave, iv) {
-     
-      const descifrador = crypto.createDecipheriv('aes-256-cbc', clave, iv);
-    
-   
-      let numeroDesencriptado = descifrador.update(numeroEncriptado, 'hex', 'utf-8');
-      numeroDesencriptado += descifrador.final('utf-8');
-    
-      return numeroDesencriptado;
-    }
-    
-    
-    const { clave, iv } = generarClaveIV();
-    
-   
-    const numeroEncriptado = encriptar(numberPayload, clave, iv);
-    console.log('Número Encriptado123:', numeroEncriptado);
-    
-  
-    const numeroDesencriptado = desencriptar(numeroEncriptado, clave, iv);
-    console.log('Número Desencriptado:', numeroDesencriptado);
-    
+});
 
-
-
-
-
-
-
-    function obtenerPrimerosDoceNumeros(cadena) {
-      // Filtrar solo los dígitos numéricos
-      let soloNumeros = cadena.replace(/\D/g, '');
-    
-      // Utiliza la función slice para extraer los primeros 12 dígitos
-      let primerosDoceNumeros = soloNumeros.slice(0, 12);
-      return primerosDoceNumeros;
-    }
-    
-    // Ejemplo de uso
-    let cadenaOriginal = numeroEncriptado ;
-    let primerosDoceNumeros = obtenerPrimerosDoceNumeros(cadenaOriginal);
-    
-    
-    
-
-    let cadenaNumerica = primerosDoceNumeros.toString();
-
-    // Convertir la cadena en un array de caracteres, invertir el array y unir los caracteres nuevamente
-    var nuevoOrden = "1" + cadenaNumerica.split('').reverse().join('');
-    
-    console.log("Encriptado Slice array:", cadenaNumerica);
-    console.log("Nuevo orden:", nuevoOrden);
-    numberxx = nuevoOrden
-
-
-    queue.enqueue(async () => {
-      try {
-        const attachment = [];
-
-        if (payload?.body.includes("_event_media_")) {
-
-          const mime_type = payload.mime_type;
-          const ext = mimeType.extension(`${mime_type}`);
-
-          const buffer = await downloadMediaMessage(payload, "buffer");
-
-          const fileName = `file-${Date.now()}.${ext}`;
-          const pathFile = `${process.cwd()}/public/${fileName}`;
-          await fs.writeFile(pathFile, buffer);
-
-          attachment.push(pathFile);
-
-
-          await handlerMessage({
-              type: payload.mime_type,
-              phone: nuevoOrden,
-              phonecrypt: numeroEncriptado,
-              name: payload.pushName,
-              message: payload.caption ? payload.caption : "",
-              attachment,
-              mode: 'incoming'
-          }, chatwoot)
-
-
-        } else if (payload?.body.includes("_event_document_")) {
-          function obtenerExtension(nombreArchivo) {
-            return nombreArchivo.split(".").pop();
-          }
-
-          const mime_type = payload.mime_type;
-          const nombre = payload.filename;
-          console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",nombre);
-          ext = obtenerExtension(nombre);
-
-          buffer = await downloadMediaMessage(payload, "buffer");
-
-          const fileName = `file-${Date.now()}.${ext}`;
-          const pathFile = `${process.cwd()}/public/${fileName}`;
-          await fs.writeFile(pathFile, buffer);
-
-          attachment.push(pathFile);
-
-          
-          await handlerMessage({
-              type: payload.type,
-              phone: nuevoOrden,
-              phonecrypt: numeroEncriptado,
-              name: payload.pushName,
-              message: payload.caption ? payload.caption : (payload.filename ? payload.filename : ""),
-              attachment,
-              mode: 'incoming'
-          }, chatwoot)
-
-        } else if (payload?.body.includes("_event_audio_")) {
-
-          const mime_type = payload.mime_type;
-          const ext = mimeType.extension(`${mime_type}`);
-
-          buffer = await downloadMediaMessage(payload, "buffer");
-
-          const fileName = `file-${Date.now()}.${ext}`;
-          const pathFile = `${process.cwd()}/public/${fileName}`;
-          await fs.writeFile(pathFile, buffer);
-
-          attachment.push(pathFile);
-
-          
-          await handlerMessage({
-              type: payload.mime_type,
-              phone: nuevoOrden,
-              phonecrypt: numeroEncriptado,
-              name: payload.pushName,
-              message: payload.caption ? payload.caption : (payload.filename ? payload.filename : ""),
-              attachment,
-              mode: 'incoming'
-          }, chatwoot)
-        } else {
-
-          
-          // Proceso para manejar otros tipos de eventos
-          // Aquí puedes manejar mensajes que no sean media o documentos
-          const genericMessage = payload.body; // Mensaje original
-
-          await handlerMessage(
-            {
-              type: payload.type,
-              phone: nuevoOrden,
-              phonecrypt: numeroEncriptado,
-              name: payload.pushName,
-              message: genericMessage, // Mensaje original para otros casos
-              attachment,
-              mode: "incoming",
-            },
-            chatwoot
-          );
-        }
-      } catch (err) {
-        console.log("ERROR123", err);
-      }
+// Función principal
+const main = async () => {
+    const adapterDB = new MockAdapter();
+    const adapterFlow = createFlow([flowPrincipal, flowVenta, flowsAlquiler, Menuflow, Cliente]);
+    const adapterProvider = createProvider(MetaProvider, {
+        jwtToken: process.env.jwtToken,
+        numberId: process.env.numberId,
+        verifyToken: 'A1234',
+        version: 'v18.0',
     });
-  });
-    
-        /**
-         * Los mensajes salientes (cuando el bot le envia un mensaje al cliente ---> )
-         */
-        bot.on('send_message', (payload) => {
-            queue.enqueue(async () => {
 
-              //console.log("payload11111111111111", payload )
-              console.log("payload11111111111111", payload );
+    const bot = await createBot({
+        flow: adapterFlow,
+        provider: adapterProvider,
+        database: adapterDB,
+    });
 
-                await handlerMessage({
-                  type: payload.type,
-                  phone: nuevoOrden,
-                  phonecrypt: numeroEncriptado,
-                  name: payload.pushName,
-                  message: genericMessage, // Mensaje original para otros casos
-                  attachment,
-                    mode:'outgoing'
-                }, chatwoot)
-            })
-        })
+    serverHttp.initialization(bot);
+};
 
+// Ejecución de la función principal
+main();
 
-    }
-    
-    main()

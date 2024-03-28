@@ -223,7 +223,7 @@ media:'FichaTecnicaFULL.pdf', delay: 3000
   .then(json => dolar = json.venta)
   console.log('VENTA')
   await flowDynamic(`*VALORES*\n   *ESPEJO MAGICO* \n  💵   *U$D 1.700 .-*   🔒 \n 💱 > U$D = AR$ > 💱 \n 📈 AR$ ${new Intl.NumberFormat('es-MX').format(dolar*1700)} .-🔓 `,)
-  await flowDynamic(`\n\n*PLATAFORMA 360*\n  💵   *U$D 1.500 .-*   🔒 \n  💱 > U$D = AR$ > 💱\n  📈 AR$ ${new Intl.NumberFormat('es-MX').format(dolar*1500)} .-🔓`,)
+//  await flowDynamic(`\n\n*PLATAFORMA 360*\n  💵   *U$D 1.500 .-*   🔒 \n  💱 > U$D = AR$ > 💱\n  📈 AR$ ${new Intl.NumberFormat('es-MX').format(dolar*1500)} .-🔓`,)
   await flowDynamic(`Cotizacion actual: \n💱[1 U$S = AR ${dolar}.-]💱` ,)
   await flowDynamic( `\n\n*FILA VIP*\n  ORGANIZADORES DE FILA PIXEL\n  🚧 💲💲💲 75 USD  💲💲💲 🥇\n ⛓️ ${new Intl.NumberFormat('es-MX').format(dolar*75)}\n  SOGAS TRENZADA\n  💲💲💲  20 USD 💲💲💲 \n  ⛓️ ${new Intl.NumberFormat('es-MX').format(dolar*20)} ⛓️ `)
   

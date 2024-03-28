@@ -151,9 +151,9 @@ media: 'banner3.jpg'})
            '\nSu diseño compacto y portátil, con dimensiones de 126 cm de alto x 70 cm de ancho y 20 cm de profundidad en el modelo',
            'Slim, permite transportarlo fácilmente en cualquier vehículo. Esto brinda una gran versatilidad y conveniencia para eventos ',
             'y fiestas.'],{delay: 2000})
-  
-  .addAnswer('Plataforma 360 Super Slow', {media: 'banner.jpg'})
- 
+
+ // .addAnswer('Plataforma 360 Super Slow', {media: 'banner.jpg'})
+  .addAnswer('Selfie Mirror', {media: 'video3.mp4'})
   .addAnswer(['La facilidad de uso es una de las ventajas clave del Espejo Mágico. Simplemente tienes que enchufarlo y presionar el ',
               'botón de encendido para que empiece a funcionar. Esto agiliza la instalación y permite que los eventos comiencen rápidamente.',
             '\nEs importante mencionar que el Selfie Mirror no incluye una impresora, pero está preparado para funcionar con cualquier ',
@@ -161,12 +161,12 @@ media: 'banner3.jpg'})
             'los requerimientos de impresión.',
            '\nEn cuanto al precio, el valor del equipo es de 1700 dólares o pesos al valor del dólar blue del día.'])
                                     
-    
+   
 
    
             
   .addAnswer('Equipo Slim Selfie Mirror', {media: 'banner4.jpg'})
-  
+    /**
   .addAnswer(['*Plataforma 360 Super Slow*',
   '\nNuestra plataforma incluye todo lo necesario para poder brindar un servicio profesional. Incluye Monitor transmitiendo en vivo. Proceso de editado automatico.',
   ' (Una vez grabado se reproduce en el monitor automaticamente ya editado)',
@@ -176,8 +176,8 @@ media: 'banner3.jpg'})
         'El valor del equipo es de 1700 U$S.' ,
         '▶ REQUERIDO:Necesita contar con un Apple Iphone 13 o suoperior (dispositivo de grabacion)',
   'y un TV LED de 32 o mas (monitoreo)'])
-
-  .addAnswer('Selfie Mirror', {media: 'video3.mp4'})
+ */
+ 
   
   .addAnswer('Formas de pago: efectivo, transferencia/depósito')
 
@@ -210,10 +210,8 @@ media: 'banner3.jpg'})
     media: 'colum1.jpg', delay: 3000})
     .addAnswer('UNIFILAS',{
       media: 'colum2.mp4', delay: 3000})
-      .addAnswer('FICHA TECNICA',
-        {
-            body:'PDF',
-media:"FichaTecnicaFULL.pdf"
+      .addAnswer('FICHA TECNICA', {
+media:'FichaTecnicaFULL.pdf', delay: 3000
         })
   
         .addAnswer('Selfie Mirror',{

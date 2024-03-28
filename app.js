@@ -274,7 +274,8 @@ const organizadorflow = addKeyword('UNIFILA LED',{sensitive:true})
            'Slim, permite transportarlo fácilmente en cualquier vehículo. Esto brinda una gran versatilidad y conveniencia para eventos ',
             'y fiestas.'],{delay: 2000})
   
-  .addAnswer('Plataforma 360 Super Slow', {media: 'banner.jpg'})
+ 
+ .addAnswer('Plataforma 360 Super Slow', {media: 'banner.jpg'})
  
   .addAnswer(['La facilidad de uso es una de las ventajas clave del Espejo Mágico. Simplemente tienes que enchufarlo y presionar el ',
               'botón de encendido para que empiece a funcionar. Esto agiliza la instalación y permite que los eventos comiencen rápidamente.',
@@ -282,13 +283,13 @@ const organizadorflow = addKeyword('UNIFILA LED',{sensitive:true})
             'impresora que se adapte a las necesidades del cliente. Esto brinda flexibilidad para elegir la impresora que mejor se ajuste a',
             'los requerimientos de impresión.',
            '\nEn cuanto al precio, el valor del equipo es de 1700 dólares o pesos al valor del dólar blue del día.'])
-                                    
-    
+                        
+
 
    
             
   .addAnswer('Equipo Slim Selfie Mirror', {media: 'banner4.jpg'})
-  
+  /* 
   .addAnswer(['*Plataforma 360 Super Slow*',
   '\nNuestra plataforma incluye todo lo necesario para poder brindar un servicio profesional. Incluye Monitor transmitiendo en vivo. Proceso de editado automatico.',
   ' (Una vez grabado se reproduce en el monitor automaticamente ya editado)',
@@ -297,7 +298,7 @@ const organizadorflow = addKeyword('UNIFILA LED',{sensitive:true})
          '\n*Equipo listo para trabajar*.',
         'El valor del equipo es de 1700 U$S.' ,
         '▶ REQUERIDO:Necesita contar con un Apple Iphone 13 o suoperior (dispositivo de grabacion)',
-  'y un TV LED de 32 o mas (monitoreo)'])
+  'y un TV LED de 32 o mas (monitoreo)']) *//
 
   .addAnswer('Selfie Mirror', {media: 'video3.mp4'})
   
@@ -346,10 +347,10 @@ media:"FichaTecnicaFULL.pdf"
   .then(response => response.json())
   .then(json => dolar = json.venta)
   console.log('VENTA')
-  await flowDynamic(`*VALORES*\n   *ESPEJO MAGICO* \n  💵   *U$D 1.700 .-*   🔒 \n 💱 > U$D = AR$ > 💱 \n 📈 AR$ ${new Intl.NumberFormat('es-MX').format(dolar*1700)} .-🔓 `,)
-  await flowDynamic(`\n\n*PLATAFORMA 360*\n  💵   *U$D 1.500 .-*   🔒 \n  💱 > U$D = AR$ > 💱\n  📈 AR$ ${new Intl.NumberFormat('es-MX').format(dolar*1500)} .-🔓`,)
+  await flowDynamic(`*VALORES*\n   *ESPEJO MAGICO* \n  💵   *U$D 2.500 .-*   🔒 \n 💱 > U$D = AR$ > 💱 \n 📈 AR$ ${new Intl.NumberFormat('es-MX').format(dolar*2500)} .-🔓 `,)
+ // await flowDynamic(`\n\n*PLATAFORMA 360*\n  💵   *U$D 1.500 .-*   🔒 \n  💱 > U$D = AR$ > 💱\n  📈 AR$ ${new Intl.NumberFormat('es-MX').format(dolar*1500)} .-🔓`,)
   await flowDynamic(`Cotizacion actual: \n💱[1 U$S = AR ${dolar}.-]💱` ,)
-  await flowDynamic( `\n\n*FILA VIP*\n  ORGANIZADORES DE FILA PIXEL\n  🚧 💲💲💲 75 USD  💲💲💲 🥇\n ⛓️ ${new Intl.NumberFormat('es-MX').format(dolar*75)}\n  SOGAS TRENZADA\n  💲💲💲  20 USD 💲💲💲 \n  ⛓️ ${new Intl.NumberFormat('es-MX').format(dolar*20)} ⛓️ `)
+  await flowDynamic( `\n\n*FILA VIP*\n  ORGANIZADORES DE FILA PIXEL\n  🚧 💲💲💲 105 USD  💲💲💲 🥇\n ⛓️ ${new Intl.NumberFormat('es-MX').format(dolar*105)}\n  SOGAS TRENZADA\n  💲💲💲  25 USD 💲💲💲 \n  ⛓️ ${new Intl.NumberFormat('es-MX').format(dolar*25)} ⛓️ `)
   
 
 

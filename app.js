@@ -568,7 +568,7 @@ const chatwoot = new ChatwootClass({
             database: adapterDB,
         })
     
-    serverHttp.initialization(bot)
+   ServerHttp.initialization(bot)
         /**
          * Los mensajes entrantes al bot (cuando el cliente nos escribe! <---)
          */

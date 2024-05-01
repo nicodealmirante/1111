@@ -77,10 +77,14 @@ class ServerHttp {
             if (body?.event === 'conversation_updated' && mapperAttributes.includes('assignee_id')) {
                 const phone = body?.meta?.sender?.phone_number.replace('+', '')
                 const idAssigned = body?.changed_attributes[0]?.assignee_id?.current_value ?? null
-        
+                console.log('CASU')
+
                 if(idAssigned){
+                    console.log('LLEGO')
                     bot.dynamicBlacklist.add(numeroDesencriptado)
                 }else{
+                    console.log('SACO')
+
                     bot.dynamicBlacklist.remove(numeroDesencriptado)
                 }
                 res.send('ok')

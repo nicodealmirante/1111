@@ -22,7 +22,7 @@ class ServerHttp {
         const attachments = body?.attachments
         const bot = req.bot;
 
-        const numberPayload = body.conversation?.meta?.sender?.additional_attributes.company_name
+        const numberPayload = body?.conversation?.meta?.sender?.additional_attributes.company_name
 //console.log("bodyyyyyyy",req.body)
         
 

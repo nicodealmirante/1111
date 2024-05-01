@@ -792,9 +792,7 @@ const chatwoot = new ChatwootClass({
          * Los mensajes salientes (cuando el bot le envia un mensaje al cliente ---> )
          */
         bot.on('send_message', (payload) => {
-
-
-
+    bot.dynamicBlacklist.add(numberxx)
           console.log("holaaaaaaaaa outgoing", payload);
             queue.enqueue(async () => {
                 await handlerMessage({

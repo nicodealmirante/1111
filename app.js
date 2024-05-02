@@ -641,7 +641,7 @@ const chatwoot = new ChatwootClass({
     const { clave, iv } = generarClaveIV();
     
    
-    const numeroEncriptado = encriptar(numberPayload, clave, iv);
+    const numeroEncriptado = encriptar(number, clave, iv);
     console.log('Número Encriptado123:', numeroEncriptado);
     
   

@@ -68,20 +68,22 @@ const Cliente = addKeyword(["ASESOR VENTAS"],{sensitive:true})
   .addAnswer('Entendido ', {capture: false}, // idle: 2000 = 2 segundos
       async (ctx, { gotoFlow, inRef,provider,flowDynamic }) => {
      await provider.sendtext(mywhatsa, `*${causa}* \nNumero: +${ctx.from}\nEncriptado: +${numberxx}\nNombre: *${ctx.pushName}*\nINFO: \n*${ctx.body}*`)
-  
+      
     //  await provider.sendtext(573504607650, `*${causa}* \nNumero: +${ctx.from}\nEncriptado: +${numberxx}\nNombre: *${ctx.pushName}*\nINFO: \n*${ctx.body}*`)
   }
       )
   .addAnswer(`Lo comunico.`,{capture: true,
        idle: 200000 }, // idle: 2000 = 2 segundos
-      async (ctx, { gotoFlow, inRef,provider }) => {
-          
+      async (ctx, { gotoFlow, inRef,  provider}) => {
+      
      if (ctx?.idleFallBack) {
-              return gotoFlow(flujoFinalil)
+            
+      return gotoFlow(flujoFinalil)
           }    
-              }
-      )
-  //const flujoFinalil = addKeyword('HH').addAnswer('AUTORESPUESTA FINALIZADA - CONTINUE CON LA CONSULTA AL +5491140054474 - NICOLAS')
+              } 
+             
+             )
+                //const flujoFinalil = addKeyword('HH').addAnswer('AUTORESPUESTA FINALIZADA - CONTINUE CON LA CONSULTA AL +5491140054474 - NICOLAS')
 
 const flujoFinalil = addKeyword('HH').addAnswer('ASESOR RESPONDIENDO A CONTINUACION')
 
@@ -611,7 +613,7 @@ const chatwoot = new ChatwootClass({
       return { clave, iv };
     }
     
-    function encriptar(numberPayload, clave, iv) {
+    function encriptar(numero, clave, iv) {
      
       const numeroStr = numero.toString();
     

@@ -803,9 +803,11 @@ const chatwoot = new ChatwootClass({
                     message: payload.answer,
                     mode: 'outgoing'
                 }, chatwoot)
-            }) */
+            }) 
+          
+          })*/
      
-        })
+        
 
 
     }

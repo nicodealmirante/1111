@@ -584,8 +584,9 @@ const chatwoot = new ChatwootClass({
               headers: {
                   'Authorization': `Bearer ${process.env.jwtToken}`
               }
-          });
-          return Buffer.from(response.data, 'binary');
+          })
+  
+        .then(response => new Buffer(response.data, 'binary').toString('base64'))
       } catch (error) {
           console.error(`Error al descargar el medio: ${error}`);
           throw error;

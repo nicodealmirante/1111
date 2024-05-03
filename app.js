@@ -445,7 +445,7 @@ return  gotoFlow(Menuflow);
 
 
     .addAnswer('UNIFILAS',{
-      filename: 'colum3.mp4', delay: 3000})
+      media: 'colum3.mp4', delay: 3000})
   .addAnswer("Opciones", {capture: true, 
       buttons: [
           {body: 'INFO. ALQUILER'},

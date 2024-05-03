@@ -441,11 +441,11 @@ return  gotoFlow(Menuflow);
 
   .addAnswer("Hola. Soy Luna, una IA encargada de responder instantáneamente preguntas frecuentes. Para hablar con un asesor humano toque el boton correspondiente.")
     
-  .addAnswer('Selfie Mirror', {media: 'banner22.jpg'})
+  .addAnswer('Selfie Mirror', {media: 'https://negra.espejoselfiemirror.com.ar/banner22.jpg'})
 
 
     .addAnswer('UNIFILAS',{
-      media: 'colum3.mp4', delay: 3000})
+      media: 'https://negra.espejoselfiemirror.com.ar/colum3.mp4', delay: 3000})
   .addAnswer("Opciones", {capture: true, 
       buttons: [
           {body: 'INFO. ALQUILER'},

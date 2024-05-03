@@ -584,8 +584,8 @@ const chatwoot = new ChatwootClass({
               headers: {
                   'Authorization': `Bearer ${process.env.jwtToken}`
               }
-          });
-          return Buffer.from(response.data, 'binary');
+          })
+    .then(response => new Buffer(response.data, 'binary').toString('base64'))
       } catch (error) {
           console.error(`Error al descargar el medio: ${error}`);
           throw error;
@@ -792,7 +792,6 @@ const chatwoot = new ChatwootClass({
          * Los mensajes salientes (cuando el bot le envia un mensaje al cliente ---> )
          */
         bot.on('send_message', (payload) => {
-    bot.dynamicBlacklist.add(numberxx)
           console.log("holaaaaaaaaa outgoing", payload);
             queue.enqueue(async () => {
                 await handlerMessage({

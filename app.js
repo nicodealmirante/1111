@@ -73,7 +73,7 @@ const Cliente = addKeyword(["ASESOR VENTAS"],{sensitive:true})
       )
   .addAnswer(`Lo comunico.`,{capture: true,
        idle: 200000 }, // idle: 2000 = 2 segundos
-      async (ctx, { gotoFlow, inRef,provider }) => {
+      async (ctx, { gotoFlow }) => {
               return gotoFlow(flujoFinalil)
          
               }
@@ -81,7 +81,7 @@ const Cliente = addKeyword(["ASESOR VENTAS"],{sensitive:true})
   //const flujoFinalil = addKeyword('HH').addAnswer('AUTORESPUESTA FINALIZADA - CONTINUE CON LA CONSULTA AL +5491140054474 - NICOLAS')
 
 const flujoFinalil = addKeyword('HH')
-.addAction(async(ctx, {gotoFlow,endFlow}) => { 
+.addAction(async(ctx, {endFlow}) => { 
   console.log('endf')
   return endFlow(flujoFinalil)})
 

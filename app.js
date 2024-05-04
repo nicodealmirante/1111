@@ -5,7 +5,7 @@ const axios = require("axios");
 const mimeType = require('mime-types')
 const fs = require('node:fs/promises');
 var numberxx
-const { createBot, createProvider, createFlow, addKeyword, EVENTS, ProviderClass } = require('@bot-whatsapp/bot')
+const { createBot, createProvider, createFlow, addKeyword, EVENTS, ProviderClass } = require( '@builderbot/bot')
 const Queue = require('queue-promise')
 const MetaProvider = require("@bot-whatsapp/provider/meta")
 const MockAdapter = require('@bot-whatsapp/database/mock')

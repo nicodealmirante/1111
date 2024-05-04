@@ -75,10 +75,8 @@ const Cliente = addKeyword(["ASESOR VENTAS"],{sensitive:true})
   .addAnswer(`Lo comunico.`,{capture: true,
        idle: 200000 }, // idle: 2000 = 2 segundos
       async (ctx, { gotoFlow, inRef,provider }) => {
-          
-     if (ctx?.idleFallBack) {
               return gotoFlow(flujoFinalil)
-          }    
+         
               }
       )
   //const flujoFinalil = addKeyword('HH').addAnswer('AUTORESPUESTA FINALIZADA - CONTINUE CON LA CONSULTA AL +5491140054474 - NICOLAS')

@@ -575,6 +575,9 @@ const chatwoot = new ChatwootClass({
 
 
 
+
+
+
     
         const downloadMediaMessage = async (ctx) => {
           console.log("qqqqqqqqqqqq",ctx)
@@ -584,8 +587,8 @@ const chatwoot = new ChatwootClass({
                   headers: {
                       'Authorization': `Bearer ${process.env.jwtToken}`
                   }
-              });
-              return Buffer.from(response.data, 'binary');
+              })
+        .then(response => new Buffer(response.data, 'binary').toString('base64'))
           } catch (error) {
               console.error(`Error al descargar el medio: ${error}`);
               throw error;
@@ -595,11 +598,175 @@ const chatwoot = new ChatwootClass({
     
       adapterProvider.on("message", (payload) => {
         console.log("payload", payload);
+    
+    
+        const numberPayload = payload.from
+    
+        const crypto = require('crypto');
+    
+    
+        
+        function generarClaveIV() {
+        
+          const clave = crypto.createHash('sha256').update('clave_secreta').digest(); 
+          const iv = Buffer.alloc(16, 0); // IV fijo
+        
+          return { clave, iv };
+        }
+        
+        function encriptar(numero, clave, iv) {
+         
+          const numeroStr = numero.toString();
+        
+         
+          const cifrador = crypto.createCipheriv('aes-256-cbc', clave, iv);
+        
+         
+          let numeroEncriptado = cifrador.update(numeroStr, 'utf-8', 'hex');
+          numeroEncriptado += cifrador.final('hex');
+        
+          
+          return numeroEncriptado;
+        }
+        
+        function desencriptar(numeroEncriptado, clave, iv) {
+         
+          const descifrador = crypto.createDecipheriv('aes-256-cbc', clave, iv);
+        
+       
+          let numeroDesencriptado = descifrador.update(numeroEncriptado, 'hex', 'utf-8');
+          numeroDesencriptado += descifrador.final('utf-8');
+        
+          return numeroDesencriptado;
+        }
+        
+        
+        const { clave, iv } = generarClaveIV();
+        
+       
+        const numeroEncriptado = encriptar(numberPayload, clave, iv);
+        console.log('Número Encriptado123:', numeroEncriptado);
+        
+      
+        const numeroDesencriptado = desencriptar(numeroEncriptado, clave, iv);
+        console.log('Número Desencriptado:', numeroDesencriptado);
+        
+    
+    
+    
+    
+    
+    
+    
+        function obtenerPrimerosDoceNumeros(cadena) {
+          // Filtrar solo los dígitos numéricos
+          let soloNumeros = cadena.replace(/\D/g, '');
+        
+          // Utiliza la función slice para extraer los primeros 12 dígitos
+          let primerosDoceNumeros = soloNumeros.slice(0, 12);
+          return primerosDoceNumeros;
+        }
+        
+        // Ejemplo de uso
+        let cadenaOriginal = numeroEncriptado ;
+        let primerosDoceNumeros = obtenerPrimerosDoceNumeros(cadenaOriginal);
+        
+        
+        
+    
+        let cadenaNumerica = primerosDoceNumeros.toString();
+    
+        // Convertir la cadena en un array de caracteres, invertir el array y unir los caracteres nuevamente
+        var nuevoOrden = "1" + cadenaNumerica.split('').reverse().join('');
+        
+        console.log("Encriptado Slice array:", cadenaNumerica);
+        console.log("Nuevo orden:", nuevoOrden);
+        numberxx = nuevoOrden
+    
+    
         queue.enqueue(async () => {
           try {
             const attachment = [];
     
-         
+            if (payload?.body.includes("_event_media_")) {
+    
+              const mime_type = payload.mime_type;
+              const ext = mimeType.extension(`${mime_type}`);
+    
+              const buffer = await downloadMediaMessage(payload, "buffer");
+    
+              const fileName = `file-${Date.now()}.${ext}`;
+              const pathFile = `${process.cwd()}/public/${fileName}`;
+              await fs.writeFile(pathFile, buffer);
+    
+              attachment.push(pathFile);
+    
+    
+              await handlerMessage({
+                  type: payload.mime_type,
+                  phone: nuevoOrden,
+                  phonecrypt: numeroEncriptado,
+                  name: payload.pushName,
+                  message: payload.caption ? payload.caption : "",
+                  attachment,
+                  mode: 'incoming'
+              }, chatwoot)
+    
+    
+            } else if (payload?.body.includes("_event_document_")) {
+              function obtenerExtension(nombreArchivo) {
+                return nombreArchivo.split(".").pop();
+              }
+    
+              const mime_type = payload.mime_type;
+              const nombre = payload.filename;
+              console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",nombre);
+              ext = obtenerExtension(nombre);
+    
+              buffer = await downloadMediaMessage(payload, "buffer");
+    
+              const fileName = `${nombre}`;
+              const pathFile = `${process.cwd()}/public/${fileName}`;
+              await fs.writeFile(pathFile, buffer);
+    
+              attachment.push(pathFile);
+    
+              
+              await handlerMessage({
+                  type: payload.type,
+                  phone: nuevoOrden,
+                  phonecrypt: numeroEncriptado,
+                  name: payload.pushName,
+                  message: payload.caption ? payload.caption : (payload.filename ? payload.filename : ""),
+                  attachment,
+                  mode: 'incoming'
+              }, chatwoot)
+    
+            } else if (payload?.body.includes("_event_audio_")) {
+    
+              const mime_type = payload.mime_type;
+              const ext = mimeType.extension(`${mime_type}`);
+    
+              buffer = await downloadMediaMessage(payload, "buffer");
+    
+              const fileName = `file-${Date.now()}.${ext}`;
+              const pathFile = `${process.cwd()}/public/${fileName}`;
+              await fs.writeFile(pathFile, buffer);
+    
+              attachment.push(pathFile);
+    
+              
+              await handlerMessage({
+                  type: payload.mime_type,
+                  phone: nuevoOrden,
+                  phonecrypt: numeroEncriptado,
+                  name: payload.pushName,
+                  message: payload.caption ? payload.caption : (payload.filename ? payload.filename : ""),
+                  attachment,
+                  mode: 'incoming'
+              }, chatwoot)
+            } else {
+    
               
               // Proceso para manejar otros tipos de eventos
               // Aquí puedes manejar mensajes que no sean media o documentos
@@ -608,7 +775,8 @@ const chatwoot = new ChatwootClass({
               await handlerMessage(
                 {
                   type: payload.type,
-                  phone: payload.from,
+                  phone: nuevoOrden,
+                  phonecrypt: numeroEncriptado,
                   name: payload.pushName,
                   message: genericMessage, // Mensaje original para otros casos
                   attachment,
@@ -616,7 +784,7 @@ const chatwoot = new ChatwootClass({
                 },
                 chatwoot
               );
-            
+            }
           } catch (err) {
             console.log("ERROR123", err);
           }
@@ -627,12 +795,14 @@ const chatwoot = new ChatwootClass({
              * Los mensajes salientes (cuando el bot le envia un mensaje al cliente ---> )
              */
             bot.on('send_message', (payload) => {
+              console.log("holaaaaaaaaa outgoing", payload);
                 queue.enqueue(async () => {
                     await handlerMessage({
-                        phone:payload.numberOrId, 
-                        name:payload.pushName,
-                        message: payload.answer, 
-                        mode:'outgoing'
+                       // type: payload.type,
+                        phone: numberxx,
+                        name: payload.pushName,
+                        message: payload.answer,
+                        mode: 'outgoing'
                     }, chatwoot)
                 })
             })

@@ -96,7 +96,7 @@ class ChatwootClass {
      * @returns 
      */
    
-    createContact = async (dataIn = { from: '', name: '', inbox: '', phonecrypt: '' }) => {
+    createContact = async (dataIn = { from: '', name: '', inbox: ''}) => {
 
         console.log("1212",dataIn)
 
@@ -108,12 +108,7 @@ class ChatwootClass {
                 inbox_id: dataIn.inbox,
                 name:dataIn.name,
                 phone_number: dataIn.from,
-                additional_attributes: {
-   
-                    company_name: dataIn.phonecrypt
-                
-                
-                  }
+         
             };
 
             const url = this.buildBaseUrl(`/contacts`)
@@ -296,7 +291,7 @@ class ChatwootClass {
     }
 
 
-    asignaragente = async (dataIn = {type: '', msg: '',conversation_id:"" }) => {
+    asignaragente = async (dataIn = {type: '',conversation_id:"" }) => {
         try {
             const url = this.buildBaseUrl(`/conversations/${dataIn.conversation_id}/assignments`)
             const form = new FormData();

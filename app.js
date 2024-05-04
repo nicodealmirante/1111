@@ -599,82 +599,7 @@ const chatwoot = new ChatwootClass({
           try {
             const attachment = [];
     
-            if (payload?.body.includes("_event_media_")) {
-    
-              const mime_type = payload.mime_type;
-              const ext = mimeType.extension(`${mime_type}`);
-    
-              const buffer = await downloadMediaMessage(payload, "buffer");
-    
-              const fileName = `file-${Date.now()}.${ext}`;
-              const pathFile = `${process.cwd()}/public/${fileName}`;
-              await fs.writeFile(pathFile, buffer);
-    
-              attachment.push(pathFile);
-    
-    
-              await handlerMessage({
-                  type: payload.mime_type,
-                  phone: payload.from,
-                  name: payload.pushName,
-                  message: payload.caption ? payload.caption : "",
-                  attachment,
-                  mode: 'incoming'
-              }, chatwoot)
-    
-    
-            } else if (payload?.body.includes("_event_document_")) {
-              function obtenerExtension(nombreArchivo) {
-                return nombreArchivo.split(".").pop();
-              }
-    
-              const mime_type = payload.mime_type;
-              const nombre = payload.filename;
-              console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",nombre);
-              ext = obtenerExtension(nombre);
-    
-              buffer = await downloadMediaMessage(payload, "buffer");
-    
-              const fileName = `file-${Date.now()}.${ext}`;
-              const pathFile = `${process.cwd()}/public/${fileName}`;
-              await fs.writeFile(pathFile, buffer);
-    
-              attachment.push(pathFile);
-    
-              
-              await handlerMessage({
-                  type: payload.type,
-                  phone: payload.from,
-                  name: payload.pushName,
-                  message: payload.caption ? payload.caption : (payload.filename ? payload.filename : ""),
-                  attachment,
-                  mode: 'incoming'
-              }, chatwoot)
-    
-            } else if (payload?.body.includes("_event_audio_")) {
-    
-              const mime_type = payload.mime_type;
-              const ext = mimeType.extension(`${mime_type}`);
-    
-              buffer = await downloadMediaMessage(payload, "buffer");
-    
-              const fileName = `file-${Date.now()}.${ext}`;
-              const pathFile = `${process.cwd()}/public/${fileName}`;
-              await fs.writeFile(pathFile, buffer);
-    
-              attachment.push(pathFile);
-    
-              
-              await handlerMessage({
-                  type: payload.mime_type,
-                  phone: payload.from,
-                  name: payload.pushName,
-                  message: payload.caption ? payload.caption : (payload.filename ? payload.filename : ""),
-                  attachment,
-                  mode: 'incoming'
-              }, chatwoot)
-            } else {
-    
+         
               
               // Proceso para manejar otros tipos de eventos
               // Aquí puedes manejar mensajes que no sean media o documentos
@@ -691,7 +616,7 @@ const chatwoot = new ChatwootClass({
                 },
                 chatwoot
               );
-            }
+            
           } catch (err) {
             console.log("ERROR123", err);
           }

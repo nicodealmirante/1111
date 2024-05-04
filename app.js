@@ -574,23 +574,15 @@ const chatwoot = new ChatwootClass({
          */
 
 
-
+   
     
   const downloadMediaMessage = async (ctx) => {
       console.log("qqqqqqqqqqqq",ctx)
-      try {
-          const response = await axios.get(ctx.url, {
-              responseType: 'arraybuffer',
-              headers: {
-                  'Authorization': `Bearer ${process.env.jwtToken}`
-              }
-          })
-  
-        .then(response => new Buffer(response.data, 'binary').toString('base64'))
-      } catch (error) {
-          console.error(`Error al descargar el medio: ${error}`);
-          throw error;
-      }
+      return axios.get(url, { responseType: 'arraybuffer' }).then(res => {
+        ;`data:${res.headers['content-type']};base64,${Buffer.from(String.fromCharCode(...new Uint8Array(res.data)), 'binary')
+          .toString('base64')}`
+      })
+     
   };
 
 

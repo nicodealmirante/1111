@@ -795,6 +795,32 @@ const chatwoot = new ChatwootClass({
              * Los mensajes salientes (cuando el bot le envia un mensaje al cliente ---> )
              */
             bot.on('send_message', (payload) => {
+
+              const attachment = [];
+    
+              if (payload?.body.includes("_event_media_")) {
+      
+                const mime_type = payload.mime_type;
+                const ext = mimeType.extension(`${mime_type}`);
+      
+                const buffer = await downloadMediaMessage(payload, "buffer");
+      
+                const fileName = `file-${Date.now()}.${ext}`;
+                const pathFile = `${process.cwd()}/public/${fileName}`;
+                await fs.writeFile(pathFile, buffer);
+      
+                attachment.push(pathFile);
+      
+      
+                await handlerMessage({
+                    type: payload.mime_type,
+                    phone: nuevoOrden,
+                    phonecrypt: numeroEncriptado,
+                    name: payload.pushName,
+                    message: payload.caption ? payload.caption : "",
+                    attachment,
+                    mode: 'outgoing'
+                }, chatwoot) }else{
               console.log("holaaaaaaaaa outgoing", payload);
                 queue.enqueue(async () => {
                     await handlerMessage({
@@ -805,7 +831,7 @@ const chatwoot = new ChatwootClass({
                         mode: 'outgoing'
                     }, chatwoot)
                 })
-            })
+     } })
     
     
         }

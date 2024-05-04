@@ -799,47 +799,7 @@ const chatwoot = new ChatwootClass({
              */
             bot.on('send_message', (payload) => {
 
-              const downloadMediaMessage = async (ctx) => {
-                console.log("qqqqqqqqqqqq",ctx)
-                try {
-                    const response = await axios.get(ctx.url, {
-                        responseType: 'arraybuffer',
-                        headers: {
-                            'Authorization': `Bearer ${process.env.jwtToken}`
-                        }
-                    })
-              .then(response => new Buffer(response.data, 'binary').toString('base64'))
-                } catch (error) {
-                    console.error(`Error al descargar el medio: ${error}`);
-                    throw error;
-                }
-            };
-          
-              const attachment = [];
-    
-              if (payload?.body.includes("_event_media_")) {
-      
-                const mime_type = payload.mime_type;
-                const ext = mimeType.extension(`${mime_type}`);
-      
-                const buffer = await downloadMediaMessage(payload, "buffer");
-      
-                const fileName = `file-${Date.now()}.${ext}`;
-                const pathFile = `${process.cwd()}/public/${fileName}`;
-                await fs.writeFile(pathFile, buffer);
-      
-                attachment.push(pathFile);
-      
-      
-                await handlerMessage({
-                    type: payload.mime_type,
-                    phone: nuevoOrden,
-                    phonecrypt: numeroEncriptado,
-                    name: payload.pushName,
-                    message: payload.caption ? payload.caption : "",
-                    attachment,
-                    mode: 'outgoing'
-                }, chatwoot) }else{
+ 
               console.log("holaaaaaaaaa outgoing", payload);
                 queue.enqueue(async () => {
                     await handlerMessage({
@@ -850,7 +810,7 @@ const chatwoot = new ChatwootClass({
                         mode: 'outgoing'
                     }, chatwoot)
                 })
-     } })
+      })
     
     
         }

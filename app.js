@@ -67,7 +67,7 @@ const mywhatsa = "5491140054474@s.whatsapp.net";
 const Cliente = addKeyword(["ASESOR VENTAS"],{sensitive:true})
   .addAnswer('Entendido ', {capture: false}, // idle: 2000 = 2 segundos
       async (ctx, { gotoFlow, inRef,provider,flowDynamic }) => {
-     await provider.sendtext(mywhatsa, `*${causa}* \nNumero: +${ctx.from}\nEncriptado: +${numberxx}\nNombre: *${ctx.pushName}*\nINFO: \n*${ctx.body}*`)
+     await provider.sendmessage(mywhatsa, `*${causa}* \nNumero: +${ctx.from}\nEncriptado: +${numberxx}\nNombre: *${ctx.pushName}*\nINFO: \n*${ctx.body}*`)
   
     //  await provider.sendtext(573504607650, `*${causa}* \nNumero: +${ctx.from}\nEncriptado: +${numberxx}\nNombre: *${ctx.pushName}*\nINFO: \n*${ctx.body}*`)
   }
@@ -83,7 +83,10 @@ const Cliente = addKeyword(["ASESOR VENTAS"],{sensitive:true})
       )
   //const flujoFinalil = addKeyword('HH').addAnswer('AUTORESPUESTA FINALIZADA - CONTINUE CON LA CONSULTA AL +5491140054474 - NICOLAS')
 
-const flujoFinalil = addKeyword('HH').addAnswer('ASESOR RESPONDIENDO A CONTINUACION')
+const flujoFinalil = addKeyword('HH')
+.addAction(async(ctx, {gotoFlow,endFlow}) => { 
+  console.log('endflow')
+  return endFlow(flujoFinalil)})
 
 
 

@@ -12,7 +12,14 @@
   "keywords": [],
   "dependencies": {
 
-    
+
+        "@builderbot/bot": "latest",
+
+        "eslint-plugin-builderbot": "latest",
+        "eslint": "^8.57.0",
+        "nodemon": "^3.1.0",
+
+
     "@bot-whatsapp/bot": "latest",
     "@bot-whatsapp/cli": "latest",
     "@bot-whatsapp/database": "latest",

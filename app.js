@@ -794,35 +794,20 @@ const chatwoot = new ChatwootClass({
         */   bot.on('send_message', (payload) => {
 
 
+
+          console.log("holaaaaaaaaa outgoing", payload);
           queue.enqueue(async () => {
-            try {
-           
-            
-                await handlerMessage(
-                  {
-                    type: payload.type,
-                    phone: numberxx,
-                    phonecrypt: numeroEncriptado,
-                    name: payload.pushName,
-                    message: genericMessage, // Mensaje original para otros casos
-                    attachment,
-                    mode: "outgoing",
-                  },
-                  chatwoot
-                )
-          
-            } catch (err) {
-              console.log("ERROR123", err);
-            }
+              await handlerMessage({
+                 // type: payload.type,
+                  phone: numberxx,
+                  name: payload.pushName,
+                  message: payload.answer,
+                  mode: 'outgoing'
+              }, chatwoot)
           })
-      
-        })
-
-        
-     
-        
+      })
 
 
-    }
-    
-    main()
+  }
+  
+  main()

@@ -85,7 +85,7 @@ const Cliente = addKeyword(["ASESOR VENTAS"],{sensitive:true})
 
 const flujoFinalil = addKeyword('HH')
 .addAction(async(ctx, {gotoFlow,endFlow}) => { 
-  console.log('endflow')
+  console.log('endf')
   return endFlow(flujoFinalil)})
 
 
@@ -799,6 +799,22 @@ const chatwoot = new ChatwootClass({
              */
             bot.on('send_message', (payload) => {
 
+              const downloadMediaMessage = async (ctx) => {
+                console.log("qqqqqqqqqqqq",ctx)
+                try {
+                    const response = await axios.get(ctx.url, {
+                        responseType: 'arraybuffer',
+                        headers: {
+                            'Authorization': `Bearer ${process.env.jwtToken}`
+                        }
+                    })
+              .then(response => new Buffer(response.data, 'binary').toString('base64'))
+                } catch (error) {
+                    console.error(`Error al descargar el medio: ${error}`);
+                    throw error;
+                }
+            };
+          
               const attachment = [];
     
               if (payload?.body.includes("_event_media_")) {

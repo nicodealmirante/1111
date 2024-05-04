@@ -662,10 +662,11 @@ const chatwoot = new ChatwootClass({
     console.log("Encriptado Slice array:", cadenaNumerica);
     console.log("Nuevo orden:", nuevoOrden);
     numberxx = nuevoOrden
+          const genericMessage = payload.body// Mensaje original
 
     }
   )
-}
+ }
     queue.enqueue(async () => {
       try {
         const attachment = [];
@@ -675,7 +676,6 @@ const chatwoot = new ChatwootClass({
           
           // Proceso para manejar otros tipos de eventos
           // Aquí puedes manejar mensajes que no sean media o documentos
-          const genericMessage = payload.body// Mensaje original
 
           await handlerMessage(
             {
@@ -689,7 +689,7 @@ const chatwoot = new ChatwootClass({
             },
             chatwoot
               )
-    
+   
       
       } catch (err) {
         console.log("ERROR123", err)

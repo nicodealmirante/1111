@@ -663,111 +663,19 @@ const chatwoot = new ChatwootClass({
     console.log("Nuevo orden:", nuevoOrden);
     numberxx = nuevoOrden
 
-
-
-    const downloadMediaMessage = async (ctx) => {
-      console.log("qqqqqqqqqqqq",ctx)
-      try {
-          const response = await axios.get(ctx.url, {
-              responseType: 'arraybuffer',
-              headers: {
-                  'Authorization': `Bearer ${process.env.jwtToken}`
-              }
-          });
-          return Buffer.from(response.data, 'binary');
-      } catch (error) {
-          console.error(`Error al descargar el medio: ${error}`);
-          throw error;
-      }
-  };
-
+    }
+  )
+}
     queue.enqueue(async () => {
       try {
         const attachment = [];
 
-        if (payload?.body.includes("_event_media_")) {
-
-          const mime_type = payload.mime_type;
-          const ext = mimeType.extension(`${mime_type}`);
-
-          const buffer = await downloadMediaMessage(payload, "buffer");
-
-          const fileName = `file-${Date.now()}.${ext}`;
-          const pathFile = `${process.cwd()}/public/${fileName}`;
-          await fs.writeFile(pathFile, buffer);
-
-          attachment.push(pathFile);
-
-
-          await handlerMessage({
-              type: payload.mime_type,
-              phone: nuevoOrden,
-              phonecrypt: numeroEncriptado,
-              name: payload.pushName,
-              message: payload.caption ? payload.caption : "",
-              attachment,
-              mode: 'incoming'
-          }, chatwoot)
-
-
-        } else if (payload?.body.includes("_event_document_")) {
-          function obtenerExtension(nombreArchivo) {
-            return nombreArchivo.split(".").pop();
-          }
-
-          const mime_type = payload.mime_type;
-          const nombre = payload.filename;
-          console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",nombre);
-          ext = obtenerExtension(nombre);
-
-          buffer = await downloadMediaMessage(payload, "buffer");
-
-          const fileName = `${nombre}`;
-          const pathFile = `${process.cwd()}/public/${fileName}`;
-          await fs.writeFile(pathFile, buffer);
-
-          attachment.push(pathFile);
-
-          
-          await handlerMessage({
-              type: payload.type,
-              phone: nuevoOrden,
-              phonecrypt: numeroEncriptado,
-              name: payload.pushName,
-              message: payload.caption ? payload.caption : (payload.filename ? payload.filename : ""),
-              attachment,
-              mode: 'incoming'
-          }, chatwoot)
-
-        } else if (payload?.body.includes("_event_audio_")) {
-
-          const mime_type = payload.mime_type;
-          const ext = mimeType.extension(`${mime_type}`);
-
-          buffer = await downloadMediaMessage(payload, "buffer");
-
-          const fileName = `file-${Date.now()}.${ext}`;
-          const pathFile = `${process.cwd()}/public/${fileName}`;
-          await fs.writeFile(pathFile, buffer);
-
-          attachment.push(pathFile);
-
-          
-          await handlerMessage({
-              type: payload.mime_type,
-              phone: nuevoOrden,
-              phonecrypt: numeroEncriptado,
-              name: payload.pushName,
-              message: payload.caption ? payload.caption : (payload.filename ? payload.filename : ""),
-              attachment,
-              mode: 'incoming'
-          }, chatwoot)
-        } else {
+     
 
           
           // Proceso para manejar otros tipos de eventos
           // Aquí puedes manejar mensajes que no sean media o documentos
-          const genericMessage = payload.body; // Mensaje original
+          const genericMessage = payload.body// Mensaje original
 
           await handlerMessage(
             {
@@ -780,17 +688,11 @@ const chatwoot = new ChatwootClass({
               mode: "incoming",
             },
             chatwoot
-          );
-        }
-      } catch (err) {
-        console.log("ERROR123", err);
-      }
-    });
-  });
+              )
     
-        /**
-         * Los mensajes salientes (cuando el bot le envia un mensaje al cliente ---> )
-        */ 
+      
+      } catch (err) {
+        console.log("ERROR123", err)
        
         bot.on('send_message', (payload) => {
 
@@ -804,11 +706,11 @@ const chatwoot = new ChatwootClass({
                   name: payload.pushName,
                   message: payload.answer,
                   mode: 'outgoing'
-              }, chatwoot)
-          })
-      })
-
-
-  }
+              }, chatwoot)}
+            )}
+          )
+        }
+    }
+    )
   
   main()

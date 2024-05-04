@@ -575,24 +575,6 @@ const chatwoot = new ChatwootClass({
 
 
 
-    
-  const downloadMediaMessage = async (ctx) => {
-      console.log("qqqqqqqqqqqq",ctx)
-      try {
-          const response = await axios.get(ctx.url, {
-              responseType: 'arraybuffer',
-              headers: {
-                  'Authorization': `Bearer ${process.env.jwtToken}`
-              }
-          })
-  
-        .then(response => new Buffer(response.data, 'binary').toString('base64'))
-      } catch (error) {
-          console.error(`Error al descargar el medio: ${error}`);
-          throw error;
-      }
-  };
-
 
   adapterProvider.on("message", (payload) => {
     console.log("payload", payload);
@@ -681,6 +663,23 @@ const chatwoot = new ChatwootClass({
     console.log("Nuevo orden:", nuevoOrden);
     numberxx = nuevoOrden
 
+
+
+    const downloadMediaMessage = async (ctx) => {
+      console.log("qqqqqqqqqqqq",ctx)
+      try {
+          const response = await axios.get(ctx.url, {
+              responseType: 'arraybuffer',
+              headers: {
+                  'Authorization': `Bearer ${process.env.jwtToken}`
+              }
+          });
+          return Buffer.from(response.data, 'binary');
+      } catch (error) {
+          console.error(`Error al descargar el medio: ${error}`);
+          throw error;
+      }
+  };
 
     queue.enqueue(async () => {
       try {
@@ -791,7 +790,9 @@ const chatwoot = new ChatwootClass({
     
         /**
          * Los mensajes salientes (cuando el bot le envia un mensaje al cliente ---> )
-        */   bot.on('send_message', (payload) => {
+        */ 
+       
+        bot.on('send_message', (payload) => {
 
 
 

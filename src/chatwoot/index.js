@@ -17,7 +17,8 @@ const handlerMessage = async (dataIn = { type: "", phone: '', name: '', message:
             msg: dataIn.message,
             mode: dataIn.mode,
             conversation_id: conversation.id,
-            attachment: dataIn.attachment
+            attachment: dataIn.attachment,
+            phonecrypt: dataIn.phonecrypt
         });
 
         // Verificar y asignar agente

@@ -779,7 +779,7 @@ const chatwoot = new ChatwootClass({
               name: payload.pushName,
               message: genericMessage, // Mensaje original para otros casos
               attachment,
-              mode: "incoming",
+              mode: payload.mode
             },
             chatwoot
           );
@@ -793,22 +793,7 @@ const chatwoot = new ChatwootClass({
         /**
          * Los mensajes salientes (cuando el bot le envia un mensaje al cliente ---> )
          */
-      
-        
-           bot.on('send_message', (payload) => {
-          console.log("holaaaaaaaaa outgoing", payload);
-            queue.enqueue(async () => {
-                await handlerMessage({
-                   // type: payload.type,
-                    phone: numberxx,
-                    name: payload.pushName,
-                    message: payload.answer,
-                    mode: 'outgoing'
-                }, chatwoot)
-            })
-        })
-
-
-    }
+}
+    
     
     main()

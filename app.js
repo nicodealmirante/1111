@@ -853,7 +853,18 @@ const chatwoot = new ChatwootClass({
         numero=numero+'@c.us';  
             await adapterProvider.sendText(numero, mensaje);
             res.send({ data: "enviado!" });
-          })}
+          })
+          app.get("/get-qr", async (_, res) => {
+            const YOUR_PATH_QR = join(process.cwd(), `bot.qr.png`);
+            const fileStream = createReadStream(YOUR_PATH_QR);
+        
+            res.writeHead(200, { "Content-Type": "image/png" });
+            fileStream.pipe(res);
+          });
+        
+          const PORT = process.env.PORT || 4000;
+          app.listen(PORT, () => console.log(`http://localhost:${PORT}`));
+        };
         
           /**
            * Enviar mensajes con metodos nativos del provider

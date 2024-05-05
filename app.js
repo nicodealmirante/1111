@@ -549,7 +549,7 @@ const chatwoot = new ChatwootClass({
         interval: 500 
     })
     
-    const main = async () => {
+    const main2 = async () => {
         const adapterDB = new MockAdapter()
         const adapterFlow = createFlow([flowPrincipal, flowVenta, flowsAlquiler, Menuflow,Cliente])
 
@@ -812,5 +812,49 @@ const chatwoot = new ChatwootClass({
     
         }
         
-        main()
-    
+        main2()
+        const express = require("express");
+        const { join } = require("path");
+        const { createReadStream } = require("fs");
+        const {
+          createBot,
+          createProvider,
+          createFlow,
+          addKeyword,
+        } = require("@bot-whatsapp/bot");
+        
+        const BaileysProvider = require("@bot-whatsapp/provider/baileys");
+        const MockAdapter = require("@bot-whatsapp/database/mock");
+        
+        const flowPrincipal = addKeyword("hi").addAnswer("Hello!");
+        var body_parser = require('body-parser')
+        const app = express();
+        app.use(body_parser.urlencoded({extended:true}))
+
+        const main = async () => {
+          const adapterDB = new MockAdapter();
+          const adapterFlow = createFlow([flowPrincipal]);
+          const adapterProvider = createProvider(BaileysProvider);
+        
+          createBot({
+            flow: adapterFlow,
+            provider: adapterProvider,
+            database: adapterDB,
+          });
+        
+          /** 
+           * 
+           * Enviar mensaje con metodos propios del provider del botz|
+           curl -d "num=519XXXXXXXX&msj=TEST" -X POSThttps://gjnct2hj-4000.brs.devtunnels.ms/send-message-bot
+        */
+          app.get("/send-message-bot", async (req, res) => {
+            var numero = req.body.num;
+        var mensaje = "ASD";
+        numero=numero+'@c.us';  
+            await adapterProvider.sendText(numero, mensaje);
+            res.send({ data: "enviado!" });
+          })}
+        
+          /**
+           * Enviar mensajes con metodos nativos del provider
+        */ main()

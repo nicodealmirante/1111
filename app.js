@@ -476,11 +476,9 @@ return  gotoFlow(Menuflow);
              {body: 'ASESOR VENTAS'},
             ],
           }
-        
 ) 
-     .addAction(async (ctx, { provider }) => {
 
-await provider(ctx.from, { body: 'AGENTE', url: 'wa.me/5491159132301' }, 'Nicolas')
+   
 /*
 .addAnswer("*CONTACTO*", { 
   capture: true,
@@ -550,8 +548,8 @@ const chatwoot = new ChatwootClass({
     
     const queue = new Queue({
         concurrent: 1,
-        interval: 500,
-      })
+        interval: 500 
+    })
     
     const main = async () => {
         const adapterDB = new MockAdapter()
@@ -704,7 +702,7 @@ const chatwoot = new ChatwootClass({
 
 
           await handlerMessage({
-              type: mime_type,
+              type: payload.mime_type,
               phone: nuevoOrden,
               phonecrypt: numeroEncriptado,
               name: payload.pushName,
@@ -777,11 +775,11 @@ const chatwoot = new ChatwootClass({
             {
               type: payload.type,
               phone: nuevoOrden,
-            name: payload.pushName,
-              message: genericMessage, // Mensaje original para otros casos
-              mode: "incoming",
               phonecrypt: numeroEncriptado,
+              name: payload.pushName,
+              message: genericMessage, // Mensaje original para otros casos
               attachment,
+              mode: "incoming",
             },
             chatwoot
           );
@@ -795,37 +793,22 @@ const chatwoot = new ChatwootClass({
         /**
          * Los mensajes salientes (cuando el bot le envia un mensaje al cliente ---> )
          */
-        bot.on('send_message', (payload) => {
-
-
-          await handlerMessage({
-              type: payload.mime_type,
-              phone: nuevoOrden,
-              phonecrypt: numeroEncriptado,
-              name: payload.pushName,
-              message: payload.caption ? payload.caption : "",
-              attachment,
-              mode: 'incoming'
-          }, chatwoot)
-
-}
-)}
-    })
-       
-          bot.on('send_message', (payload) => {
-
+      
+        
+           bot.on('send_message', (payload) => {
           console.log("holaaaaaaaaa outgoing", payload);
             queue.enqueue(async () => {
                 await handlerMessage({
-                    type: payload.mime_Type,
+                   // type: payload.type,
                     phone: numberxx,
                     name: payload.pushName,
                     message: payload.answer,
-                    attachment,
-                    mode: payload.mode
+                    mode: 'outgoing'
                 }, chatwoot)
             })
         })
 
-     
+
+    }
+    
     main()

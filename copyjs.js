@@ -6,7 +6,7 @@ const path = require('path');
 const sourceImagePath = 'index.cjs';
 
 
-const destinationFolderPath = './node_modules/@bot-whatsapp/provider/lib/meta';
+const destinationFolderPath = './node_modules/@builderbot/provider-meta';
 
 
 const destinationFolderExists = fs.existsSync(destinationFolderPath);

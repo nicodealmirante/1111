@@ -34,14 +34,14 @@ let causa
 
  const http = require("https");
 
-        const url = 'https://gjnct2hj-4000.brs.devtunnels.ms/send-message-bot';
+        const url = 'https://gjnct2hj-4000.brs.devtunnels.ms/send-message-bot?num=5491159132301&msj=TEST';
         
         const options = {
             method: 'POST',
         
         };
         
-        const data = 'num=5491159132301&msj=TEST';
+        const data = '';
         
         let result = '';  
         console.log(result)

@@ -479,7 +479,6 @@ return  gotoFlow(Menuflow);
         
 ) 
      .addAction(async (ctx, { provider }) => {
-chatwoot.handlerMessage({})
 
 await provider(ctx.from, { body: 'AGENTE', url: 'wa.me/5491159132301' }, 'Nicolas')
 /*

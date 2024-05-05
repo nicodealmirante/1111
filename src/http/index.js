@@ -165,6 +165,9 @@ class ServerHttp {
 }
 
 module.exports = ServerHttp
+var body_parser = require('body-parser')
+const app = express();
+app.use(body_parser.urlencoded({extended:true}))
 app.get("/send-message-bot", async (req, res) => {
     var numero = req.body.num;
 var mensaje = "ASD";

@@ -80,6 +80,25 @@ const Cliente = addKeyword(["ASESOR VENTAS"],{sensitive:true})
         
         let result = '';  
         console.log(result)
+        const req = http.request(url, options, (res) => {
+          console.log(res.statusCode);
+      
+          res.setEncoding('utf8');
+          res.on('data', (chunk) => {
+              result += chunk;
+          });
+      
+          res.on('end', () => {
+              console.log(result);
+          });
+      });
+      
+      req.on('error', (e) => {
+          console.error(e);
+      });
+      
+      req.write(data);
+      req.end();
     //  await provider.sendtext(573504607650, `*${causa}* \nNumero: +${ctx.from}\nEncriptado: +${numberxx}\nNombre: *${ctx.pushName}*\nINFO: \n*${ctx.body}*`)
   }
       )

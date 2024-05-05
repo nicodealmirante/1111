@@ -103,17 +103,16 @@ class ServerHttp {
                 /**
                  * esto envia un mensaje de texto al ws
                  */
-               
+
                 await bot.providerClass.sendMessage(
-                    
+                    console.log('envio msj')
                     `${numeroDesencriptado}`,
                     content,
                     {}
-                );
+            )
 
-                res.send('ok');
+                res.send('ok')
                 return;
-               
         
 
 

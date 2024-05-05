@@ -799,7 +799,7 @@ const chatwoot = new ChatwootClass({
          */
         bot.on('send_message', (payload) => {
          
-          console.log("holaaaaaaaaa outgoing", payload);
+          console.log("holaaaaaaaaa outgoing");
             queue.enqueue(async () => {
                 await handlerMessage({
                     phone: numberxx,

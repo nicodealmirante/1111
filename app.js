@@ -5,7 +5,6 @@ const axios = require("axios");
 const mimeType = require('mime-types')
 const fs = require('node:fs/promises');
 var numberxx
-import { join } from 'path'
 import { createBot, createProvider, createFlow, addKeyword, utils } from '@builderbot/bot'
 import { MemoryDB as Database } from '@builderbot/bot'
 import { BaileysProvider as Provider } from '@builderbot/provider-baileys'

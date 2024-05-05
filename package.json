@@ -13,16 +13,17 @@
   "dependencies": {
 
 
-        "@builderbot/bot": "latest",
+ 
 
         "eslint-plugin-builderbot": "latest",
         "eslint": "^8.57.0",
 
+        "@builderbot/provider-baileys": "latest",
 
-    "@bot-whatsapp/bot": "latest",
-    "@bot-whatsapp/cli": "latest",
-    "@bot-whatsapp/database": "latest",
-    "@bot-whatsapp/provider": "latest",
+    "@builderbot/bot": "latest",
+    "@builderbot/cli": "latest",
+    "@builderbot/database": "latest",
+    "@builderbot/provider-meta": "latest",
     "@ffmpeg-installer/ffmpeg": "^1.1.0",
     "axios": "latest",
     "body-parser": "^1.20.1",

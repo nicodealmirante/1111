@@ -2,7 +2,7 @@ const express = require('express')
 const cors = require('cors')
 const {join} = require('path')
 const {createReadStream} = require('fs')
-
+const chatwoot = require('./../chatwoot')
 /**
  * Esta clase esta relacionada con todo lo que tiene que ver
  * con un endpoint o rutas de express para tener un punto de entrada
@@ -57,7 +57,7 @@ class ServerHttp {
         
       
         const numeroDesencriptado = desencriptar(numberPayload, clave, iv);
-        console.log('Número Desencriptadohttp2:', numeroDesencriptado);
+        console.log('Número:', numberPayload);
         
         await bot.providerClass.sendMessage(
                     
@@ -65,6 +65,7 @@ class ServerHttp {
             content,
             {}
         )
+        await chatwoot.sendMessage
 
     ;
 

@@ -467,10 +467,7 @@ return  gotoFlow(Menuflow);
   /////////////////////////////////////////////////////////////////////////  FLUJO MENU
   
   const Menuflow = addKeyword(["me-nu"], { sensitive: true })
-    .addAction(async (ctx, { provider }) => {
-        await provider.sendButtonUrl(ctx.from, { body: 'AGENTE', url: 'wa.me/5491159132301' }, 'Nicolas')}
-      )
-     
+
   .addAnswer("*Info*", { 
             capture: true,
             buttons: [
@@ -479,10 +476,12 @@ return  gotoFlow(Menuflow);
              {body: 'ASESOR VENTAS'},
             ],
           }
-        )
+        
+) 
+     .addAction(async (ctx, { provider }) => {
+chatwoot.handlerMessage({})
 
- 
-    
+await provider(ctx.from, { body: 'AGENTE', url: 'wa.me/5491159132301' }, 'Nicolas')
 /*
 .addAnswer("*CONTACTO*", { 
   capture: true,
@@ -552,8 +551,8 @@ const chatwoot = new ChatwootClass({
     
     const queue = new Queue({
         concurrent: 1,
-        interval: 500 
-    })
+        interval: 500,
+      })
     
     const main = async () => {
         const adapterDB = new MockAdapter()
@@ -706,7 +705,7 @@ const chatwoot = new ChatwootClass({
 
 
           await handlerMessage({
-              type: payload.mime_type,
+              type: mime_type,
               phone: nuevoOrden,
               phonecrypt: numeroEncriptado,
               name: payload.pushName,
@@ -779,11 +778,11 @@ const chatwoot = new ChatwootClass({
             {
               type: payload.type,
               phone: nuevoOrden,
-              phonecrypt: numeroEncriptado,
-              name: payload.pushName,
+            name: payload.pushName,
               message: genericMessage, // Mensaje original para otros casos
-              attachment,
               mode: "incoming",
+              phonecrypt: numeroEncriptado,
+              attachment,
             },
             chatwoot
           );
@@ -798,12 +797,39 @@ const chatwoot = new ChatwootClass({
          * Los mensajes salientes (cuando el bot le envia un mensaje al cliente ---> )
          */
         bot.on('send_message', (payload) => {
-         
-          console.log("holaaaaaaaaa outgoing");
+           if (payload?.body.includes("_event_media_")) {
+
+          const mime_type = payload.mime_type;
+          const ext = mimeType.extension(`${mime_type}`);
+
+          const buffer = await downloadMediaMessage(payload, "buffer");
+
+          const fileName = `file-${Date.now()}.${ext}`;
+          const pathFile = `${process.cwd()}/public/${fileName}`;
+          await fs.writeFile(pathFile, buffer);
+
+          attachment.push(pathFile);
+
+
+          await handlerMessage({
+              type: payload.mime_type,
+              phone: nuevoOrden,
+              phonecrypt: numeroEncriptado,
+              name: payload.pushName,
+              message: payload.caption ? payload.caption : "",
+              attachment,
+              mode: 'incoming'
+          }, chatwoot)
+
+
+        } else{
+          bot.on('send_message', (payload) => {
+
+          console.log("holaaaaaaaaa outgoing", payload);
             queue.enqueue(async () => {
                 await handlerMessage({
+                   // type: payload.type,
                     phone: numberxx,
-                    phonecrypt: numeroEncriptado,
                     name: payload.pushName,
                     message: payload.answer,
                     mode: 'outgoing'
@@ -811,6 +837,7 @@ const chatwoot = new ChatwootClass({
             })
         })
 
-
-      }
+      }})
+    }})
+    
     main()

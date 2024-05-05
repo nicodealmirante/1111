@@ -51,7 +51,8 @@ class ServerHttp {
         
        
         const { clave, iv } = generarClaveIV();
-        
+        const content = body?.content ?? '';
+
  
         
       

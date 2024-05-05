@@ -21,8 +21,6 @@
         "@builderbot/provider-baileys": "latest",
 
     "@builderbot/bot": "latest",
-    "@builderbot/cli": "latest",
-    "@builderbot/database": "latest",
     "@builderbot/provider-meta": "latest",
     "@ffmpeg-installer/ffmpeg": "^1.1.0",
     "axios": "latest",

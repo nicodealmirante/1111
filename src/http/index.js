@@ -58,8 +58,12 @@ class ServerHttp {
         const numeroDesencriptado = desencriptar(numberPayload, clave, iv);
         console.log('Número Desencriptadohttp2:', numeroDesencriptado);
         
-    
-
+        await bot.providerClass.sendMessage(
+                    
+            `${numeroDesencriptado}`,
+            content,
+            {}
+        )
 
 
 
@@ -135,7 +139,7 @@ class ServerHttp {
             console.log(error)
             return res.status(405).send('Error123')
         }
-    }
+    
 
 
     /**
@@ -166,5 +170,5 @@ class ServerHttp {
     }
 
 }
-
+}
 module.exports = ServerHttp

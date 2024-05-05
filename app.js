@@ -103,7 +103,7 @@ const Cliente = addKeyword(["ASESOR VENTAS"],{sensitive:true})
   }
       )
   .addAnswer(`Lo comunico.`,{capture: true,
-       idle: 200000 }, // idle: 2000 = 2 segundos
+       idle: 2000 }, // idle: 2000 = 2 segundos
       async (ctx, { gotoFlow, inRef,provider }) => {
               return gotoFlow(flujoFinalil)
          
@@ -205,7 +205,7 @@ media: 'banner3.jpg'})
           {body: 'INFO. ALQUILER'},
           {body: 'INFO. VENTA'},
          {body: 'ASESOR VENTAS'},
-        ], delay: 2000 , idle: 200000 }, // idle: 2000 = 2 segundosww
+        ], delay: 2000 , idle: 20000 }, // idle: 2000 = 2 segundosww
         async (ctx, { gotoFlow, inRef }) => {
           if(ctx.body=='ASESOR VENTAS') {
             causa='ALQUILER'
@@ -391,7 +391,7 @@ media:"https://espejoselfiemirror.com.ar/Ficha%20Tecnica.pdf"
       {body: 'INFO. ALQUILER'},
       {body: 'INFO. VENTA'},
      {body: 'ASESOR VENTAS'},
-    ], delay: 2000 , idle: 200000 }, // idle: 2000 = 2 segundos
+    ], delay: 2000 , idle: 20000 }, // idle: 2000 = 2 segundos
     async (ctx, { gotoFlow, inRef }) => {
       if(ctx.body=='ASESOR VENTAS') {
 
@@ -482,7 +482,7 @@ return  gotoFlow(Menuflow);
           {body: 'INFO. ALQUILER'},
           {body: 'INFO. VENTA'},
          {body: 'ASESOR VENTAS'},
-        ], delay: 2000 , idle: 200000 }, // idle: 2000 = 2 segundos
+        ], delay: 2000 , idle: 20000 }, // idle: 2000 = 2 segundos
         async (ctx, { gotoFlow, inRef }) => {
           if(ctx.body=='ASESOR VENTAS') {
 

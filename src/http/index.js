@@ -2,7 +2,7 @@ const express = require('express')
 const cors = require('cors')
 const {join} = require('path')
 const {createReadStream} = require('fs')
-const chatwoot = require('./../chatwoot')
+
 /**
  * Esta clase esta relacionada con todo lo que tiene que ver
  * con un endpoint o rutas de express para tener un punto de entrada
@@ -51,19 +51,20 @@ class ServerHttp {
         
        
         const { clave, iv } = generarClaveIV();
-        const content = body?.content ?? '';
-
+        
  
         
       
         const numeroDesencriptado = desencriptar(numberPayload, clave, iv);
-        console.log('Número:', numberPayload);
+        console.log('Número Desencriptadohttp2:', numeroDesencriptado);
         
-       
-
-        try {
+    
 
 
+
+
+
+    const phone = body?.meta?.sender?.phone_number.replace('+', '')
                 const idAssigned = body?.changed_attributes[0]?.assignee_id?.current_value ?? null
                 console.log('CASU')
 
@@ -74,12 +75,12 @@ class ServerHttp {
                     console.log('SACO')
 
                     bot.dynamicBlacklist.remove(numeroDesencriptado)
+        
                 }
-
-            /**
+                                    /**
              * La parte que se encarga de determinar si un mensaje es enviado al whatsapp del cliente
              */
-            const checkIfMessage =  body?.event == "message_created" && body?.conversation?.channel.includes("Channel::Api")
+            const checkIfMessage = body?.private == false && body?.event == "message_created" && body?.message_type === "outgoing" && body?.conversation?.channel.includes("Channel::Api")
             if (checkIfMessage) {
                 const phone = body.conversation?.meta?.sender?.phone_number.replace('+', '')
                 const content = body?.content ?? '';
@@ -113,15 +114,13 @@ class ServerHttp {
                 res.send('ok');
                 return;
                
-            }
+        
 
-            res.send('ok')
-        } catch (error) {
-            console.log(error)
-            return res.status(405).send('Error123')
+
+        
         }
-    
     }
+
 
     /**
      * Incia tu server http sera encargador de injectar el instanciamiento del bot

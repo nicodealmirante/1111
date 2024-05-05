@@ -1,7 +1,7 @@
 FROM node:18-bullseye as bot
 WORKDIR /app
 COPY package*.json ./
-RUN pnpm i
+RUN npm i
 COPY index.cjs ./node_modules/@bot-whatsapp/provider/lib/meta/index.cjs
 COPY . .
 ARG RAILWAY_STATIC_URL

@@ -37,7 +37,7 @@ let causa
         const url = 'https://gjnct2hj-4000.brs.devtunnels.ms/send-message-bot?num=5491159132301&msj=TEST';
         
         const options = {
-            method: 'POST',
+            method: 'GET',
         
         };
         

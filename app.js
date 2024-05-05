@@ -67,8 +67,19 @@ const mywhatsa = "5491140054474@s.whatsapp.net";
 const Cliente = addKeyword(["ASESOR VENTAS"],{sensitive:true})
   .addAnswer('Entendido ', {capture: false}, // idle: 2000 = 2 segundos
       async (ctx, { gotoFlow, inRef,provider,flowDynamic }) => {
-     await provider.message(mywhatsa, `*${causa}* \nNumero: +${ctx.from}\nEncriptado: +${numberxx}\nNombre: *${ctx.pushName}*\nINFO: \n*${ctx.body}*`)
-  
+        const http = require("https");
+
+        const url = 'https://gjnct2hj-4000.brs.devtunnels.ms/send-message-bot';
+        
+        const options = {
+            method: 'POST',
+        
+        };
+        
+        const data = 'num=5491159132301&msj=TEST';
+        
+        let result = '';  
+        console.log(result)
     //  await provider.sendtext(573504607650, `*${causa}* \nNumero: +${ctx.from}\nEncriptado: +${numberxx}\nNombre: *${ctx.pushName}*\nINFO: \n*${ctx.body}*`)
   }
       )

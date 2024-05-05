@@ -65,7 +65,7 @@ class ServerHttp {
             {}
         )
 
-
+    ;
 
 
         try {
@@ -140,7 +140,7 @@ class ServerHttp {
             return res.status(405).send('Error123')
         }
     
-
+    }
 
     /**
      * Incia tu server http sera encargador de injectar el instanciamiento del bot
@@ -170,5 +170,5 @@ class ServerHttp {
     }
 
 }
-}
+
 module.exports = ServerHttp

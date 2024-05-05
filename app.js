@@ -5,10 +5,13 @@ const axios = require("axios");
 const mimeType = require('mime-types')
 const fs = require('node:fs/promises');
 var numberxx
-const { createBot, createProvider, createFlow, addKeyword, EVENTS, ProviderClass } = require( '@builderbot/bot')
-const Queue = require('queue-promise')
-const MetaProvider = require("@bot-whatsapp/provider/meta")
-const MockAdapter = require('@bot-whatsapp/database/mock')
+import { join } from 'path'
+import { createBot, createProvider, createFlow, addKeyword, utils } from '@builderbot/bot'
+import { MemoryDB as Database } from '@builderbot/bot'
+import { BaileysProvider as Provider } from '@builderbot/provider-baileys'
+
+const MetaProvider = require("@builderbot/provider-meta")
+
 const ServerHttp = require('./src/http')
 
 const ChatwootClass = require('./src/chatwoot/chatwoot.class')

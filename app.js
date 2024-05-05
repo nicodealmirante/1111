@@ -549,7 +549,7 @@ const chatwoot = new ChatwootClass({
         interval: 500 
     })
     
-    const main2 = async () => {
+    const main = async () => {
         const adapterDB = new MockAdapter()
         const adapterFlow = createFlow([flowPrincipal, flowVenta, flowsAlquiler, Menuflow,Cliente])
 const adapterprovider2 = createProvider(BaileysProvider);

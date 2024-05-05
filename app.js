@@ -567,8 +567,12 @@ const adapterprovider2 = createProvider(BaileysProvider);
             provider: adapterProvider,
             database: adapterDB,
         })
-    
-    serverHttp.initialization(bot)
+        const bot2 = await createBot({
+          flow: adapterFlow,
+          provider: adapterProvider2,
+          database: adapterDB,
+        })
+    serverHttp.initialization(bot,bot2)
         /**
          * Los mensajes entrantes al bot (cuando el cliente nos escribe! <---)
          */

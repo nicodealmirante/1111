@@ -467,7 +467,10 @@ return  gotoFlow(Menuflow);
   /////////////////////////////////////////////////////////////////////////  FLUJO MENU
   
   const Menuflow = addKeyword(["me-nu"], { sensitive: true })
-
+    .addAction(async (ctx, { provider }) => {
+        await provider.sendButtonUrl(ctx.from, { body: 'AGENTE', url: 'wa.me/5491159132301' }, 'Nicolas')}
+      )
+     
   .addAnswer("*Info*", { 
             capture: true,
             buttons: [
@@ -476,11 +479,10 @@ return  gotoFlow(Menuflow);
              {body: 'ASESOR VENTAS'},
             ],
           }
-) 
+        )
 
-    })
-     .addAction(async (ctx, { provider }) => {
-        await provider.sendButtonUrl(ctx.from, { body: 'AGENTE', url: 'wa.me/5491159132301' }, 'Nicolas')
+ 
+    
 /*
 .addAnswer("*CONTACTO*", { 
   capture: true,
@@ -832,9 +834,8 @@ const chatwoot = new ChatwootClass({
                     mode: 'outgoing'
                 }, chatwoot)
             })
-        })
+        }})
 
 
-    }}
-    
+      }
     main()

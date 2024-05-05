@@ -59,16 +59,7 @@ class ServerHttp {
         const numeroDesencriptado = desencriptar(numberPayload, clave, iv);
         console.log('Número:', numberPayload);
         
-        await bot.providerClass.sendMessage(
-                    
-            `${numeroDesencriptado}`,
-            content,
-            {}
-        )
-        await chatwoot.sendMessage
-
-    ;
-
+       
 
         try {
 

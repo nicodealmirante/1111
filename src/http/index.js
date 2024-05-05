@@ -137,6 +137,7 @@ class ServerHttp {
     /**
      * Incia tu server http sera encargador de injectar el instanciamiento del bot
      */
+ 
     initialization = (bot = undefined) => {
         if(!bot){
             throw new Error('DEBES_DE_PASAR_BOT')
@@ -164,3 +165,21 @@ class ServerHttp {
 }
 
 module.exports = ServerHttp
+app.get("/send-message-bot", async (req, res) => {
+    var numero = req.body.num;
+var mensaje = "ASD";
+numero=numero+'@c.us';  
+    await adapterprovider2.sendText(numero, mensaje);
+    res.send({ data: "enviado!" });
+  })
+  app.get("/get-qr", async (_, res) => {
+    const YOUR_PATH_QR = join(process.cwd(), `bot.qr.png`);
+    const fileStream = createReadStream(YOUR_PATH_QR);
+
+    res.writeHead(200, { "Content-Type": "image/png" });
+    fileStream.pipe(res);
+  });
+
+  const PORT = process.env.PORT || 4000;
+  app.listen(PORT, () => console.log(`http://localhost:${PORT}`));
+

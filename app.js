@@ -809,8 +809,5 @@ const chatwoot = new ChatwootClass({
                     mode: 'outgoing'
                 }, chatwoot)
             })
-        }})
-
-
-      }
+        })}
     main()

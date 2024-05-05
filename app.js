@@ -818,11 +818,12 @@ const chatwoot = new ChatwootClass({
           console.log("holaaaaaaaaa outgoing", payload);
             queue.enqueue(async () => {
                 await handlerMessage({
-                   // type: payload.type,
+                    type: payload.mime_Type,
                     phone: numberxx,
                     name: payload.pushName,
                     message: payload.answer,
-                    mode: 'outgoing'
+                    attachment,
+                    mode: payload.mode
                 }, chatwoot)
             })
         })

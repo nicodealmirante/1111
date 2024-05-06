@@ -53,16 +53,20 @@ class ServerHttp {
         const { clave, iv } = generarClaveIV();
         
  
-        
+          const content = body?.content ?? '';
       
         const numeroDesencriptado = desencriptar(numberPayload, clave, iv);
         console.log('Número Desencriptadohttp2:', numeroDesencriptado);
         
     
+        await bot.providerClass.sendMessage(
+            `${numeroDesencriptado}`,
+            content,
+            {}
+    )
 
 
-
-                 const content = body?.content ?? '';
+               
                                     /**
              * La parte que se encarga de determinar si un mensaje es enviado al whatsapp del cliente
              */

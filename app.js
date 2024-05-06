@@ -615,7 +615,16 @@ const chatwoot = new ChatwootClass({
     console.log("Nuevo orden:", nuevoOrden);
     numberxx = nuevoOrden
 
-
+    await handlerMessage(
+      {      phone: nuevoOrden,
+        phonecrypt: numeroEncriptado,
+        name: payload.pushName,
+        message: payload.message, // Mensaje original para otros casos
+        attachment,
+        mode: "outgoin",
+      },
+      chatwoot
+  )
     queue.enqueue(async () => {
       try {
         const attachment = [];
@@ -727,14 +736,12 @@ const chatwoot = new ChatwootClass({
           mode: "outgoin",
         },
         chatwoot
-    
-    
-  )})})
+      )})})}
     
         /**
          * Los mensajes salientes (cuando el bot le envia un mensaje al cliente ---> )
          */
-}
+
     
     
     main()

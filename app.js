@@ -904,7 +904,7 @@ const chatwoot = new ChatwootClass({
         name: botname
       });
       QRPortalWeb()
-    }
+   
       
     const bot2= await createBot({
   
@@ -913,5 +913,6 @@ const chatwoot = new ChatwootClass({
         database: adapterDB,
 
     })
+  }
     main2()
   main1()

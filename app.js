@@ -17,7 +17,6 @@ const { handlerMessage } = require('./src/chatwoot')
 let motivo;  
 const QRPortalWeb = require('@bot-whatsapp/portal')
 
-const PORT =  3001
 
 /** * Aqui declaramos los flujos hijos, los flujos se declaran de atras para adelante, es decir que si tienes un flujo de este tipo:
  *
@@ -639,7 +638,8 @@ const chatwoot = new ChatwootClass({
           numberId: process.env.numberId,
           verifyToken: 'A1234',
           version: 'v18.0',
-          name: botname
+          name: botname,
+           PORT:3002
         });
           
         const bot = await createBot({

@@ -21,10 +21,7 @@ const handlerMessage = async (dataIn = { type: "", phone: '', name: '', message:
             phonecrypt: dataIn.phonecrypt
         });
 
-        // Verificar y asignar agente
-        if (Object.keys(agentesMap).some(clave => dataIn.message.includes(clave))) {
-            await asignarAgente(chatwoot, dataIn.message, conversation.id);
-        }
+   
     } catch (error) {
         console.error("Error en handlerMessage:", error);
         // Implementar lógica de manejo de errores según sea necesario

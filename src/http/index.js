@@ -61,15 +61,6 @@ console.log("bodyyyyyyy",req.body)
     
 
 
-
-
-
-    const phone = body?.meta?.sender?.phone_number.replace('+', '')
-                console.log('CASU')
-
-                    bot.dynamicBlacklist.add(numeroDesencriptado)
-             
-        
                 
                                     /**
              * La parte que se encarga de determinar si un mensaje es enviado al whatsapp del cliente

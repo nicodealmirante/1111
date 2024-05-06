@@ -440,7 +440,6 @@ return  gotoFlow(Menuflow);
 
 
   const flowPrincipal = addKeyword(EVENTS.WELCOME)
-  .addAction(async (ctx, { state }) => {if state.
 
   .addAnswer("Hola. Soy Luna, una IA encargada de responder instantáneamente preguntas frecuentes. Para hablar con un asesor humano toque el boton correspondiente.")
     

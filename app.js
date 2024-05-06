@@ -15,6 +15,7 @@ const ServerHttp = require('./src/http')
 const ChatwootClass = require('./src/chatwoot/chatwoot.class')
 const { handlerMessage } = require('./src/chatwoot')
 let motivo;  
+const QRPortalWeb = require('@bot-whatsapp/portal')
 
 const PORT =  3001
 
@@ -640,7 +641,7 @@ const chatwoot = new ChatwootClass({
           version: 'v18.0',
           name: botname
         });
-
+      }
         const main2 = async () => {  
           botname: "BOT2"
           const adapterDB = new MockAdapter()
@@ -649,8 +650,8 @@ const chatwoot = new ChatwootClass({
           const adapterProvider = createProvider(BaileysProvider, {
             name: botname
           });
-      
-        
+          QRPortalWeb()
+        }
           
         const bot = await createBot({
       
@@ -902,7 +903,7 @@ const chatwoot = new ChatwootClass({
         })
 
 
-    }}
+    
     
     main1()
         

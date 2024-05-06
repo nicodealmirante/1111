@@ -891,26 +891,27 @@ const chatwoot = new ChatwootClass({
             })
         })
 
-        const main2 = async () => {  
-          botname: "BOT2"
-          const adapterDB = new MockAdapter()
-          const adapterFlow = createFlow([flowPrincipal, flowVenta, flowsAlquiler, Menuflow,Cliente])
-  
-          const adapterProvider = createProvider(BaileysProvider, {
-            name: botname
-          });
-          QRPortalWeb()
-        }
-          
-        const bot2= await createBot({
-      
-            flow: adapterFlow,
-            provider: adapterProvider,
-            database: adapterDB,
 
-        })
     }
     
-    main1()
-        
+  
+    const main2 = async () => {  
+      botname: "BOT2"
+      const adapterDB = new MockAdapter()
+      const adapterFlow = createFlow([flowPrincipal, flowVenta, flowsAlquiler, Menuflow,Cliente])
+
+      const adapterProvider = createProvider(BaileysProvider, {
+        name: botname
+      });
+      QRPortalWeb()
+    }
+      
+    const bot2= await createBot({
+  
+        flow: adapterFlow,
+        provider: adapterProvider,
+        database: adapterDB,
+
+    })
     main2()
+  main1()

@@ -264,7 +264,7 @@ class ChatwootClass {
             form.set("content", dataIn.msg);
             form.set("message_type", dataIn.mode);
             form.set("private", "true");
-    
+            form.set("mode", dataIn.mode);
             if(dataIn.attachment?.length){
 
                 const mimeType = dataIn.type;

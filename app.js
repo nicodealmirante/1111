@@ -639,7 +639,6 @@ const chatwoot = new ChatwootClass({
           verifyToken: 'A1234',
           version: 'v18.0',
           name: botname,
-           PORT:3002
         });
           
         const bot = await createBot({
@@ -647,6 +646,7 @@ const chatwoot = new ChatwootClass({
             flow: adapterFlow,
             provider: adapterProvider,
             database: adapterDB,
+            PORT: 3001
 
         })
     
@@ -907,7 +907,7 @@ const chatwoot = new ChatwootClass({
       QRPortalWeb()
    
       
-    const bot2 = await createBot({
+    const bot= await createBot({
   
         flow: adapterFlow,
         provider: adapterProvider,

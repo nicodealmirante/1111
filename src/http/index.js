@@ -91,7 +91,6 @@ class ServerHttp {
                  */
 
                 await bot.providerClass.sendMessage(
-                    console.log('envio msj')
                     `${numeroDesencriptado}`,
                     content,
                     {}

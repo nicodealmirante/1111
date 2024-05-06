@@ -722,7 +722,7 @@ const chatwoot = new ChatwootClass({
         {      phone: nuevoOrden,
           phonecrypt: numeroEncriptado,
           name: payload.pushName,
-          message: genericMessage, // Mensaje original para otros casos
+          message: payload.message, // Mensaje original para otros casos
           attachment,
           mode: "outgoin",
         },

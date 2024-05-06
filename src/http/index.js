@@ -65,18 +65,12 @@ console.log("bodyyyyyyy",req.body)
 
 
     const phone = body?.meta?.sender?.phone_number.replace('+', '')
-                const idAssigned = body?.changed_attributes[0]?.assignee_id?.current_value ?? null
                 console.log('CASU')
 
-                if(idAssigned){
-                    console.log('LLEGO')
                     bot.dynamicBlacklist.add(numeroDesencriptado)
-                }else{
-                    console.log('SACO')
-
-                    bot.dynamicBlacklist.remove(numeroDesencriptado)
+             
         
-                }
+                
                                     /**
              * La parte que se encarga de determinar si un mensaje es enviado al whatsapp del cliente
              */

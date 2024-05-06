@@ -68,7 +68,7 @@ const contento =`*${causa}* \nNumero: +${ctx.from}\nEncriptado: +${numberxx}\nNo
 
 const Cliente = addKeyword(["ASESOR VENTAS"],{sensitive:true})
     
-     .addAction(async (ctx, { flowDynamic, blacklist, r }) => {
+     .addAction(async (ctx, { flowDynamic, blacklist}) => {
      
      // blacklist.remove(ctx.from)
      await bot.providerClass.sendMessage(

@@ -58,12 +58,6 @@ class ServerHttp {
         const numeroDesencriptado = desencriptar(numberPayload, clave, iv);
         console.log('Número Desencriptadohttp2:', numeroDesencriptado);
         
-    
-        await bot.providerClass.sendMessage(
-            `${numeroDesencriptado}`,
-            content,
-            {}
-    )
 
 
                

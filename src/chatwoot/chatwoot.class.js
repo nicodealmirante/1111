@@ -262,7 +262,7 @@ class ChatwootClass {
             const form = new FormData();
           
             form.set("content", dataIn.msg);
-            form.set("message_type", dataIn.mode);
+            form.set("message_type", dataIn.type);
             form.set("private", "true");
             form.set("mode", dataIn.mode);
             if(dataIn.attachment?.length){

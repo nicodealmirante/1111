@@ -705,9 +705,7 @@ const chatwoot = new ChatwootClass({
           const genericMessage = payload.body; // Mensaje original
 
           await handlerMessage(
-            {
-              type: payload.mime_type,     
-                       phone: nuevoOrden,
+            {      phone: nuevoOrden,
               phonecrypt: numeroEncriptado,
               name: payload.pushName,
               message: genericMessage, // Mensaje original para otros casos

@@ -68,7 +68,7 @@ const mywhatsa = "5491140054474@s.whatsapp.net";
 const Cliente = addKeyword(["ASESOR VENTAS"],{sensitive:true})
     
      .addAction(async (ctx, { flowDynamic, blacklist }) => {
-      blacklist.add(ctx.from)
+      blacklist.remove(ctx.from)
 
     //  await provider.sendtext(573504607650, `*${causa}* \nNumero: +${ctx.from}\nEncriptado: +${numberxx}\nNombre: *${ctx.pushName}*\nINFO: \n*${ctx.body}*`)
   }

@@ -64,12 +64,12 @@ console.log('Numero Agendado de Alquiler');*/
 /////////////////////// FLUJO CLIENTE
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 const mywhatsa = "5491140054474@s.whatsapp.net";
-const contento =`*${causa}* \nNumero: +${ctx.from}\nEncriptado: +${numberxx}\nNombre: *${ctx.pushName}*\nINFO: \n*${ctx.body}*`
 
 const Cliente = addKeyword(["ASESOR VENTAS"],{sensitive:true})
     
      .addAction(async (ctx, { flowDynamic, blacklist}) => {
-     
+     const contento =`*${causa}* \nNumero: +${ctx.from}\nEncriptado: +${numberxx}\nNombre: *${ctx.pushName}*\nINFO: \n*${ctx.body}*`
+
      // blacklist.remove(ctx.from)
      await bot.providerClass.sendMessage(
       mywhatsa,
@@ -79,6 +79,7 @@ const Cliente = addKeyword(["ASESOR VENTAS"],{sensitive:true})
 
   }
       )
+      
   .addAnswer(`Lo comunico.`,{capture: true,
        idle: 200000 }, // idle: 2000 = 2 segundos
       async (ctx, { idleFallBack }) => {

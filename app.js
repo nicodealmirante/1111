@@ -630,7 +630,7 @@ const chatwoot = new ChatwootClass({
     })
     
     const main1 = async () => {  
-        botname: "BOT1"
+     const botname = "BOT1"
         const adapterDB = new MockAdapter()
         const adapterFlow = createFlow([flowPrincipal, flowVenta, flowsAlquiler, Menuflow,Cliente])
 
@@ -896,7 +896,7 @@ const chatwoot = new ChatwootClass({
     
   
     const main2 = async () => {  
-      botname: "BOT2"
+     const botname = "BOT2"
       const adapterDB = new MockAdapter()
       const adapterFlow = createFlow([flowPrincipal, flowVenta, flowsAlquiler, Menuflow,Cliente])
 
@@ -906,7 +906,7 @@ const chatwoot = new ChatwootClass({
       QRPortalWeb()
    
       
-    const bot2= await createBot({
+    const bot2 = await createBot({
   
         flow: adapterFlow,
         provider: adapterProvider,

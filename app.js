@@ -615,7 +615,7 @@ curl 'https://graph.facebook.com/v18.0/106540352242922/messages' \
  */
 ////////////////////////////////////////////////////////////////////////////////////////
 
-const serverHttp = new ServerHttp(PORT)
+const serverHttp = new ServerHttp(3001)
 
 const chatwoot = new ChatwootClass({
   account: process.env.CHATWOOT_ACCOUNT_ID,

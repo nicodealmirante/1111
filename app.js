@@ -901,7 +901,7 @@ const chatwoot = new ChatwootClass({
       const adapterFlow = createFlow([flowPrincipal, flowVenta, flowsAlquiler, Menuflow,Cliente])
 
       const adapterProvider = createProvider(BaileysProvider, {
-        name: botnamem, 
+        name: botname, 
         PORT:3009
       });
       QRPortalWeb()

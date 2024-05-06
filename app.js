@@ -8,6 +8,7 @@ var numberxx
 const { createBot, createProvider, createFlow, addKeyword, EVENTS, ProviderClass } = require('@bot-whatsapp/bot')
 const Queue = require('queue-promise')
 const MetaProvider = require("@bot-whatsapp/provider/meta")
+const BaileysProvider = require('@bot-whatsapp/provider/baileys')
 const MockAdapter = require('@bot-whatsapp/database/mock')
 const ServerHttp = require('./src/http')
 
@@ -610,61 +611,7 @@ curl 'https://graph.facebook.com/v18.0/106540352242922/messages' \
           }
 ) 
 /*
-.addAnswer("*CONTACTO*", { 
-  capture: true,
-  buttons: [
-      {body: 'HABLAR CON ASESOR'},
-      {body: 'INFO DE LA EMPRESA'},
-      {body: 'adadsdd', url: "https://wa.me/541166704322"},
-  ],
-delay: 2000 }, async (ctx, { fallBack, gotoFlow, provider, flowDynamic}) => {
-if (ctx.body == 'PAGINA WEB') {
-  await flowDynamic('SELFIE MIRROR \nhttps://www.espejoselfiemirror.com.ar')  
-  await flowDynamic('FILA VIP \nhttps://filavip.ar')  
-    gotoFlow(Menuflow);
-} else if (ctx.body == 'HABLAR CON ASESOR') {
-nombre = "Cliente"
-return gotoFlow(Cliente)
-} else if (ctx.body == 'INFO DE LA EMPRESA') {
-await flowDynamic('*Av de Mayo 1624  - RAMOS MEJÍA - Buenos Aires*' )
-await flowDynamic('  Nuestros horarios de atención son: de Lunes a Viernes de 10hs a 17hs' )
 
-await flowDynamic('Selfie Mirror', {media: 'video.mp4'})
-
-return  gotoFlow(Menuflow);
-}   })
-
-
-  const Menuflow2 = addKeyword(["me-?nu"], { sensitive: true })
-
-  
-     .addAnswer("Menu", { 
-                      capture: true,
-                      buttons: [
-                          {body: 'HABLAR CON ASESOR'},
-                          {body: 'INFO DE LA EMPRESA'},
-                          {body: 'PAGINA WEB'},
-                      ],
-                   delay: 2000 }, async (ctx, { gotoFlow, provider, flowDynamic}) => {
-              
-              if (ctx.body == 'PAGINA WEB') {
-                await flowDynamic('SELFIE MIRROR \nhttps://www.espejoselfiemirror.com.ar')  
-
-                await flowDynamic('FILA VIP \nhttps://filavip.ar')  
-                      return  gotoFlow(Menuflow);
-      } else if (ctx.body == 'HABLAR CON ASESOR') {
-         nombre = "Cliente"
-         return gotoFlow(Cliente)
-      } else if (ctx.body == 'INFO DE LA EMPRESA') {
-       await flowDynamic('*Av de Mayo 1624  - RAMOS MEJÍA - Buenos Aires*' )
-       await flowDynamic('  Nuestros horarios de atención son: de Lunes a Viernes de 10hs a 17hs' )
-   
-       await flowDynamic('Selfie Mirror', {media: 'video.mp4'})
-      
-      return  gotoFlow(Menuflow);
-         } 
-        });
-        
  */
 ////////////////////////////////////////////////////////////////////////////////////////
 
@@ -681,7 +628,8 @@ const chatwoot = new ChatwootClass({
         interval: 500 
     })
     
-    const main = async () => {
+    const main1 = async () => {  
+        botname: "BOT1"
         const adapterDB = new MockAdapter()
         const adapterFlow = createFlow([flowPrincipal, flowVenta, flowsAlquiler, Menuflow,Cliente])
 
@@ -690,14 +638,26 @@ const chatwoot = new ChatwootClass({
           numberId: process.env.numberId,
           verifyToken: 'A1234',
           version: 'v18.0',
+          name: botname
         });
+
+        const main2 = async () => {  
+          botname: "BOT2"
+          const adapterDB = new MockAdapter()
+          const adapterFlow = createFlow([flowPrincipal, flowVenta, flowsAlquiler, Menuflow,Cliente])
+  
+          const adapterProvider = createProvider(BaileysProvider, {
+            name: botname
+          });
       
         
           
         const bot = await createBot({
+      
             flow: adapterFlow,
             provider: adapterProvider,
             database: adapterDB,
+
         })
     
     serverHttp.initialization(bot)
@@ -942,6 +902,8 @@ const chatwoot = new ChatwootClass({
         })
 
 
-    }
+    }}
     
-    main()
+    main1()
+        
+    main2()

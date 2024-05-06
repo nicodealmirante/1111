@@ -904,7 +904,7 @@ const chatwoot = new ChatwootClass({
         name: botname, 
         PORT:3009
       });
-      QRPortalWeb()
+      QRPortalWeb({PORT: 3005})
    
       
     const bot= await createBot({

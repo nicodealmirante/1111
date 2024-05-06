@@ -23,7 +23,7 @@ class ServerHttp {
         const bot = req.bot;
 
         const numberPayload = body.conversation?.meta?.sender?.additional_attributes.company_name
-console.log("bodyyyyyyy",req.body)
+//console.log("bodyyyyyyy",req.body)
         
 
         //const numberPayload = 573504607650;
@@ -61,14 +61,15 @@ console.log("bodyyyyyyy",req.body)
     
 
 
-                
+
+        
                                     /**
              * La parte que se encarga de determinar si un mensaje es enviado al whatsapp del cliente
              */
             const checkIfMessage = body?.private == false && body?.event == "message_created" && body?.message_type === "outgoing" && body?.conversation?.channel.includes("Channel::Api")
             if (checkIfMessage) {
                 const phone = body.conversation?.meta?.sender?.phone_number.replace('+', '')
-                const content = body?.contexnt ?? '';
+                const content = body?.content ?? '';
 
                 const file = attachments?.length ? attachments[0] : null;
                 if (file) {

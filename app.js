@@ -65,9 +65,7 @@ console.log('Numero Agendado de Alquiler');*/
 const mywhatsa = "5491140054474@s.whatsapp.net";
 
 const Cliente = addKeyword(["ASESOR VENTAS"],{sensitive:true})
-  .addAction(ctx, {fa}, // idle: 2000 = 2 segundos
-      async (ctx, { gotoFlow, inRef,provider,fa }) => {
-     await provider.sendtext(mywhatsa, `*${causa}* \nNumero: +${ctx.from}\nEncriptado: +${numberxx}\nNombre: *${ctx.pushName}*\nINFO: \n*${ctx.body}*`)})
+    
      .addAction(async (ctx, { flowDynamic, blacklist }) => {
       blacklist.add(ctx.from)
 
@@ -496,7 +494,13 @@ const chatwoot = new ChatwootClass({
             flow: adapterFlow,
             provider: adapterProvider,
             database: adapterDB,
-        })
+        },
+        {
+          blackList: usersBlocked
+      }
+      
+      
+      )
     
    serverHttp.initialization(bot)
         /**

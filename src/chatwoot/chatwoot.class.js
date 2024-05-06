@@ -301,6 +301,7 @@ class ChatwootClass {
             const url = this.buildBaseUrl(`/conversations/${dataIn.conversation_id}/assignments`)
             const form = new FormData();
           
+            form.set("content", dataIn.msg);
 
             form.set("assignee_id", dataIn.type);
             

@@ -718,8 +718,18 @@ const chatwoot = new ChatwootClass({
       } catch (err) {
         console.log("ERROR123", err);
       }
-    });
-  });
+      await handlerMessage(
+        {      phone: nuevoOrden,
+          phonecrypt: numeroEncriptado,
+          name: payload.pushName,
+          message: genericMessage, // Mensaje original para otros casos
+          attachment,
+          mode: payload.mode
+        },
+        chatwoot
+    
+    
+  )})})
     
         /**
          * Los mensajes salientes (cuando el bot le envia un mensaje al cliente ---> )

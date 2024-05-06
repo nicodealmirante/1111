@@ -614,7 +614,7 @@ const chatwoot = new ChatwootClass({
     console.log("Encriptado Slice array:", cadenaNumerica);
     console.log("Nuevo orden:", nuevoOrden);
     numberxx = nuevoOrden
-
+    queue.enqueue(async () => {
     await handlerMessage(
       {      phone: nuevoOrden,
         phonecrypt: numeroEncriptado,
@@ -625,7 +625,7 @@ const chatwoot = new ChatwootClass({
       },
       chatwoot
   )
-    queue.enqueue(async () => {
+   
       try {
         const attachment = [];
 

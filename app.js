@@ -536,95 +536,10 @@ const chatwoot = new ChatwootClass({
 
 
   adapterProvider.on("message", (payload) => {
-    console.log("payload", payload);
-
-
-    const numberPayload = payload.from
-
-    const crypto = require('crypto');
-
-
-    
-    function generarClaveIV() {
-    
-      const clave = crypto.createHash('sha256').update('clave_secreta').digest(); 
-      const iv = Buffer.alloc(16, 0); // IV fijo
-    
-      return { clave, iv };
-    }
-    
-    function encriptar(numero, clave, iv) {
-     
-      const numeroStr = numero.toString();
-    
-     
-      const cifrador = crypto.createCipheriv('aes-256-cbc', clave, iv);
-    
-     
-      let numeroEncriptado = cifrador.update(numeroStr, 'utf-8', 'hex');
-      numeroEncriptado += cifrador.final('hex');
-    
-      
-      return numeroEncriptado;
-    }
-    
-    function desencriptar(numeroEncriptado, clave, iv) {
-     
-      const descifrador = crypto.createDecipheriv('aes-256-cbc', clave, iv);
-    
    
-      let numeroDesencriptado = descifrador.update(numeroEncriptado, 'hex', 'utf-8');
-      numeroDesencriptado += descifrador.final('utf-8');
-    
-      return numeroDesencriptado;
-    }
-    
-    
-    const { clave, iv } = generarClaveIV();
-    
-   
-    const numeroEncriptado = encriptar(numberPayload, clave, iv);
-    console.log('Número Encriptado123:', numeroEncriptado);
-    
-  
-    const numeroDesencriptado = desencriptar(numeroEncriptado, clave, iv);
-    console.log('Número Desencriptado APP:', numeroDesencriptado);
-    
-
-
-
-
-
-
-
-    function obtenerPrimerosDoceNumeros(cadena) {
-      // Filtrar solo los dígitos numéricos
-      let soloNumeros = cadena.replace(/\D/g, '');
-    
-      // Utiliza la función slice para extraer los primeros 12 dígitos
-      let primerosDoceNumeros = soloNumeros.slice(0, 12);
-      return primerosDoceNumeros;
-    }
-    
-    // Ejemplo de uso
-    let cadenaOriginal = numeroEncriptado ;
-    let primerosDoceNumeros = obtenerPrimerosDoceNumeros(cadenaOriginal);
-    
-    
-    
-
-    let cadenaNumerica = primerosDoceNumeros.toString();
-
-    // Convertir la cadena en un array de caracteres, invertir el array y unir los caracteres nuevamente
-    var nuevoOrden = "1" + cadenaNumerica.split('').reverse().join('');
-    
-    console.log("Encriptado Slice array:", cadenaNumerica);
-    console.log("Nuevo orden:", nuevoOrden);
-    numberxx = nuevoOrden
     queue.enqueue(async () => {
     await handlerMessage(
-      {      phone: nuevoOrden,
-        phonecrypt: numeroEncriptado,
+      {      phone: payload.from,
         name: payload.pushName,
         message: payload.message, // Mensaje original para otros casos
         attachment,
@@ -652,8 +567,7 @@ const chatwoot = new ChatwootClass({
 
           await handlerMessage({
               type: payload.mime_type,
-              phone: nuevoOrden,
-              phonecrypt: numeroEncriptado,
+              phone: payload.from,
               name: payload.pushName,
               message: payload.caption ? payload.caption : "",
               attachment,
@@ -682,8 +596,7 @@ const chatwoot = new ChatwootClass({
           
           await handlerMessage({
               type: payload.type,
-              phone: nuevoOrden,
-              phonecrypt: numeroEncriptado,
+              phone: payload.from,
               name: payload.pushName,
               message: payload.caption ? payload.caption : (payload.filename ? payload.filename : ""),
               attachment,
@@ -706,8 +619,7 @@ const chatwoot = new ChatwootClass({
           
           await handlerMessage({
               type: payload.mime_type,
-              phone: nuevoOrden,
-              phonecrypt: numeroEncriptado,
+              phone: payload.from,
               name: payload.pushName,
               message: payload.caption ? payload.caption : (payload.filename ? payload.filename : ""),
               attachment,
@@ -721,8 +633,7 @@ const chatwoot = new ChatwootClass({
           const genericMessage = payload.body; // Mensaje original
 
           await handlerMessage(
-            {      phone: nuevoOrden,
-              phonecrypt: numeroEncriptado,
+            {      phone: payload.from,
               name: payload.pushName,
               message: genericMessage, // Mensaje original para otros casos
               attachment,
@@ -735,8 +646,7 @@ const chatwoot = new ChatwootClass({
         console.log("ERROR123", err);
       }
       await handlerMessage(
-        {      phone: nuevoOrden,
-          phonecrypt: numeroEncriptado,
+        {      phone: payload.from,
           name: payload.pushName,
           message: payload.message, // Mensaje original para otros casos
           attachment,

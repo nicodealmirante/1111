@@ -1,10 +1,10 @@
 
 
-const handlerMessage = async (dataIn = { type: "", phone: '', name: '', message: '', mode: '', phonecrypt: '', attachment: [] }, chatwoot) => {
+const handlerMessage = async (dataIn = { type: "", phone: '', name: '', message: '', mode: '', attachment: [] }, chatwoot) => {
     try {
         // Configuración inicial de Chatwoot
         const inbox = await chatwoot.findOrCreateInbox({ name: 'BOTWS' });
-        const contact = await chatwoot.findOrCreateContact({ from: dataIn.phone, name: dataIn.name, phonecrypt: dataIn.phonecrypt });
+        const contact = await chatwoot.findOrCreateContact({ from: dataIn.phone, name: dataIn.name });
         const conversation = await chatwoot.findOrCreateConversation({
             inbox_id: inbox.id,
             contact_id: contact.id,
@@ -18,7 +18,6 @@ const handlerMessage = async (dataIn = { type: "", phone: '', name: '', message:
             mode: dataIn.mode,
             conversation_id: conversation.id,
             attachment: dataIn.attachment,
-            phonecrypt: dataIn.phonecrypt
         });
 
    

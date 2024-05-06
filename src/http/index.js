@@ -17,7 +17,6 @@ class ServerHttp {
         this.port = _port
     }
  chatwootCtrl = async (req, res) => {
-    const crypto = require('crypto');    
     const body = req.body;
         const attachments = body?.attachments
         const bot = req.bot;
@@ -26,39 +25,8 @@ class ServerHttp {
 //console.log("bodyyyyyyy",req.body)
         
 
-        //const numberPayload = 573504607650;
-        
-        function generarClaveIV() {
-          // Generar una clave y un IV fijos para cada número
-          const clave = crypto.createHash('sha256').update('clave_secreta').digest(); 
-          const iv = Buffer.alloc(16, 0); // IV fijo
-        
-          return { clave, iv };
-        }
-        
-
-        
-        function desencriptar(numeroEncriptado, clave, iv) {
-         
-          const descifrador = crypto.createDecipheriv('aes-256-cbc', clave, iv);
-        
-       
-          let numeroDesencriptado = descifrador.update(numeroEncriptado, 'hex', 'utf-8');
-          numeroDesencriptado += descifrador.final('utf-8');
-        
-          return numeroDesencriptado;
-        }
-        
-       
-        const { clave, iv } = generarClaveIV();
-        
  
           const content = body?.content ?? '';
-      
-        const numeroDesencriptado = desencriptar(numberPayload, clave, iv);
-        console.log('Número Desencriptadohttp2:', numeroDesencriptado);
-        
-
 
                
                                     /**
@@ -73,7 +41,7 @@ class ServerHttp {
                 if (file) {
                     console.log(`Este es el archivo adjunto...`, file.data_url)
                     await bot.providerClass.sendMedia(
-                        `${numeroDesencriptado}`,
+                        phone,
                         content,
                         file.data_url,
                        
@@ -89,7 +57,8 @@ class ServerHttp {
                  */
 
                 await bot.providerClass.sendMessage(
-                    `${numeroDesencriptado}`,
+                    phone,
+                  
                     content,
                     {}
             )

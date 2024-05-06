@@ -5,7 +5,7 @@ const axios = require("axios");
 const mimeType = require('mime-types')
 const fs = require('node:fs/promises');
 var numberxx
-const { createBot, createProvider, createFlow, addKeyword, EVENTS, ProviderClass } = require('@bot-whatsapp/bot')
+const { createBot, createProvider, createFlow, addKeyword, EVENTS } = require('@bot-whatsapp/bot')
 const Queue = require('queue-promise')
 const MetaProvider = require("@bot-whatsapp/provider/meta")
 const MockAdapter = require('@bot-whatsapp/database/mock')
@@ -65,16 +65,18 @@ console.log('Numero Agendado de Alquiler');*/
 const mywhatsa = "5491140054474@s.whatsapp.net";
 
 const Cliente = addKeyword(["ASESOR VENTAS"],{sensitive:true})
-  .addAnswer('Entendido ', {capture: false}, // idle: 2000 = 2 segundos
-      async (ctx, { gotoFlow, inRef,provider,flowDynamic }) => {
-     await provider.sendtext(mywhatsa, `*${causa}* \nNumero: +${ctx.from}\nEncriptado: +${numberxx}\nNombre: *${ctx.pushName}*\nINFO: \n*${ctx.body}*`)
-  
+  .addAction(ctx, {fa}, // idle: 2000 = 2 segundos
+      async (ctx, { gotoFlow, inRef,provider,fa }) => {
+     await provider.sendtext(mywhatsa, `*${causa}* \nNumero: +${ctx.from}\nEncriptado: +${numberxx}\nNombre: *${ctx.pushName}*\nINFO: \n*${ctx.body}*`)})
+     .addAction(async (ctx, { flowDynamic, blacklist }) => {
+      blacklist.add(ctx.from)
+
     //  await provider.sendtext(573504607650, `*${causa}* \nNumero: +${ctx.from}\nEncriptado: +${numberxx}\nNombre: *${ctx.pushName}*\nINFO: \n*${ctx.body}*`)
   }
       )
   .addAnswer(`Lo comunico.`,{capture: true,
        idle: 200000 }, // idle: 2000 = 2 segundos
-      async (ctx, { gotoFlow, inRef,provider }) => {
+      async (ctx, { fall }) => {
           
      if (ctx?.idleFallBack) {
               return gotoFlow(flujoFinalil)
@@ -438,6 +440,7 @@ return  gotoFlow(Menuflow);
 
 
   const flowPrincipal = addKeyword(EVENTS.WELCOME)
+  .addAction(async (ctx, { state }) => {if state.
 
   .addAnswer("Hola. Soy Luna, una IA encargada de responder instantáneamente preguntas frecuentes. Para hablar con un asesor humano toque el boton correspondiente.")
     
@@ -463,81 +466,7 @@ return  gotoFlow(Menuflow);
         }
         )
  
-
-  /////////////////////////////////////////////////////////////////////////  FLUJO MENU
-  
-  const Menuflow = addKeyword(["me-nu"], { sensitive: true })
-
-  .addAnswer("*Info*", { 
-            capture: true,
-            buttons: [
-                {body: 'INFO. ALQUILER'},
-                {body: 'INFO. VENTA'},
-             {body: 'ASESOR VENTAS'},
-            ],
-          }
-) 
-
-   
-/*
-.addAnswer("*CONTACTO*", { 
-  capture: true,
-  buttons: [
-      {body: 'HABLAR CON ASESOR'},
-      {body: 'INFO DE LA EMPRESA'},
-      {body: 'adadsdd', url: "https://wa.me/541166704322"},
-  ],
-delay: 2000 }, async (ctx, { fallBack, gotoFlow, provider, flowDynamic}) => {
-if (ctx.body == 'PAGINA WEB') {
-  await flowDynamic('SELFIE MIRROR \nhttps://www.espejoselfiemirror.com.ar')  
-  await flowDynamic('FILA VIP \nhttps://filavip.ar')  
-    gotoFlow(Menuflow);
-} else if (ctx.body == 'HABLAR CON ASESOR') {
-nombre = "Cliente"
-return gotoFlow(Cliente)
-} else if (ctx.body == 'INFO DE LA EMPRESA') {
-await flowDynamic('*Av de Mayo 1624  - RAMOS MEJÍA - Buenos Aires*' )
-await flowDynamic('  Nuestros horarios de atención son: de Lunes a Viernes de 10hs a 17hs' )
-
-await flowDynamic('Selfie Mirror', {media: 'video.mp4'})
-
-return  gotoFlow(Menuflow);
-}   })
-
-
-  const Menuflow2 = addKeyword(["me-?nu"], { sensitive: true })
-
-  
-     .addAnswer("Menu", { 
-                      capture: true,
-                      buttons: [
-                          {body: 'HABLAR CON ASESOR'},
-                          {body: 'INFO DE LA EMPRESA'},
-                          {body: 'PAGINA WEB'},
-                      ],
-                   delay: 2000 }, async (ctx, { gotoFlow, provider, flowDynamic}) => {
-              
-              if (ctx.body == 'PAGINA WEB') {
-                await flowDynamic('SELFIE MIRROR \nhttps://www.espejoselfiemirror.com.ar')  
-
-                await flowDynamic('FILA VIP \nhttps://filavip.ar')  
-                      return  gotoFlow(Menuflow);
-      } else if (ctx.body == 'HABLAR CON ASESOR') {
-         nombre = "Cliente"
-         return gotoFlow(Cliente)
-      } else if (ctx.body == 'INFO DE LA EMPRESA') {
-       await flowDynamic('*Av de Mayo 1624  - RAMOS MEJÍA - Buenos Aires*' )
-       await flowDynamic('  Nuestros horarios de atención son: de Lunes a Viernes de 10hs a 17hs' )
-   
-       await flowDynamic('Selfie Mirror', {media: 'video.mp4'})
-      
-      return  gotoFlow(Menuflow);
-         } 
-        });
         
- */
-////////////////////////////////////////////////////////////////////////////////////////
-
 const serverHttp = new ServerHttp(PORT)
 
 const chatwoot = new ChatwootClass({
@@ -648,7 +577,7 @@ const chatwoot = new ChatwootClass({
     
   
     const numeroDesencriptado = desencriptar(numeroEncriptado, clave, iv);
-    console.log('Número Desencriptado:', numeroDesencriptado);
+    console.log('Número Desencriptado APP:', numeroDesencriptado);
     
 
 
@@ -773,8 +702,8 @@ const chatwoot = new ChatwootClass({
 
           await handlerMessage(
             {
-              type: payload.type,
-              phone: nuevoOrden,
+              type: payload.mime_type,     
+                       phone: nuevoOrden,
               phonecrypt: numeroEncriptado,
               name: payload.pushName,
               message: genericMessage, // Mensaje original para otros casos

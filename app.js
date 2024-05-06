@@ -480,7 +480,7 @@ const chatwoot = new ChatwootClass({
     
     const main = async () => {
         const adapterDB = new MockAdapter()
-        const adapterFlow = createFlow([flowPrincipal, flowVenta, flowsAlquiler, Menuflow,Cliente])
+        const adapterFlow = createFlow([flowPrincipal, flowVenta, flowsAlquiler,Cliente])
 
         const adapterProvider = createProvider(MetaProvider, {
           jwtToken: process.env.jwtToken,

@@ -71,7 +71,7 @@ const Cliente = addKeyword(["ASESOR VENTAS"],{sensitive:true})
      const contento =`*${causa}* \nNumero: +${ctx.from}\nEncriptado: +${numberxx}\nNombre: *${ctx.pushName}*\nINFO: \n*${ctx.body}*`
 
      // blacklist.remove(ctx.from)
-     await bot.providerClass.sendMessage(
+     await bot.provider.sendtext(
       mywhatsa,
       contento,
       {}
@@ -80,7 +80,7 @@ const Cliente = addKeyword(["ASESOR VENTAS"],{sensitive:true})
   }
       )
       
-  .addAnswer(`Lo comunico.`,{capture: true,
+  .addAnswer(`continue al +5491140054474.`,{capture: true,
        idle: 200000 }, // idle: 2000 = 2 segundos
       async (ctx, { idleFallBack }) => {
           
@@ -91,7 +91,7 @@ const Cliente = addKeyword(["ASESOR VENTAS"],{sensitive:true})
       )
   //const flujoFinalil = addKeyword('HH').addAnswer('AUTORESPUESTA FINALIZADA - CONTINUE CON LA CONSULTA AL +5491140054474 - NICOLAS')
 
-const flujoFinalil = addKeyword('HH').addAnswer('ASESOR RESPONDIENDO A CONTINUACION')
+const flujoFinalil = addKeyword('HH').addAnswer('ASESOR +5491140054474 (continue a ese numero)')
 
 
 

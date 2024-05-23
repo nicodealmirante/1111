@@ -64,7 +64,7 @@ class ServerHttp {
                                     /**
              * La parte que se encarga de determinar si un mensaje es enviado al whatsapp del cliente
              */
-            const checkIfMessage = body?.private == false && body?.event == "message_created" && body?.message_type === "outgoing" && body?.conversation?.channel.includes("Channel::Api")
+            const checkIfMessage = body?.private == false && body?.event == "message_created" && body?.message_type === "outgoin" && body?.conversation?.channel.includes("Channel::Api")
             if (checkIfMessage) {
                 const phone = body.conversation?.meta?.sender?.phone_number.replace('+', '')
        

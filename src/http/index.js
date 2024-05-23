@@ -100,8 +100,7 @@ class ServerHttp {
                     console.log(`Este es el archivo adjunto...`, file.data_url)
                     await bot.providerClass.sendMedia(
                         `${numeroDesencriptado}`,
-                        content,
-                        file.data_url,
+                        file.data_url
                        
                     );
                     res.send('ok')

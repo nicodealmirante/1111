@@ -1,4 +1,4 @@
- require('dotenv').config()
+require('dotenv').config()
 
 const axios = require("axios");
 // const Queue = require('queue-promise')
@@ -158,12 +158,12 @@ media: 'banner3.jpg'})
 '\nEl servicio dura 2 horas. Durante ese tiempo no existe límite de capturas.',
 'Los videos son filmados y compartidos en el momento ya editados escaneando un codigo QR',
 'Incluye accesorios (pistola lanza burbujas, lanza billetes.)',
-'El valor del servicio de 2 horas es de $ 130.000 .-'])
+'El valor del servicio de 2 horas es de $ 180.000 .-'])
 .addAnswer(['\n*Espejo Magico*',
-'\nValor Servicio por 2 Horas $ 130.000',
-'\nValor ambos servicios por 2 Horas $ 250.000',
+'\nValor Servicio por 2 Horas $ 180.000',
+'\nValor ambos servicios por 2 Horas $ 350.000',
 '\nEl minimo de alquiler son 2 horas',
-'\nEl valor de la Hora adicional es de $ 75.000'])
+'\nEl valor de la Hora adicional es de $ 85.000'])
 .addAnswer(['🚚El valor no incluye traslados'])
 
 
@@ -335,8 +335,8 @@ const organizadorflow = addKeyword('UNIFILA LED',{sensitive:true})
       media: 'colum2.mp4', delay: 3000})
           .addAnswer('FICHA TECNICA',
         {
-            body:'PDF',
-media:"https://espejoselfiemirror.com.ar/Ficha%20Tecnica.pdf"
+            'PDF',
+    media:'https://espejoselfiemirror.com.ar/Ficha%20Tecnica.pdf'
         })
   
         .addAnswer('Selfie Mirror',{

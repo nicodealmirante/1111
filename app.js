@@ -1,4 +1,4 @@
-require('dotenv').config()
+ require('dotenv').config()
 
 const axios = require("axios");
 // const Queue = require('queue-promise')
@@ -333,10 +333,10 @@ const organizadorflow = addKeyword('UNIFILA LED',{sensitive:true})
     media: 'colum1.jpg', delay: 3000})
     .addAnswer('UNIFILAS',{
       media: 'colum2.mp4', delay: 3000})
-      .addAnswer('FICHA TECNICA',
+          .addAnswer('FICHA TECNICA',
         {
             body:'PDF',
-media:"https://pdfobject.com/pdf/sample.pdf"
+media:"https://espejoselfiemirror.com.ar/Ficha%20Tecnica.pdf"
         })
   
         .addAnswer('Selfie Mirror',{

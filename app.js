@@ -432,12 +432,20 @@ return  gotoFlow(Menuflow);
 }});
 */
  //////////////////////////////////////////////////////////////// EVENTO WELCOME
+let si;
+const end= addKeyword(EVENTS.WELCOME)
+  .addAction(async(ctx, {gotoFlow,endFlow}) => {  if(si==1){
+    si=1
+    return gotoFlow(flowPrincipal)}
+    
+    
+  else 
+  {endFlow()})
+            
 
 
 
-
-  const flowPrincipal = addKeyword(EVENTS.WELCOME)
-
+  const flowPrincipal = addKeyword(["me-:&:$:$:$"], { sensitive: true })
   .addAnswer("Hola. Soy Luna, una IA encargada de responder instantáneamente preguntas frecuentes. Para hablar con un asesor humano toque el boton correspondiente.")
     
   .addAnswer('Selfie Mirror', {media: 'banner22.jpg'})
@@ -461,7 +469,7 @@ return  gotoFlow(Menuflow);
             }
         }
         )
- 
+ }
 
   /////////////////////////////////////////////////////////////////////////  FLUJO MENU
   

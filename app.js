@@ -7,7 +7,7 @@ const fs = require('node:fs/promises');
 var numberxx
 const { createBot, createProvider, createFlow, addKeyword, EVENTS } = require('@bot-whatsapp/bot')
 const Queue = require('queue-promise')
-const MetaProvider = require("@bot-whatsapp/provider/meta")
+const MetaProvider = require('@bot-whatsapp/provider/baileys')
 const MockAdapter = require('@bot-whatsapp/database/mock')
 const ServerHttp = require('./src/http')
 const usersBlocked = [] //['1418****']
@@ -489,12 +489,7 @@ const chatwoot = new ChatwootClass({
         const adapterDB = new MockAdapter()
         const adapterFlow = createFlow([flowPrincipal, flowVenta, flowsAlquiler,Cliente])
 
-        const adapterProvider = createProvider(MetaProvider, {
-          jwtToken: process.env.jwtToken,
-          numberId: process.env.numberId,
-          verifyToken: 'A1234',
-          version: 'v18.0',
-        });
+        const adapterProvider = createProvider(MetaProvider);
       
         
           

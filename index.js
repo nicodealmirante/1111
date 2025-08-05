@@ -1,12 +1,11 @@
 import baileys from '@whiskeysockets/baileys'
+const { makeWASocket, useMultiFileAuthState } = baileys
+
 import pino from 'pino'
 import qrcode from 'qrcode-terminal'
 import OpenAI from 'openai'
-import fs from 'fs-extra'
+import fs from 'fs'
 import 'dotenv/config'
-
-const { default: makeWASocket, useMultiFileAuthState } = baileys
-
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
 const assistantId = process.env.ASSISTANT_ID
@@ -34,8 +33,6 @@ const respuestas = {
   }
 }
 
-
-
 async function connectBot() {
   const { state, saveCreds } = await useMultiFileAuthState('auth')
   const sock = makeWASocket({
@@ -45,12 +42,11 @@ async function connectBot() {
   })
 
   sock.ev.on('creds.update', saveCreds)
+
   sock.ev.on('connection.update', ({ connection, qr }) => {
     if (qr) qrcode.generate(qr, { small: true })
     if (connection === 'open') console.log('✅ Bot conectado a WhatsApp')
   })
-
-
 
   sock.ev.on('messages.upsert', async ({ messages }) => {
     const m = messages[0]
@@ -62,38 +58,24 @@ async function connectBot() {
     console.log(`💬 ${from}: ${text}`)
 
     try {
-      // 1️⃣ Consultar asistente
       const response = await openai.beta.threads.createAndRun({
         assistant_id: assistantId,
         thread: { messages: [{ role: 'user', content: text }] }
       })
 
-      // 2️⃣ Palabra clave
       const keyword = (response.output_text || "").trim().toUpperCase()
       console.log("🔹 Palabra clave:", keyword)
 
-      // 3️⃣ Obtener respuesta
       const resp = respuestas[keyword] || respuestas.DEFAULT
 
-      // 4️⃣ Enviar texto
       await sock.sendMessage(from, { text: resp.texto })
 
-      // 5️⃣ Enviar imágenes
       for (let img of resp.imagenes) {
-        if (fs.existsSync(img)) {
-          await sock.sendMessage(from, { image: fs.readFileSync(img), caption: "" })
-        }
+        await sock.sendMessage(from, { image: fs.readFileSync(img), caption: "" })
       }
 
-      // 6️⃣ Enviar PDFs
       for (let pdf of resp.pdfs) {
-        if (fs.existsSync(pdf)) {
-          await sock.sendMessage(from, { 
-            document: fs.readFileSync(pdf), 
-            fileName: pdf.split('/').pop(), 
-            mimetype: 'application/pdf' 
-          })
-        }
+        await sock.sendMessage(from, { document: fs.readFileSync(pdf), fileName: pdf.split('/').pop(), mimetype: 'application/pdf' })
       }
 
     } catch (e) {

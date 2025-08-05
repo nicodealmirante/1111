@@ -56,27 +56,27 @@ async function connectBot() {
 
   sock.ev.on('creds.update', saveCreds)
 
-  sock.ev.on('connection.update', async ({ connection, lastDisconnect, qr }) => {
-    if (qr) {
-      // QR en consola
-      qrcode.generate(qr, { small: true })
+ sock.ev.on('connection.update', async ({ connection, lastDisconnect, qr }) => {
+  if (qr) {
+    // QR en consola
+    qrcode.generate(qr, { small: true })
 
-      // QR remoto
-      const qrPng = await qrcodeImage.toBuffer(qr)
-      const link = await uploadQR(qrPng)
-      console.log("🔗 Escaneá el QR remoto:", link)
-    }
+    // QR remoto
+    const qrPng = await qrcodeImage.toBuffer(qr)
+    const link = await uploadQR(qrPng)
+    console.log("🔗 Escaneá el QR remoto:", link)
+  }
 
-    if (connection === 'open') console.log('✅ Bot conectado a WhatsApp')
+  if (connection === 'open') console.log('✅ Bot conectado a WhatsApp')
 
-    if (connection === 'close') {
-      const reason = new baileys.DisconnectReason(
-        lastDisconnect?.error?.output?.statusCode || 0
-      )
-      console.log('❌ Conexión cerrada:', reason)
-      throw new Error('Conexión cerrada, reiniciando...')
-    }
-  })
+  if (connection === 'close') {
+    const statusCode = lastDisconnect?.error?.output?.statusCode || 0
+    console.log('❌ Conexión cerrada. StatusCode:', statusCode)
+    throw new Error('Conexión cerrada, reiniciando...')
+  }
+})
+
+
 
   sock.ev.on('messages.upsert', async ({ messages }) => {
     const m = messages[0]

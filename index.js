@@ -1,45 +1,38 @@
 import baileys from '@whiskeysockets/baileys'
 import pino from 'pino'
 import qrcode from 'qrcode-terminal'
+import qrcodeImage from 'qrcode'
 import OpenAI from 'openai'
 import fs from 'fs-extra'
+import fetch from 'node-fetch'
 import 'dotenv/config'
 
 const { default: makeWASocket, useMultiFileAuthState } = baileys
 
-// ✅ Evitar que Railway cierre el contenedor por errores no atrapados
 process.on('uncaughtException', console.error)
 process.on('unhandledRejection', console.error)
 
-// ✅ Aseguramos carpeta de sesión
 fs.ensureDirSync('session')
 
-// 🔹 Configuración OpenAI
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
 const assistantId = process.env.ASSISTANT_ID
 
-// 🔹 Diccionario de respuestas
+// Diccionario de respuestas
 const respuestas = {
-  VENTA: {
-    texto: "💰 Info de ventas: ¡Mirá el detalle en el PDF!",
-    imagenes: ["media/venta1.jpg", "media/venta2.jpg"],
-    pdfs: ["media/detalle_espejo.pdf"]
-  },
-  ALQUILER: {
-    texto: "🏠 Info de alquileres: ¡Te paso fotos y detalle!",
-    imagenes: ["media/alquiler1.jpg"],
-    pdfs: ["media/detalle_alquiler.pdf"]
-  },
-  SOPORTE: {
-    texto: "🔧 Soporte técnico: Escribinos al 11-5555-5555",
-    imagenes: [],
-    pdfs: []
-  },
-  DEFAULT: {
-    texto: "🤖 No entendí, ¿querés info de Venta, Alquiler o Soporte?",
-    imagenes: [],
-    pdfs: []
-  }
+  VENTA: { texto: "💰 Info de ventas", imagenes: [], pdfs: [] },
+  ALQUILER: { texto: "🏠 Info de alquileres", imagenes: [], pdfs: [] },
+  SOPORTE: { texto: "🔧 Soporte técnico 11-5555-5555", imagenes: [], pdfs: [] },
+  DEFAULT: { texto: "🤖 Venta, Alquiler o Soporte?", imagenes: [], pdfs: [] }
+}
+
+async function uploadQR(data) {
+  const res = await fetch('https://file.io/?expires=1d', {
+    method: 'POST',
+    body: data,
+    headers: { 'Content-Type': 'application/octet-stream' }
+  })
+  const json = await res.json()
+  return json.link || '❌ No se pudo subir QR'
 }
 
 async function connectBot() {
@@ -52,8 +45,19 @@ async function connectBot() {
 
   sock.ev.on('creds.update', saveCreds)
 
-  sock.ev.on('connection.update', ({ connection, qr }) => {
-    if (qr) qrcode.generate(qr, { small: true })
+  sock.ev.on('connection.update', async ({ connection, qr }) => {
+    if (qr) {
+      // 1️⃣ Mostrar en consola
+      qrcode.generate(qr, { small: true })
+
+      // 2️⃣ Generar PNG temporal
+      const qrPng = await qrcodeImage.toBuffer(qr)
+
+      // 3️⃣ Subir QR remoto
+      const link = await uploadQR(qrPng)
+      console.log("🔗 Escaneá el QR remoto:", link)
+    }
+
     if (connection === 'open') console.log('✅ Bot conectado a WhatsApp')
     if (connection === 'close') console.log('❌ Conexión cerrada, reintentando...')
   })
@@ -68,39 +72,16 @@ async function connectBot() {
     console.log(`💬 ${from}: ${text}`)
 
     try {
-      // 1️⃣ Consultar asistente
       const response = await openai.beta.threads.createAndRun({
         assistant_id: assistantId,
         thread: { messages: [{ role: 'user', content: text }] }
       })
 
-      // 2️⃣ Palabra clave
       const keyword = (response.output_text || "").trim().toUpperCase()
       console.log("🔹 Palabra clave:", keyword)
 
-      // 3️⃣ Obtener respuesta
       const resp = respuestas[keyword] || respuestas.DEFAULT
-
-      // 4️⃣ Enviar texto
       await sock.sendMessage(from, { text: resp.texto })
-
-      // 5️⃣ Enviar imágenes
-      for (let img of resp.imagenes) {
-        if (fs.existsSync(img)) {
-          await sock.sendMessage(from, { image: fs.readFileSync(img), caption: "" })
-        }
-      }
-
-      // 6️⃣ Enviar PDFs
-      for (let pdf of resp.pdfs) {
-        if (fs.existsSync(pdf)) {
-          await sock.sendMessage(from, {
-            document: fs.readFileSync(pdf),
-            fileName: pdf.split('/').pop(),
-            mimetype: 'application/pdf'
-          })
-        }
-      }
 
     } catch (e) {
       console.error(e)
@@ -109,10 +90,7 @@ async function connectBot() {
   })
 }
 
-// 🔹 Ejecutar bot
 connectBot()
 
-// 🔹 Keep-alive para Railway
-setInterval(() => {
-  console.log("🤖 Bot vivo en Railway")
-}, 60000)
+// Mantener vivo
+setInterval(() => console.log("🤖 Bot vivo en Railway"), 60000)

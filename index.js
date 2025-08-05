@@ -7,17 +7,16 @@ import fs from 'fs-extra'
 import fetch from 'node-fetch'
 import 'dotenv/config'
 
-const { default: makeWASocket, useMultiFileAuthState } = baileys
+const { default: makeWASocket, useMultiFileAuthState, DisconnectReason } = baileys
 
 process.on('uncaughtException', console.error)
 process.on('unhandledRejection', console.error)
 
-fs.ensureDirSync('session')
-
+// 🔹 Config OpenAI
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
 const assistantId = process.env.ASSISTANT_ID
 
-// Diccionario de respuestas
+// 🔹 Diccionario de respuestas
 const respuestas = {
   VENTA: { texto: "💰 Info de ventas", imagenes: [], pdfs: [] },
   ALQUILER: { texto: "🏠 Info de alquileres", imagenes: [], pdfs: [] },
@@ -25,17 +24,29 @@ const respuestas = {
   DEFAULT: { texto: "🤖 Venta, Alquiler o Soporte?", imagenes: [], pdfs: [] }
 }
 
+// 🔹 Sube QR remoto y devuelve link
 async function uploadQR(data) {
-  const res = await fetch('https://file.io/?expires=1d', {
-    method: 'POST',
-    body: data,
-    headers: { 'Content-Type': 'application/octet-stream' }
-  })
-  const json = await res.json()
-  return json.link || '❌ No se pudo subir QR'
+  try {
+    const res = await fetch('https://file.io/?expires=1d', {
+      method: 'POST',
+      body: data,
+      headers: { 'Content-Type': 'application/octet-stream' }
+    })
+    const json = await res.json()
+    return json.link || '❌ No se pudo subir QR'
+  } catch {
+    return '❌ Error subiendo QR remoto'
+  }
 }
 
+// 🔹 Inicia el bot
 async function connectBot() {
+  // Borrar sesión corrupta si existe archivo en lugar de carpeta
+  if (fs.existsSync('session') && !fs.lstatSync('session').isDirectory()) {
+    fs.removeSync('session')
+  }
+  fs.ensureDirSync('session')
+
   const { state, saveCreds } = await useMultiFileAuthState('session')
   const sock = makeWASocket({
     printQRInTerminal: true,
@@ -45,21 +56,26 @@ async function connectBot() {
 
   sock.ev.on('creds.update', saveCreds)
 
-  sock.ev.on('connection.update', async ({ connection, qr }) => {
+  sock.ev.on('connection.update', async ({ connection, lastDisconnect, qr }) => {
     if (qr) {
-      // 1️⃣ Mostrar en consola
+      // QR en consola
       qrcode.generate(qr, { small: true })
 
-      // 2️⃣ Generar PNG temporal
+      // QR remoto
       const qrPng = await qrcodeImage.toBuffer(qr)
-
-      // 3️⃣ Subir QR remoto
       const link = await uploadQR(qrPng)
       console.log("🔗 Escaneá el QR remoto:", link)
     }
 
     if (connection === 'open') console.log('✅ Bot conectado a WhatsApp')
-    if (connection === 'close') console.log('❌ Conexión cerrada, reintentando...')
+
+    if (connection === 'close') {
+      const reason = new baileys.DisconnectReason(
+        lastDisconnect?.error?.output?.statusCode || 0
+      )
+      console.log('❌ Conexión cerrada:', reason)
+      throw new Error('Conexión cerrada, reiniciando...')
+    }
   })
 
   sock.ev.on('messages.upsert', async ({ messages }) => {
@@ -90,7 +106,18 @@ async function connectBot() {
   })
 }
 
-connectBot()
+// 🔹 Bucle de reconexión infinita
+async function start() {
+  try {
+    await connectBot()
+  } catch (err) {
+    console.error("💥 Error fatal:", err.message)
+    console.log("♻️  Reintentando en 5s...")
+    setTimeout(start, 5000)
+  }
+}
 
-// Mantener vivo
+start()
+
+// Mantener vivo Railway
 setInterval(() => console.log("🤖 Bot vivo en Railway"), 60000)

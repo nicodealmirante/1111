@@ -86,3 +86,8 @@ async function connectBot() {
 }
 
 connectBot()
+
+// 🔹 Mantener vivo el proceso
+setInterval(() => {
+  console.log("🤖 Bot vivo en Railway")
+}, 60000)

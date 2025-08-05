@@ -1,15 +1,24 @@
 import baileys from '@whiskeysockets/baileys'
-const { makeWASocket, useMultiFileAuthState } = baileys
-
 import pino from 'pino'
 import qrcode from 'qrcode-terminal'
 import OpenAI from 'openai'
-import fs from 'fs'
+import fs from 'fs-extra'
 import 'dotenv/config'
 
+const { default: makeWASocket, useMultiFileAuthState } = baileys
+
+// ✅ Evitar que Railway cierre el contenedor por errores no atrapados
+process.on('uncaughtException', console.error)
+process.on('unhandledRejection', console.error)
+
+// ✅ Aseguramos carpeta de sesión
+fs.ensureDirSync('session')
+
+// 🔹 Configuración OpenAI
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
 const assistantId = process.env.ASSISTANT_ID
 
+// 🔹 Diccionario de respuestas
 const respuestas = {
   VENTA: {
     texto: "💰 Info de ventas: ¡Mirá el detalle en el PDF!",
@@ -34,7 +43,7 @@ const respuestas = {
 }
 
 async function connectBot() {
-  const { state, saveCreds } = await useMultiFileAuthState('stad')
+  const { state, saveCreds } = await useMultiFileAuthState('session')
   const sock = makeWASocket({
     printQRInTerminal: true,
     logger: pino({ level: 'silent' }),
@@ -46,6 +55,7 @@ async function connectBot() {
   sock.ev.on('connection.update', ({ connection, qr }) => {
     if (qr) qrcode.generate(qr, { small: true })
     if (connection === 'open') console.log('✅ Bot conectado a WhatsApp')
+    if (connection === 'close') console.log('❌ Conexión cerrada, reintentando...')
   })
 
   sock.ev.on('messages.upsert', async ({ messages }) => {
@@ -58,24 +68,38 @@ async function connectBot() {
     console.log(`💬 ${from}: ${text}`)
 
     try {
+      // 1️⃣ Consultar asistente
       const response = await openai.beta.threads.createAndRun({
         assistant_id: assistantId,
         thread: { messages: [{ role: 'user', content: text }] }
       })
 
+      // 2️⃣ Palabra clave
       const keyword = (response.output_text || "").trim().toUpperCase()
       console.log("🔹 Palabra clave:", keyword)
 
+      // 3️⃣ Obtener respuesta
       const resp = respuestas[keyword] || respuestas.DEFAULT
 
+      // 4️⃣ Enviar texto
       await sock.sendMessage(from, { text: resp.texto })
 
+      // 5️⃣ Enviar imágenes
       for (let img of resp.imagenes) {
-        await sock.sendMessage(from, { image: fs.readFileSync(img), caption: "" })
+        if (fs.existsSync(img)) {
+          await sock.sendMessage(from, { image: fs.readFileSync(img), caption: "" })
+        }
       }
 
+      // 6️⃣ Enviar PDFs
       for (let pdf of resp.pdfs) {
-        await sock.sendMessage(from, { document: fs.readFileSync(pdf), fileName: pdf.split('/').pop(), mimetype: 'application/pdf' })
+        if (fs.existsSync(pdf)) {
+          await sock.sendMessage(from, {
+            document: fs.readFileSync(pdf),
+            fileName: pdf.split('/').pop(),
+            mimetype: 'application/pdf'
+          })
+        }
       }
 
     } catch (e) {
@@ -85,9 +109,10 @@ async function connectBot() {
   })
 }
 
+// 🔹 Ejecutar bot
 connectBot()
 
-// 🔹 Mantener vivo el proceso
+// 🔹 Keep-alive para Railway
 setInterval(() => {
   console.log("🤖 Bot vivo en Railway")
 }, 60000)

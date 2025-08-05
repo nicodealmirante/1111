@@ -34,7 +34,7 @@ const respuestas = {
 }
 
 async function connectBot() {
-  const { state, saveCreds } = await useMultiFileAuthState('auth')
+  const { state, saveCreds } = await useMultiFileAuthState('stad')
   const sock = makeWASocket({
     printQRInTerminal: true,
     logger: pino({ level: 'silent' }),

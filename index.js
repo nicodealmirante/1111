@@ -1,9 +1,12 @@
-import makeWASocket, { useMultiFileAuthState } from '@whiskeysockets/baileys'
+import baileys from '@whiskeysockets/baileys'
 import pino from 'pino'
 import qrcode from 'qrcode-terminal'
 import OpenAI from 'openai'
 import fs from 'fs-extra'
 import 'dotenv/config'
+
+const { default: makeWASocket, useMultiFileAuthState } = baileys
+
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
 const assistantId = process.env.ASSISTANT_ID
@@ -31,6 +34,8 @@ const respuestas = {
   }
 }
 
+
+
 async function connectBot() {
   const { state, saveCreds } = await useMultiFileAuthState('auth')
   const sock = makeWASocket({
@@ -40,11 +45,12 @@ async function connectBot() {
   })
 
   sock.ev.on('creds.update', saveCreds)
-
   sock.ev.on('connection.update', ({ connection, qr }) => {
     if (qr) qrcode.generate(qr, { small: true })
     if (connection === 'open') console.log('✅ Bot conectado a WhatsApp')
   })
+
+
 
   sock.ev.on('messages.upsert', async ({ messages }) => {
     const m = messages[0]
